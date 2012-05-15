@@ -1,0 +1,217 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%  
+%%  UT-THESIS.TEX
+%%  Copyright (c) 1998-2000 by Francois Pitt
+%%  Last Update: 2000 February 20
+%%  
+%%  Skeleton LaTeX2e file for the preparation of theses at UofT;
+%%  conforms to the School of Graduate Studies' guidelines of 07/97.
+%%  To be used in conjunction with class file `ut-thesis.cls', whose
+%%  features it illustrates.
+%%  
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%  
+%%  This file is distributed in the hope that it will be useful but
+%%  without any warranty (without even the implied warranty of
+%%  fitness for a particular purpose).  For a description of this
+%%  file's purpose, and instructions on its use, see below.
+%%  
+%%  Feel free to copy and redistribute this file, as long as this
+%%  copyright notice remains intact and this file is distributed
+%%  along with the companion file `ut-thesis.cls'.
+%%  
+%%  (Thanks to Robert Bernecky for his suggestions on improving the
+%%  usefulness and readability of this file.)
+%%  
+%%  Send all bugs, questions, comments, suggestions, etc. to the
+%%  author, at <fpitt_AT_cs_DOT_utoronto_DOT_ca>.
+%%  
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%  
+%%  SUMMARY OF FEATURES:
+%%  
+%%  To comment out parts of a file, use the macro \ignore{...}
+%%  around the entire block of text you want to ignore.
+%%  
+%%  To explicitly set the pagestyle of any inserted blank page when
+%%  \cleardoublepage occurs, use one of \clearemptydoublepage or
+%%  \clearplaindoublepage instead.
+%%  
+%%  For single-spaced quotes or quotations, use the `longquote' and
+%%  `longquotation' environments.  For single-spaced, 1 1/2-spaced,
+%%  or double-spaced paragraphs, use one of the environments
+%%  `singlespaced', `oneandahalfspaced', or `doublespaced'.  More
+%%  generally, for paragraphs with a line spacing of `n', use
+%%  `\begin{newspacing}{n}...\end{newspacing}'.
+%%  
+%%  All other environments, commands, and options provided by the
+%%  `ut-thesis' class will be described below, at the point where
+%%  they should appear in the document.
+%%  
+%%  See the companion file `ut-thesis.cls' for more details.
+%%  
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%         PREAMBLE         %%%%%%%%%%%%
+
+%% Default settings format a final copy (12pt font, single-sided,
+%% double-spaced, normal margins, single-spaced notes).  For a rough
+%% copy (10pt font, double-sided, double-spaced, normal margins, with
+%% the word "DRAFT" printed at each corner of every page), use the
+%% `draft' option.  The default line spacing can be changed with one
+%% of the following options: `singlespaced', `oneandahalfspaced', or
+%% `doublespaced'.  The notes are always single-spaced by default, but
+%% can be made to have the same spacing as the rest of the document by
+%% using the option `spacednotes'.  The size of the margins can be
+%% changed with one of the following options: `narrowmargins' (1 1/4"
+%% left, 3/4" others), `normalmargins' (1 1/4" left, 1" others),
+%% `widemargins' (1 1/4" all), `extrawidemargins' (1 1/2" all).  Any
+%% other standard option for the `report' document class can be used
+%% to override the default or draft settings.
+
+%% ***   Add any desired options.   ***
+\documentclass{ut-thesis}
+
+%% ***   Add \usepackage declarations here.   ***
+
+
+%% The line spacing of the document should be specified using one of
+%% the document options given above, but if you need a line spacing
+%% that is not provided by the options, you can override the default
+%% line spacing for the entire document with the command
+%%   `\linespacing{...}'.
+%% Note that in order to get the correct appearance, the argument to
+%% `\linespacing' must be equal to 1/3 + 2/3 times the desired line
+%% spacing (for example, single-spaced = \linespacing{1},
+%%                        1 1/2-spaced = \linespacing{1.33}, and
+%%                       double-spaced = \linespacing{1.66}).
+
+%% ***   Uncomment and fill in a value, if needed.    ***
+%% ***   REMEMBER: You should NOT need to use this.  Use one of   ***
+%% ***   the document class options mentionned above instead.     ***
+%\linespacing{}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                                                                  %%
+%%                  ***   I M P O R T A N T   ***                   %%
+%%                                                                  %%
+%%  Fill in the following fields with the required information:     %%
+%%   - \degree{...}       name of the degree obtained               %%
+%%   - \department{...}   name of the graduate department           %%
+%%   - \gradyear{...}     year of graduation                        %%
+%%   - \author{...}       name of the author                        %%
+%%   - \title{...}        title of the thesis                       %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% ***   Change this example to appropriate values.   ***
+\degree{Doctor of Philosophy}
+\department{Computer Science}
+\gradyear{1999}
+\author{Fran\c{c}ois Pitt}
+\title{UT-Thesis Class File Example}
+
+%% ***   NOTE   ***
+%% Put here all other formatting commands that belong in the preamble.
+%% In particular, you should put all of your `\newcommand',
+%% `\newenvironment', and `\newtheorem's (in other words, all the
+%% global definitions that you will need throughout your thesis) in
+%% a separate file and use "\input{filename}" to input it here.
+
+
+%% As another example, to list only down to subsections in the table
+%% of contents (-1=part, 0=chapter, 1=section, 2=subsection,
+%% 3=subsubsection, 4=paragraph, 5=subparagraph, 6=subsubparagraph).
+%
+\setcounter{tocdepth}{2}
+
+
+%%%%%%%%%%%%      MAIN  DOCUMENT      %%%%%%%%%%%%
+
+\begin{document}
+
+%% This sets the page style and numbering for preliminary sections.
+\begin{preliminary}
+
+%% This generates the title page from the information given above.
+\maketitle
+
+%% There should be NOTHING between the title page and abstract.
+
+%% This generates the abstract page, with the line spacing adjusted
+%% according to SGS guidelines.
+\begin{abstract}
+%% ***   Put your Abstract here.   ***
+%% (At most 150 words for M.Sc. or 350 words for Ph.D.)
+\end{abstract}
+
+%% Anything placed between the abstract and table of contents will
+%% appear on a separate page since the abstract ends with \newpage
+%% and the table of contents starts with \clearpage.
+
+%% This generates a "dedication" section, if needed.
+%% (uncomment to have it appear in the document)
+%\begin{dedication}
+%% ***   Put your Dedication here.   ***
+%\end{dedication}
+
+%% The `dedication' and `acknowledgements' sections do not create new
+%% pages so if you want the two sections to appear on separate pages,
+%% you should put an explicit \newpage between them.
+
+%% This generates an "acknowledgements" section, if needed.
+%% (uncomment to have it appear in the document)
+%\begin{acknowledgements}
+%% ***   Put your Acknowledgements here.   ***
+%\end{acknowledgements}
+
+%% This generates the Table of Contents (on a separate page).
+\tableofcontents
+
+%% This generates the List of Tables (on a separate page), if needed.
+%% (uncomment to have it appear in the document)
+%\listoftables
+
+%% This generates the List of Figures (on a separate page), if needed.
+%% (uncomment to have it appear in the document)
+%\listoffigures
+
+%% You can add commands here to generate any other material that
+%% belongs in the head matter (for example, an "Index of Symbols").
+
+%% End of the preliminary sections: reset page style and numbering.
+\end{preliminary}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%  Put your Chapters here; the easiest way to do this is to keep   %%
+%%  each chapter in a separate file and `\include' all the files    %%
+%%  right here.  Note that each chapter file should start with the  %%
+%%  line "\chapter{ChapterName}".  Note that using `\include'       %%
+%%  instead of `\input' makes each chapter start on a new page,     %%
+%%  and allows you to format only parts of your thesis at a time    %%
+%%  by using `\includeonly'.                                        %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% ***   Include chapter files here.   ***
+
+
+%% This adds a line for the Bibliography in the Table of Contents.
+\addcontentsline{toc}{chapter}{Bibliography}
+%% ***   Set the bibliography style.   ***
+%% (change according to your preference)
+\bibliographystyle{plain}
+%% ***   Set the bibliography file.   ***
+%% ("thesis.bib" by default; change if needed)
+\bibliography{thesis}
+
+%% ***   NOTE   ***
+%% If you don't use bibliography files, comment out the previous line
+%% and use \begin{thebibliography}...\end{thebibliography}.  (In that
+%% case, you should probably put the bibliography in a separate file
+%% and `\include' or `\input' it here).
+
+\end{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%  End of UT-THESIS.TEX
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
