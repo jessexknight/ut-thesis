@@ -1,0 +1,80 @@
+body {font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 62.5%;background-color: #002F65;}
+
+a {color: #238399;}
+p {padding-bottom: 1em;}
+p.skipper {position: absolute; left: -9999px;}
+h1.bluebox {font-family: Futura, Helvetica, Arial, sans-serif; font-size: 1.8em; 
+	background: url(sgs/h1-corner.gif) top right #002f64 no-repeat; color: white; padding: 5px; border-bottom: 1px solid white;}
+div.clearme {clear: both;}
+ul.mininav {list-style: none;}
+	ul.mininav li {float: left; margin-left: 0.5em; padding-left: 0.5em; border-left: 1px solid #666;}
+	ul.mininav li.first {border: none;}
+
+#mainContent {width: 100%; background: url(sgs/body-bg.gif) #bfcccf repeat-x; position: relative; z-index: 42;}
+
+#header {width: 759px; margin: 0 auto;position: relative; background: url(sgs/header-bg.gif) #ffffff 12px 10px no-repeat; height: 98px;}
+	#header ul.mininav {position: absolute; top: 10px; right: 12px;}
+		#header ul.mininav a {color: #002f63; text-decoration: none;}
+		#header ul.mininav a:hover {text-decoration: underline;}
+	#sgslink, #uoftlink {position: absolute;}
+		#sgslink a, #uoftlink a {display: block; text-indent: -9999px;}
+		#uoftlink {top: 30px; left: 50px;}
+			#uoftlink a {height: 18px; width: 295px;}
+		#sgslink {top: 50px; left: 50px;}
+			#sgslink a {height: 18px; width: 290px;}
+
+#nav {width: 757px; margin: 0 auto; height: 43px; color: #ffffff; border-left: 2px solid white; margin-bottom: 1px; z-index: 50; position: relative;}
+	#nav a {color: white;}
+	
+#nougat {width: 755px; margin: 0 auto; background: #e9f0f2; border-left: 2px solid white; border-right: 2px solid white; padding: 15px 0;z-index: 0; position: relative;}
+	#sidebar {width: 215px; float: left; margin-left: 10px; clear: left; display: inline; z-index: 0;}
+
+		#sidebar h1.bluebox {display: none; padding-top: 1em;}
+			body.page22 #sidebar h1#about {display: block;}
+			body.page33 #sidebar h1#programs {display: block;}
+			body.page34 #sidebar h1#resources {display: block;}
+			body.page26 #sidebar h1#policies {display: block;}
+			body.page27 #sidebar h1#administrative {display: block;}
+			body.page272 #sidebar h1#information {display: block;}
+			body.page301 #sidebar h1#gradroom {display: block;}
+		div.pagelet {border-top: 1px solid #bfbfbf; border-bottom: 1px solid #bfbfbf; background: #dde4e6; padding: 7px 5px; margin-bottom: 2em;}
+			div.pagelet h1 {font-weight: bold; font-size: 1.1em; color: #002f64;letter-spacing: 0.05em; padding-bottom: 0.2em;}
+	#content {width: 500px; float: right; margin-right: 10px; font-size: 1.1em; display: inline;}
+		#locationline {font-size: 0.9090909091em; color: #9fa4a6; padding-bottom: 0.5em; text-align: right;}
+			#locationline a {color: #9fa4a6; text-decoration: none;}
+				#locationline a:hover {text-decoration: underline; color: #7a7e80;}
+		#content h1.bluebox {font-size: 1.8em; padding-left: 5px;}
+		ul.news {list-style: none; margin: 0; padding: 0;}
+			ul.news li {background: #dde4e6; border-bottom: 1px solid #bfbfbf; padding: 5px; clear: left; float: left; width: 490px;}
+			ul.news img {width: 50px;}
+			ul.news .newsimg {float: left; margin-right: 5px; width: 50px;}
+			ul.news .newstext {float: left; width: 435px; font-size: 1.1em;}
+			ul.news h2 {font-weight: bold; letter-spacing: 0.04em; color: #238399;}
+			ul.news a {text-decoration: none; color: #238399;}
+				ul.news a:hover {text-decoration: underline;}
+			ul.news p {line-height: 1.3em;}
+		#subpage #content h1, #subpage #content h2, #subpage #content h3, #subpage #content h4, #subpage #content h5 
+			{letter-spacing: 0.04em; color: #238399; padding-bottom: 0.25em; padding-top: 0.25em;}
+		#subpage #content h1 {font-size: 1.90909090em; font-weight: bold;}
+		#subpage #content h2 {font-size: 1.6363636363636363636363636363636em; font-weight: bold;}
+		#subpage #content h3 {font-size: 1.2727272727272727272727272727273em; font-weight: bold;}
+		#subpage #content h4 {font-size: 1em; font-weight: bold;}
+		#subpage #content h5 {font-size: 1em;}
+		#subpage #content ul, #subpage #content ol {margin-left: 30px; padding-bottom: 1em;}
+			#subpage #content ul ul, #subpage #content ol ol, #subpage #content ol ul, #subpage #content ul ol {padding-bottom: 0;}
+		
+#flashContent {margin-bottom: 1em;}
+
+#footer {background: url(sgs/footer-bg.gif) repeat-x #002F65; color: #ffffff; position: relative;width: 100%; height: 75px; padding-top: 5px; z-index: 1;}
+	#footerContent {width: 759px; margin: 0 auto; position: relative;}
+	#footer a {color: white;}
+	#footer p#copyright {width: 370px;}
+	#footer ul.mininav {position: absolute; top: 0; right: 12px;}
+		#footer ul.mininav li {border-left: 1px solid #fff;}
+		#footer ul.mininav li.first {border: none;}
+		
+.ipf-PageChildLinks li {padding-bottom: 0.25em;}
+.ipf-PageChildLinks a, .ipf-PageChildLinks a:active, .ipf-PageChildLinks a:visited {color: #238399;}
+.ipf-ChildLinkSummary {display:block;}
+
+#slideshow { height: 200px; width: 500px; overflow: hidden; margin-bottom: 1em; }

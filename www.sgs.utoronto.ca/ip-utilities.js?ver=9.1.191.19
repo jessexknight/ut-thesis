@@ -1,0 +1,1303 @@
+ipjUA=navigator.userAgent;
+ipjIsIE = (navigator.appName == "Microsoft Internet Explorer");
+ipjIsIE5 = ipjIsIE && (ipjUA.indexOf('MSIE 5') != -1);
+ipjIsIE5_0 = ipjIsIE && (ipjUA.indexOf('MSIE 5.0') != -1);
+ipjIsIE7 = ipjIsIE && (ipjUA.indexOf('MSIE 7') != -1);
+ipjIsGecko = ipjUA.indexOf('Gecko') != -1; // Will also be true on Safari
+ipjIsSafari = ipjUA.indexOf('Safari') != -1;
+ipjIsOpera = window['opera'] && opera.buildNumber ? true : false;
+ipjIsMac = ipjUA.indexOf('Mac') != -1;
+ipjIsNS7 = ipjUA.indexOf('Netscape/7') != -1;
+ipjIsNS71 = ipjUA.indexOf('Netscape/7.1') != -1;
+ipjIsFF = ipjUA.indexOf('Firefox') != -1;
+ipjIsFF3 = ipjUA.indexOf('Firefox/3') != -1;
+var ipjPageSiteID=-1;
+var ipjPageSiteGroupID=-1;
+function ipjCreateCookie(name,value,days){
+if (days){
+var date=new Date();
+date.setTime(date.getTime()+(days*24*60*60*1000));
+var expires = "; expires="+date.toGMTString();
+}
+else var expires = "";
+document.cookie = name+"="+value+expires+"; path=/";
+}
+function ipjReadCookie(name){
+var nameEQ = name + "=";
+var ca = document.cookie.split(';');
+for(var i=0;i<ca.length;i++){
+var c=ca[i];
+while (c.charAt(0)==' ') c = c.substring(1,c.length);
+if (c.indexOf(nameEQ)==0) return c.substring(nameEQ.length,c.length);
+}
+return null;
+}
+function ipjEraseCookie(name){
+ipjCreateCookie(name,"",-1);
+}
+function ipjAddEvent(obj, evType, fn){
+if (obj.addEventListener){
+obj.addEventListener(evType, fn, false);
+return true;
+}
+else{
+if (obj.attachEvent){
+var r = obj.attachEvent("on"+evType, fn);
+return r;
+}
+else return false;
+}
+}
+function ipjCancelEvent(event){
+if (window.event && window.event.cancelBubble !==null) window.event.cancelBubble=true;
+else if (event!=null && event.stopPropagation) event.stopPropagation();
+}
+function ipjPageHeight(){
+if (window.innerHeight!=window.undefined) return window.innerHeight;
+if (document.compatMode=='CSS1Compat') return document.documentElement.clientHeight;
+if (document.body) return document.body.clientHeight;
+return 0;
+}
+function ipjPageWidth(){
+if (window.innerWidth!=window.undefined) return window.innerWidth;
+if (document.compatMode=='CSS1Compat') return document.documentElement.clientWidth;
+if (document.body) return document.body.clientWidth;
+return 0;
+}
+function ipjPageScrollTop(){
+if (self.pageYOffset) return self.pageYOffset;
+if (document.documentElement && document.documentElement.scrollTop) return document.documentElement.scrollTop;
+if (document.body) return document.body.scrollTop;
+return 0;
+}
+function ipjPageScrollLeft(){
+if (self.pageXOffset) return self.pageXOffset;
+if (document.documentElement && document.documentElement.scrollLeft) return document.documentElement.scrollLeft;
+if (document.body) return document.body.scrollLeft;
+return 0;
+}
+if(typeof HTMLElement!="undefined" && !HTMLElement.prototype.insertAdjacentElement) {
+HTMLElement.prototype.insertAdjacentElement=function(where,parsedNode)
+{
+switch (where){
+case 'beforeBegin':
+this.parentNode.insertBefore(parsedNode,this)
+break;
+case 'afterBegin':
+this.insertBefore(parsedNode,this.firstChild);
+break;
+case 'beforeEnd':
+this.appendChild(parsedNode);
+break;
+case 'afterEnd':
+if (this.nextSibling)
+this.parentNode.insertBefore(parsedNode,this.nextSibling);
+else this.parentNode.appendChild(parsedNode);
+break;
+}
+}
+HTMLElement.prototype.insertAdjacentHTML=function(where,htmlStr)
+{
+var r=this.ownerDocument.createRange();
+r.setStartBefore(this);
+var parsedHTML=r.createContextualFragment(htmlStr);
+this.insertAdjacentElement(where,parsedHTML)
+}
+HTMLElement.prototype.insertAdjacentText=function(where,txtStr)
+{
+var parsedText=document.createTextNode(txtStr)
+this.insertAdjacentElement(where,parsedText)
+}
+}
+function ipjSetElementInnerHTMLGecko(element,htmlStr)
+{
+var range=element.ownerDocument.createRange();
+range.selectNodeContents(element);
+range.deleteContents();
+var newFragment=range.createContextualFragment(htmlStr);
+element.appendChild(newFragment);
+};
+function ipjGetElementOuterHTMLGecko(element)
+{
+var range=document.createRange();
+range.selectNode(element);
+var span = document.createElement("span");
+range.surroundContents(span);
+var strOuterHtml=span.innerHTML;
+range.selectNode(span);
+range.extractContents();
+range.insertNode(element);
+return strOuterHtml;
+};
+function ipjGetHtmlTextOfRangeGecko(range)
+{
+var clonedSelection=range.cloneContents();
+var div = document.createElement('div');
+div.appendChild(clonedSelection);
+return div.innerHTML;
+}
+function ipjValidateRegEx(objTextbox, objSpan, strRegEx, intRequired, isRevMatch)
+{
+var b=false;
+var s=objTextbox.value;
+if (iTrim(s) == '') {
+b=(intRequired==1);
+}
+else{
+if (iTrim(strRegEx) != '') {
+var rx=new RegExp(strRegEx);
+var matches=rx.exec(s);
+if (isRevMatch=='True')
+{
+b=(matches==null);
+}
+else
+{
+b=(matches !=null);
+}
+}
+}
+if (b){
+iSetElementVis(objSpan, 1)
+}
+else{
+iSetElementVis(objSpan, 0)
+}
+};
+function ipjFindObj(n, d){
+if(n==null) return n;
+var p,i,x;
+if(!d) d=document;
+if((p=n.indexOf("?"))>0&&parent.frames.length) {
+d=parent.frames[n.substring(p+1)].document; n=n.substring(0,p);
+}
+if(!(x=d[n])&&d.all) x=d.all[n];
+for (i=0;!x&&i<d.forms.length;i++) x=d.forms[i][n];
+for(i=0;!x&&d.layers&&i<d.layers.length;i++) x=ipjFindObj(n,d.layers[i].document);
+if(!x && d.getElementById) x=d.getElementById(n);
+return x;
+}
+function ipjJumpMenu(targ,selObj,restore){
+eval(targ+".location='"+selObj.options[selObj.selectedIndex].value+"'");
+if (restore) selObj.selectedIndex=0;
+}
+function iSetElementVis(elementName, intVis)
+{
+var element=ipjFindObj(elementName);
+if (element){
+switch(intVis){
+case 0:
+element.style.visibility = "hidden";
+break;
+case 1:
+element.style.visibility = "visible";
+break;
+case 2:
+if (element.style.visibility == "hidden") {
+element.style.visibility = "visible";
+}
+else{
+element.style.visibility = "hidden";
+}
+}
+}
+};
+function ipjShowFirstHideSecond (elementName1, elementName2)
+{
+var element1=ipjFindObj(elementName1);
+var element2=ipjFindObj(elementName2);
+if ((element1) && (element2)){
+element1.style.display = "inline";
+element2.style.display = "none";
+}
+};
+function ipjEnableFirstDisableSecond (elementName1, elementName2)
+{
+var element1=ipjFindObj(elementName1);
+var element2=ipjFindObj(elementName2);
+if ((element1) && (element2)){
+element1.disabled=false;
+element2.disabled=true;
+}
+};
+function ipjConditionalSetEnable(checkBoxName,elementName)
+{
+var element1=ipjFindObj(elementName);
+var checkbox1=ipjFindObj(checkBoxName)
+if ((element1) && (checkbox1)){
+element1.disabled=!checkbox1.checked;
+}
+};
+function ipjEnable(elementName)
+{
+var element1=ipjFindObj(elementName);
+if (element1)
+{
+element1.disabled=false;
+}
+};
+function ipjDisable(elementName)
+{
+var element1=ipjFindObj(elementName);
+if (element1)
+{
+element1.disabled=true;
+}
+};
+function ipjShowDiv(divName)
+{
+var element1=ipjFindObj(divName);
+if (element1)
+{
+iSetElementVis(divName, 1);
+}
+};
+function ipjHideDiv(divName)
+{
+var element1=ipjFindObj(divName);
+if (element1)
+{
+iSetElementVis(divName, 0);
+}
+};
+function ipjToggleDivWithImage(image, divId)
+{
+var div=ipjFindObj(divId);
+if(div)
+{
+if(div.style.visibility=='visible')
+{
+ipjHideDiv(divId);
+div.style.display='none';
+var objRegEx = new RegExp("control_contract.gif");
+image.src = image.src.replace(objRegEx, "control_expand.gif");
+}
+else
+{
+ipjShowDiv(divId);
+div.style.display='inline';
+var objRegEx = new RegExp("control_expand.gif");
+image.src = image.src.replace(objRegEx, "control_contract.gif");
+}
+}
+};
+function iTrim(str)
+{
+var x=str;
+x=x.replace(/^\s*(.*)/, "$1");
+x=x.replace(/(.*?)\s*$/, "$1");
+return x;
+};
+function iTrimChar(str, c)
+{
+if ((str !=null) && (str !=undefined)){
+while (str.substring(0, 1)==c){
+str=str.substring(1, str.length);
+}
+while (str.substring(str.length-1, 1)==c){
+str=str.substring(0, str.length-1);
+}
+}
+return str;
+};
+function ipjFocusElement(formName, elemName, doSelect)
+{
+if (document.forms[formName][elemName] !=null){
+var elem=document.forms[formName].elements[elemName];
+elem.focus();
+if (doSelect){
+elem.select();
+}
+}
+};
+function iAppendVirtualPath(path1, path2)
+{
+path1=iTrim(path1);
+path2=iTrim(path2);
+path1 = iTrimChar(path1, "/");
+path2 = iTrimChar(path2, "/");
+if ((path1.length>0) && (path2.length>0)){
+return "/" + path1 + "/" + path2;
+}
+if (path1.length>0){
+return "/" + path1;
+}
+if (path2.length>0){
+return "/" + path2;
+}
+};
+String.prototype.endsWith=function(sEnd)
+{
+return (this.substr(this.length-sEnd.length)==sEnd);
+};
+String.prototype.startsWith=function(sStart)
+{
+return (this.substr(0,sStart.length)==sStart);
+};
+String.prototype.trim = function() { return this.replace(/^\s+|\s+$/g, ""); }
+String.prototype.toCharArray=function()
+{
+var arrRet=new Array();
+for(var i=0;i<this.length;i++){
+arrRet.push(this.substr(i,1));
+}
+return arrRet;
+};
+String.prototype.reverse=function()
+{
+var a=new Array();
+for(var i=0;i<this.length;i++){
+a.push(this.substr(i,1));
+}
+return a.reverse().join("");
+}
+var iDivUpdateLast=(new Date()).getTime();
+function ipjDivUpdate(elemName, msg)
+{
+msg=unescape(msg);
+if ((new Date()).getTime()>iDivUpdateLast+1000){
+var div=ipjFindObj(elemName);
+div.innerHTML+=msg;
+window.scrollTo(0,document.body.scrollHeight);
+iDivUpdateLast=(new Date()).getTime();
+}
+};
+function ipjRadioSelect(rbId)
+{
+var rb=ipjFindObj(rbId);
+rb.checked=true;
+};
+function ipjClearDefaultAndCSS(el)
+{
+if (el){
+if (el.defaultValue==el.value) el.value = ""
+}
+};
+function ipjAddPostBack()
+{
+if(typeof(__doPostBack) == 'undefined')
+{
+document.write("<input type=\"hidden\" name=\"__EVENTTARGET\" value=\"\" />");
+document.write("<input type=\"hidden\" name=\"__EVENTARGUMENT\" value=\"\" />");
+document.write("<script language=\"javascript\" type=\"text/javascript\"> function __doPostBack(eventTarget, eventArgument) {	var theform; if (window.navigator.appName.toLowerCase().indexOf(\"microsoft\") > -1) { theform = document.IronPointForm; } else { theform = document.forms[\"IronPointForm\"]; } theform.__EVENTTARGET.value = eventTarget.split(\"$\").join(\":\"); theform.__EVENTARGUMENT.value = eventArgument; theform.submit(); }</script>");
+}
+};
+function ipjSetRadioButton(groupName, value){
+var radios=document.getElementsByName(groupName);
+for (i=0; i<radios.length; i++){
+radios[i].checked=(radios[i].value==value);
+}
+}
+function ipjOpenPreview(url)
+{
+eval("window.open(url,'Admin','scrollbars=yes,status=yes,toolbar=yes,menubar=yes,resizable=yes,height=510,width=750,left='+(screen.width-750)/2+',top='+(screen.height-(510+45))/2)");
+};
+function ipjOpenPrintPage(url)
+{
+eval("window.open(url,'PrinterFriendlyPage','scrollbars=yes,status=yes,toolbar=yes,menubar=yes,resizable=yes,height=510,width=750,left='+(screen.width-750)/2+',top='+(screen.height-(510+45))/2)");
+};
+function ipjOpenPrintPageReturnWindow(url)
+{
+return eval("window.open(url,'PrinterFriendlyPage_'+new Date().getTime(),'scrollbars=yes,status=yes,toolbar=yes,menubar=yes,resizable=yes,height=510,width=750,left='+(screen.width-750)/2+',top='+(screen.height-(510+45))/2)");
+};
+function ipjSearchResultPreview(url, id, previewLabel, hideLabel)
+{
+var strFrameID = 'ipFrame' + id;
+var objFrame=ipjFindObj(strFrameID);
+var strPreview = '&lt;&lt;' + previewLabel + '&gt;&gt;'
+var strHide = '&lt;&lt;' + hideLabel + '&gt;&gt;'
+if(url.innerHTML == strPreview) // We're expanding the frame
+{
+objFrame.src=url.href;
+objFrame.height = "175px";
+if (document.all) objFrame.width = "100%"; //IE
+else objFrame.width = "95%";//Firefox, leave room for a scrollbar
+url.innerHTML = '<font color=red>'+ strHide + '</font>';
+}
+else // We're hiding the frame
+{
+objFrame.src = "";
+objFrame.height = "0";
+objFrame.width = "0";
+url.innerHTML=strPreview;
+}
+};
+function ipjShowPopupWithContent(strContent,winName,features)
+{
+if (winName =="")    winName = "_blank";
+if (winName =="center") features = ipjFindCenterForPopup();
+if (features == "")  features = "width=300,height=300"
+var ipDisplayWindow  = window.open("",winName,features);
+ipDisplayWindow.document.write(unescape(strContent));
+ipDisplayWindow.document.close();
+}
+function ipjShowPopupByURL(strURL,winName,features)
+{
+if (winName =="")    winName = "_blank";
+if (winName =="center") features = ipjFindCenterForPopup();
+if (features == "")  features = "width=300,height=300"
+var ipDisplayWindow=window.open(strURL,winName,features);
+}
+function ipjFindCenterForPopup()
+{
+if (window.screen){
+var nWidth=380;
+var nHeight=350;
+var nLeft=10;
+var nTop=10;
+nLeft=(window.screen.availWidth-nWidth)/2;
+nTop=(window.screen.availHeight-nHeight)/2;
+var features = 'width='+nWidth+',height='+nHeight+',left='+nLeft+',top='+nTop;
+}
+else{
+var features='width=380,height=350';
+}
+return features;
+}
+var ipjModalDialogWindow=null;
+var ipjModalReturnFunction=null;
+var ipjModalReturnFunctionArgs=null;
+var ipjModalAbortNew=false;
+var ipjEventActionCancelled=false;
+function Dimensions(){
+this.top=0;
+this.left=0;
+this.width=0;
+this.height=0;
+}
+function ipjGetDialogDimensions(intWidth, intHeight)
+{
+var dim=new Dimensions();
+dim.width=intWidth;
+dim.height=intHeight;
+if (window.screenX){
+dim.left=window.screenX+((window.outerWidth-intWidth)/2);
+dim.top=window.screenY+((window.outerHeight-intHeight)/2);
+}else if (window.screenLeft){
+var CSSCompat = (document.compatMode && document.compatMode != "BackCompat");
+window.outerWidth=(CSSCompat) ? document.body.parentElement.clientWidth : document.body.clientWidth;
+window.outerHeight=(CSSCompat) ? document.body.parentElement.clientHeight : document.body.clientHeight;
+window.outerHeight-=80;
+dim.left=parseInt(window.screenLeft+((window.outerWidth-intWidth)/2));
+dim.top=parseInt(window.screenTop+((window.outerHeight-intHeight)/2));
+}else{
+dim.left=(screen.width-intWidth)/2;
+dim.top=(screen.height-intHeight)/2;
+}
+return dim;
+}
+function ipjShowModal(strUrl, intHeight, intWidth , args, objPointer, funcReturnFunc, functionArgs, dialogArgs){
+ipjEventActionCancelled=false;
+if (ipjModalAbortNew==true) return true;
+ipjSessionWarningSet();
+if (args !=null){
+strUrl += "?" + args;
+}
+var dim=ipjGetDialogDimensions(intWidth, intHeight);
+if (!ipjModalDialogWindow || (ipjModalDialogWindow && ipjModalDialogWindow.closed)){
+if (window.showModalDialog){
+var ieFeatures = "resizable:no;dialogLeft:" + dim.left + "px;dialogTop:" + dim.top + "px;dialogWidth:" + dim.width + "px;dialogHeight:" + dim.height + "px;status:no;help:no;scroll:no"; //mr
+var returnValue=window.showModalDialog(strUrl, dialogArgs, ieFeatures);
+ipjSessionKeepAlive();
+ipjSessionWarningSet();
+if (funcReturnFunc !=null){
+funcReturnFunc(returnValue, functionArgs);
+return;
+}
+else{
+return returnValue;
+}
+}
+else{
+ipjModalReturnFunction=funcReturnFunc;
+ipjModalReturnFunctionArgs=functionArgs;
+ipjModalDialogArgs=dialogArgs;
+var nnfeatures = "dependent=yes,resizable=no,screenX=" + dim.left + ",screenY=" + dim.top + ",width=" + dim.width + ",height=" + dim.height;
+ipjModalDialogWindow=window.open(strUrl, (new Date()).getTime().toString(), nnfeatures);
+ipjModalDialogWindow.focus();
+window.top.captureEvents(Event.CLICK|Event.FOCUS);
+window.top.onfocus=iHandleFocus;
+window.top.onclick=iHandleFocus;
+setTimeout("ipjModalDialogWindow.focus();",1)
+}
+}
+else{
+ipjModalDialogWindow.focus();
+}
+}
+function ipjCloseModal(returnValue)
+{
+returnValue=unescape(returnValue);
+if (ipjIsFF3)
+{
+window.top.returnValue=returnValue;
+window.top.close();
+}
+else if (window.showModalDialog)
+{
+window.close();
+window.returnValue=returnValue;
+}
+else
+{
+parent.opener.top.releaseEvents(Event.CLICK|Event.FOCUS);
+parent.opener.top.onclick="";
+parent.opener.top.onfocus="";
+if (parent.opener.ipjModalReturnFunction!=null) parent.opener.ipjModalReturnFunction(returnValue,parent.opener.ipjModalReturnFunctionArgs);
+window.top.close();
+}
+};
+function ipjForcePostBack(returnValue, postbackArgs)
+{
+if (postbackArgs==null || typeof(postbackArgs)!="object") __doPostBack('','');
+else{
+if (postbackArgs.length==1) __doPostBack(postbackArgs[0],'');
+if (postbackArgs.length==2) __doPostBack(postbackArgs[0],postbackArgs[1]);
+}
+}
+function ipjUpdateHyperlink(hyperlinkText, hyperlinkElementId)
+{
+if (hyperlinkText==null || hyperlinkText=="") return;
+document.getElementById(hyperlinkElementId).innerHTML=hyperlinkText;
+}
+function ipjContinueEventAction(returnValue, elementId)
+{
+if (document.all) return;
+if (returnValue=="true" || returnValue==true) {
+ipjModalAbortNew=true;
+document.getElementById(elementId).click();
+}
+else{
+__doPostBack('','');  //default action is to postback when the modal is closed
+}
+}
+function ipjContinueEventActionWithCancel(returnValue, elementId)
+{
+if (document.all || ipjIsFF3){
+if (returnValue==window.undefined || returnValue=="" || returnValue=="false") ipjEventActionCancelled=true;
+return;
+}
+else{
+if (returnValue==window.undefined || returnValue=="" || returnValue=="false") {
+}
+else{
+ipjModalAbortNew=true;
+document.getElementById(elementId).click();
+}
+}
+}
+function iIgnoreEvents(e)
+{
+return false;
+};
+function iHandleFocus()
+{
+if (ipjModalDialogWindow){
+if (!ipjModalDialogWindow.closed){
+ipjModalDialogWindow.focus();
+return false;
+}
+else{
+window.top.releaseEvents(Event.CLICK|Event.FOCUS);
+window.top.onclick="";
+window.top.onfocus="";
+}
+}
+};
+var ipjULMouseoutLIs=new Array();
+var ipjULMouseoutLITimeouts=new Array();
+function ipjInitUnorderedListMenu(sectionMenuElementID, collapseDelay){
+if (arguments.length==1) collapseDelay=0;
+var sfEls = document.getElementById(sectionMenuElementID).getElementsByTagName("LI");
+for (var i=0; i<sfEls.length; i++){
+if (collapseDelay==0){
+sfEls[i].onmouseover=function(){
+this.className+=" sfhover";
+}
+sfEls[i].onmouseout=function(){
+this.className=this.className.replace(new RegExp(" sfhover\\b"), "");
+}
+}
+else{
+sfEls[i].onmouseover=function(){
+this.className+=" sfhover";
+ipjULProcessLIMouseouts();
+}
+sfEls[i].onmouseout=function(){
+ipjULMouseoutLIs.push(this);
+var to = setTimeout("ipjULProcessLIMouseouts()",collapseDelay);
+ipjULMouseoutLITimeouts.push(to);
+}
+}
+}
+}
+function ipjULProcessLIMouseouts(){
+for (var i=0; i<ipjULMouseoutLIs.length; i++){
+ipjULMouseoutLIs[i].className=ipjULMouseoutLIs[i].className.replace(new RegExp(" sfhover\\b"), "");
+}
+for (var i=0; i<ipjULMouseoutLITimeouts.length; i++){
+clearTimeout(ipjULMouseoutLITimeouts[i]);
+}
+ipjULMouseoutLIs=new Array();
+ipjULMouseoutLITimeouts=new Array();
+}
+function ipjInitUnorderedListMenuItemsActive(sectionMenuElementID){
+var strList=null;
+try
+{
+strList = eval('ipActivePageDefIds_' + sectionMenuElementID + ';');
+}
+catch (e)
+{}
+var sfEls = document.getElementById(sectionMenuElementID).getElementsByTagName("LI");
+if (strList)
+for (var i=0; i<sfEls.length; i++){
+{
+var strPageDefId = sfEls[i].id.replace('pageid','');
+for (var j=0;j<strList.length;j++)
+{
+if (strList[j]==strPageDefId)
+{
+intLevel = sfEls[i].getAttribute('level');
+if (sfEls[i].className.length>0)
+{
+sfEls[i].className = sfEls[i].className + ' ipf-active' + intLevel;
+}
+else
+{
+sfEls[i].className = 'ipf-active' + intLevel;
+}
+break;
+}
+}
+}
+}
+}
+function ipjOpenCalendarButtonClick(ctlID, doAutoPostBack, localize)
+{
+var selectedDate = encodeURI(document.getElementById(ctlID+"_txtDate").value);
+var iframeElem = document.getElementById(ctlID+"_ifrCalendarPage");
+var pathToIframe = iAppendVirtualPath(ipVirDir, "/CM/WebUI/UserControls/DateTimeControlIframe.aspx?ctlID=" + ctlID + "&doAutoPostBack=" + doAutoPostBack + "&localize=" + localize + "&selectedDate=" + selectedDate);
+iframeElem.src=pathToIframe;
+if (!document.all) iframeElem.height=parseInt(iframeElem.height)+20;
+iframeElem.style.display=(iframeElem.style.display=="block"?"none":"block");
+}
+function ipjClearCalendarButtonClick(ctlID, doAutoPostBack)
+{
+if (document.getElementById(ctlID+"_txtDate")) document.getElementById(ctlID+"_txtDate").value="";
+if (document.getElementById(ctlID+"_hdnDateValueForQuestionnaireResponses")) document.getElementById(ctlID+"_hdnDateValueForQuestionnaireResponses").value="";
+if (document.getElementById(ctlID+"_dd24Hours")) document.getElementById(ctlID+"_dd24Hours").selectedIndex=0;
+if (document.getElementById(ctlID+"_dd12Hours")) document.getElementById(ctlID+"_dd12Hours").selectedIndex=0;
+if (document.getElementById(ctlID+"_ddMinute")) document.getElementById(ctlID+"_ddMinute").selectedIndex=0;
+if (document.getElementById(ctlID+"_ddAMPM")) document.getElementById(ctlID+"_ddAMPM").selectedIndex=0;
+if (doAutoPostBack) __doPostBack('','');
+}
+function ipjCalendarDaySelectedClick(ctlID, strDate, strDateValueForQuestionnaireResponses, doAutoPostBack)
+{
+document.getElementById(ctlID+"_txtDate").value=strDate;
+try
+{
+eval(ctlID+"_DaySelectedClick();");
+}
+catch (err)
+{
+}
+document.getElementById(ctlID+"_hdnDateValueForQuestionnaireResponses").value=strDateValueForQuestionnaireResponses;
+if (doAutoPostBack) __doPostBack('','');
+else document.getElementById(ctlID+"_ifrCalendarPage").style.display="none";
+}
+var __nonMSDOMBrowser = (window.navigator.appName.toLowerCase().indexOf('explorer') == -1);
+var __theFormPostData = "";
+var __theFormPostCollection=new Array();
+function WebForm_InitCallback(){
+__theFormPostData = "";
+__theFormPostCollection=new Array();
+for (var formIndex=0; formIndex<document.forms.length; formIndex++){
+var objForm=document.forms[formIndex];
+if (objForm.name.indexOf("IronPointForm") > -1) {
+var count=objForm.elements.length;
+var element;
+for (var i=0; i<count; i++){
+element=objForm.elements[i];
+var tagName=element.tagName.toLowerCase();
+if (tagName == "input") {
+var type=element.type;
+if ((type == "text" || type == "hidden" || type == "password" ||
+((type == "checkbox" || type == "radio") && element.checked)) &&
+(element.id != "__EVENTVALIDATION")) {
+WebForm_InitCallbackAddField(element.name, element.value);
+}
+}
+else if (tagName == "select") {
+var fieldValue="";
+for (var j=0; j<element.options.length; j++){
+var selectChild=element.options[j];
+if (selectChild.selected==true) WebForm_InitCallbackAddField(element.name, selectChild.value);
+}
+}
+else if (tagName == "textarea") {
+WebForm_InitCallbackAddField(element.name, element.value);
+}
+}
+}
+}
+}
+function WebForm_InitCallbackAddField(name, value){
+var nameValue=new Object();
+nameValue.name=name;
+nameValue.value=value;
+__theFormPostCollection[__theFormPostCollection.length]=nameValue;
+__theFormPostData += name + "=" + WebForm_EncodeCallback(value) + "&";
+}
+function WebForm_EncodeCallback(parameter)
+{
+if (encodeURIComponent){
+return encodeURIComponent(parameter);
+}
+else{
+return escape(parameter);
+}
+}
+function ipjDoXmlHttpRequestSynchronous(strCallerId, strURL, strPostData)
+{
+WebForm_InitCallback();
+var xmlHttp=iGetXmlHttpObject();
+if (xmlHttp==null)
+{
+alert ('Browser does not support HTTP Request');
+return;
+}
+xmlHttp.open('POST',strURL,false);
+xmlHttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+var strData=new String;
+if (strCallerId.length>0)
+{
+strData = __theFormPostData + '__CALLBACKID=' + WebForm_EncodeCallback(strCallerId) + '&__CALLBACKPARAM=';
+}
+if (strPostData.length>0)
+{
+strData+=WebForm_EncodeCallback(strPostData);
+}
+xmlHttp.send(strData);
+return xmlHttp.responseText;
+}
+function ipjDoXmlHttpRequest(strCallerId, strURL, strPostData, ptrStateChangeFunc)
+{
+WebForm_InitCallback();
+var xmlHttp=iGetXmlHttpObject();
+if (xmlHttp==null)
+{
+alert ('Browser does not support HTTP Request');
+return;
+}
+xmlHttp.onreadystatechange=function()
+{
+if (xmlHttp.readyState==4 || xmlHttp.readyState=='complete')
+{
+ptrStateChangeFunc(xmlHttp);
+}
+}
+xmlHttp.open('POST',strURL,true);
+xmlHttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+var strData=new String;
+if (strCallerId.length>0)
+{
+strData = __theFormPostData + '__CALLBACKID=' + WebForm_EncodeCallback(strCallerId) + '&__CALLBACKPARAM=';
+}
+if (strPostData.length>0)
+{
+strData+=WebForm_EncodeCallback(strPostData);
+}
+xmlHttp.send(strData);
+}
+function ipjDoXmlHttpRequestFromModal(returnValue, postbackArgs)
+{
+if (returnValue)
+{
+if (postbackArgs.length==3)
+{
+ipjDoXmlHttpRequest(postbackArgs[0],postbackArgs[1],postbackArgs[2]);
+}
+}
+}
+function ipjCreateXMLDOM(strResponseText)
+{
+var vXMLDoc;
+if (window.ActiveXObject)
+{
+vXMLDoc = new ActiveXObject("Microsoft.XMLDOM");
+vXMLDoc.async=false;
+vXMLDoc.loadXML(strResponseText);
+}
+else if(document.implementation.createDocument)
+{
+var vParser=new DOMParser();
+vXMLDoc = vParser.parseFromString(strResponseText, "text/xml");
+}
+return vXMLDoc;
+}
+function iGetXmlHttpObject()
+{
+var objXMLHttp=null;
+if (window.XMLHttpRequest)
+{
+objXMLHttp=new XMLHttpRequest();
+}
+else if (window.ActiveXObject)
+{
+objXMLHttp=new ActiveXObject("Microsoft.XMLHTTP");
+}
+return objXMLHttp;
+}
+function ipjSessionKeepAlive()
+{
+var objXMLHttp=iGetXmlHttpObject();
+var strURL = iAppendVirtualPath(ipVirDir, "/CM/WebUI/Admin/ServerAction.aspx?action=session_keepalive&dt=" + new Date().getTime());
+objXMLHttp.open('GET', strURL, true);
+objXMLHttp.send(null);
+}
+function ipjSessionTerminate()
+{
+var objXMLHttp=iGetXmlHttpObject();
+var strURL = iAppendVirtualPath(ipVirDir, "/CM/WebUI/Admin/ServerAction.aspx?action=session_terminate&dt=" + new Date().getTime());
+objXMLHttp.open('GET', strURL, true);
+objXMLHttp.send(null);
+}
+function getKeyCode(e)
+{
+if (window.event)
+return window.event.keyCode;
+else if (e)
+return e.which;
+else
+return null;
+}
+function ipKeyRestrict(e, validchars, blurOnEnter, caller)
+{
+var key='', keychar='';
+key=getKeyCode(e);
+if (key==null) return true;
+keychar=String.fromCharCode(key);
+keychar=keychar.toLowerCase();
+validchars=validchars.toLowerCase();
+if (validchars.indexOf(keychar) !=-1)
+return true;
+if (blurOnEnter && key==13)
+{
+caller.blur();
+return false;
+}
+if ( key==null || key==0 || key==8 || key==9 || key==13 || key==27 )
+return true;
+return false;
+}
+ipjAddEvent(window, "resize", ipjCenterModalDialogPanel);
+ipjAddEvent(window, "scroll", ipjCenterModalDialogPanel);
+var ipjModalDialogPanelCurrentElem=null;
+function ipjShowModalDialogPanel(elemID){
+if (ipjModalDialogPanelCurrentElem!=null) return;
+ipjModalDialogPanelCurrentElem=document.getElementById(elemID);
+ipjModalDialogPanelCurrentElem.style.display="block";
+var overlayElem=ipjModalDialogPanelCurrentElem.nextSibling;
+if (document.all) overlayElem.style.filter="progid:DXImageTransform.Microsoft.AlphaImageLoader(src='"+ipSysImageDir+"/ModalOverlay.png', sizingMethod='scale')";
+else overlayElem.style.backgroundImage="url("+ipSysImageDir+"/ModalOverlay.png)";
+overlayElem.style.display="block";
+ipjCenterModalDialogPanel();
+}
+function ipjHideModalDialogPanel(){
+ipjModalDialogPanelCurrentElem.style.display="none";
+ipjModalDialogPanelCurrentElem.nextSibling.style.display="none";
+ipjModalDialogPanelCurrentElem=null;
+}
+function ipjCenterModalDialogPanel(){
+if (ipjModalDialogPanelCurrentElem==null) return;
+var top=ipjPageScrollTop()+((ipjPageHeight()-parseInt(ipjModalDialogPanelCurrentElem.style.height))/2);
+var left=ipjPageScrollLeft()+((ipjPageWidth()-parseInt(ipjModalDialogPanelCurrentElem.style.width))/2);
+ipjModalDialogPanelCurrentElem.style.top = (top<0?0:top)+"px";
+ipjModalDialogPanelCurrentElem.style.left = (left<0?0:left)+"px";
+var overlayElem=ipjModalDialogPanelCurrentElem.nextSibling;
+overlayElem.style.height = ipjPageHeight()+"px";
+overlayElem.style.width = ipjPageWidth()+"px";
+overlayElem.style.top = ipjPageScrollTop()+"px";
+overlayElem.style.left = ipjPageScrollLeft()+"px";
+}
+var ipjSessionWarningCounter=0;
+var ipjSessionWarningTimer=null;
+var ipjSessionWarningPageTitle=null;
+var ipjSessionWarningPageTitleFlashInterval=null;
+function ipjSessionWarningSet(){
+if (!window.ipjSessionWarningEnabled || window.ipjSessionWarningEnabled==false) return;
+if (window.ipjSessionWarningTimer) clearTimeout(ipjSessionWarningTimer);
+ipjSessionWarningTimer = setTimeout("ipjShowSessionWarning()", ipjSessionWarningSecondsTo*1000);
+}
+function ipjShowSessionWarning(){
+if (ipjSessionWarningIsModalPage==true){
+ipjSessionTerminate();
+document.getElementById("divSessionWarningText").innerHTML="<img src='"+ipSysImageDir+"/caution.gif'/> Your session has expired.";
+document.getElementById("divSessionWarningButton").value="OK";
+document.getElementById("divSessionWarningButton").onclick=ipjSessionWarningModalPageClose;
+ipjShowModalDialogPanel(ipjSessionWarningModalID);
+if (!document.all) window.top.opener.ipjHideModalDialogPanel();
+}
+else{
+ipjSessionWarningCounter=ipjSessionWarningCounterInitial;
+ipjShowModalDialogPanel(ipjSessionWarningModalID);
+ipjSessionWarningCountdown();
+}
+window.focus();
+ipjSessionWarningPageTitle=document.title;
+ipjSessionWarningPageTitleFlashInterval=setInterval("ipjSessionWarningFlashTitle()",1000);
+}
+function ipjSessionWarningFlashTitle(){
+document.title=(document.title==ipjSessionWarningPageTitle?"SESSION EXPIRY":ipjSessionWarningPageTitle);
+}
+function ipjSessionWarningCountdown(){
+document.getElementById("divSessionWarningSeconds").innerHTML=ipjSessionWarningCounter+" seconds";
+if (ipjSessionWarningCounter<=0){
+ipjSessionTerminate();
+document.getElementById("divSessionWarningText").innerHTML="<img src='"+ipSysImageDir+"/caution.gif'/> Your session has expired.";
+document.getElementById("divSessionWarningButton").value="OK";
+document.getElementById("divSessionWarningButton").onclick=ipjSessionWarningReloadPage;
+clearInterval(ipjSessionWarningPageTitleFlashInterval);
+document.title=ipjSessionWarningPageTitle;
+}
+else{
+ipjSessionWarningCounter--;
+ipjSessionWarningTimer = setTimeout("ipjSessionWarningCountdown()", 1000);
+}
+}
+function ipjSessionWarningExtend(){
+clearTimeout(ipjSessionWarningTimer);
+ipjHideModalDialogPanel();
+ipjSessionKeepAlive();
+ipjSessionWarningSet();
+clearInterval(ipjSessionWarningPageTitleFlashInterval);
+document.title=ipjSessionWarningPageTitle;
+}
+function ipjSessionWarningReloadPage(){
+if (window.ipjQuestionnaireLastPageURL){
+document.location.href=unescape(ipjQuestionnaireLastPageURL);
+}
+else{
+document.location.href=document.location.href;
+}
+}
+function ipjSessionWarningModalPageClose(){
+window.top.close();
+}
+var ipjMouseoutLIs=new Array();
+var ipjMouseoutLITimeouts=new Array();
+function ipjInitULMenu(menuElementID, frameElementID){
+var sfEls = document.getElementById(menuElementID).getElementsByTagName("LI");
+var elFrame=document.getElementById(frameElementID);
+for (var i=0; i<sfEls.length; i++){
+sfEls[i].onmouseover=function(){
+this.className+=" sfhover";
+ipjProcessLIMouseouts(frameElementID);
+if (elFrame)
+{
+var guideElement=null;
+if (this.className.indexOf("rootitem")<0)
+guideElement=this.parentElement;
+else
+{
+var items = this.getElementsByTagName("LI");
+if (items && items[0])
+{
+guideElement=items[0].parentElement;
+}
+}
+if (guideElement)
+{
+elFrame.style.top=guideElement.offsetTop;
+elFrame.style.left=guideElement.offsetLeft;
+elFrame.style.width=guideElement.offsetWidth;
+elFrame.style.height=guideElement.offsetHeight;
+}
+}
+}
+sfEls[i].onmouseout=function(){
+ipjMouseoutLIs.push(this);
+var to = setTimeout("ipjProcessLIMouseouts('" + frameElementID + "')",500);
+ipjMouseoutLITimeouts.push(to);
+}
+}
+}
+function ipjProcessLIMouseouts(frameElementID){
+var elFrame=document.getElementById(frameElementID);
+for (var i=0; i<ipjMouseoutLIs.length; i++){
+ipjMouseoutLIs[i].className=ipjMouseoutLIs[i].className.replace(new RegExp(" sfhover\\b"), "");
+}
+for (var i=0; i<ipjMouseoutLITimeouts.length; i++){
+clearTimeout(ipjMouseoutLITimeouts[i]);
+}
+ipjMouseoutLIs=new Array();
+ipjMouseoutLITimeouts=new Array();
+if (elFrame)
+{
+elFrame.style.width=0;
+elFrame.style.height=0;
+}
+}
+var ipjIsAdminBarPinned=true;
+var ipjEnabledIEPositionFix = (ipjIsIE && !(ipjIsIE7 && document.compatMode && document.compatMode=='CSS1Compat'));
+function ipjAdminBarSetByCookie(){
+var pinned = ipjReadCookie("adminbarpinned");
+if (pinned!=null){
+if (pinned=="true") {
+document.getElementById("tblACMAdminToolbar").className = "ipb-atb-pinned";
+ipjIsAdminBarPinned=true;
+}
+else{
+document.getElementById("tblACMAdminToolbar").className = "ipb-atb-unpinned";
+ipjIsAdminBarPinned=false;
+}
+}
+}
+function ipjSwitchPinAdminBar(){
+document.getElementById("tblACMAdminToolbar").className = (ipjIsAdminBarPinned?"ipb-atb-unpinned":"ipb-atb-pinned");
+ipjIsAdminBarPinned=!ipjIsAdminBarPinned;
+ipjCreateCookie("adminbarpinned", (ipjIsAdminBarPinned?"true":"false"), 10);
+}
+function ipjSwitchAboutACMPanel(){
+document.getElementById("divAboutACM").style.display=(document.getElementById("divAboutACM").style.display=="block"?"none":"block");
+}
+function ipjGetAdminBarTop(){
+if (ipjIsAdminBarPinned || !ipjEnabledIEPositionFix) return 0;
+else{
+if (document.compatMode && document.compatMode=='CSS1Compat') return document.documentElement.scrollTop;
+else return document.body.scrollTop;
+}
+}
+function ipjAdminBarIEPositionFix(){
+if (ipjEnabledIEPositionFix==true){
+var fixStyle ="<style>"
+fixStyle+=".ipb-atb-unpinned { position: absolute; top: expression(ipjGetAdminBarTop()); } ";
+if (ipjEnabledIEPositionFix==true && (document.body.currentStyle.backgroundImage=="" || document.body.currentStyle.backgroundImage=="none")) {
+fixStyle+="* html body { background-image: url(falseimage.jpg); background-attachment: fixed}";
+}
+fixStyle+="</style>";
+document.write(fixStyle);
+}
+}
+var ipjFormSubmitted=false;
+var ipjSelectedSubmitButton=null;
+var __ValidatorOnSubmit=null;
+ipjAddEvent(window, "load" , ipjAddUnloadEvent)
+function ipjAddUnloadEvent(){
+if (document.forms.length > 0) ipjAddEvent(window, "unload" , function (){})
+}
+function ipjInitIronPointFormHandling(){
+ipjRegisterSubmitButtons();
+if (typeof(__doPostBack) == 'undefined') {
+return;
+}
+__oldDoPostBack=__doPostBack;
+__doPostBack=ipjSubmitIronPointForm;
+}
+function ipjRegisterSubmitButtons(){
+for (var formIndex=0; formIndex<document.forms.length; formIndex++){
+var innerForm=document.forms[formIndex];
+if (innerForm.name.indexOf("IronPointForm_") > -1) {
+var elements = innerForm.getElementsByTagName("INPUT");
+for (var elementIndex=0; elementIndex<elements.length; elementIndex++){
+var element=elements[elementIndex];
+var type=element.type;
+if (type=="submit" || type=="image") {
+ipjAddEvent(element, "click" , ipjSubmitButtonClicked);
+}
+}
+}
+}
+}
+function ipjSubmitButtonClicked(e){
+if (ipjIsIE) ipjSelectedSubmitButton=e.srcElement;
+else ipjSelectedSubmitButton=e.currentTarget;
+}
+function ipjSubmitIronPointForm(eventTarget, eventArgument)
+{
+if (ipjFormSubmitted==true) return;
+if (typeof(ValidatorOnSubmit) == "function")
+{
+if (__ValidatorOnSubmit==null)
+{
+__ValidatorOnSubmit=ValidatorOnSubmit;
+ValidatorOnSubmit=function()
+{
+var blnReturn=__ValidatorOnSubmit();
+if (blnReturn)
+{
+ipjPrepIronPointForm();
+if (eventTarget==null) eventTarget="";
+if (eventArgument==null) eventArgument="";
+ipjFormSubmitted=true;
+}
+return blnReturn;
+};
+}
+}
+else
+{
+ipjPrepIronPointForm();
+if (eventTarget==null) eventTarget="";
+if (eventArgument==null) eventArgument="";
+ipjFormSubmitted=true;
+}
+if (typeof(__doPostBack) == 'undefined') {
+document.forms['IronPointForm'].submit();
+return;
+}
+if (typeof(__oldDoPostBack) == 'undefined') {
+__doPostBack(eventTarget, eventArgument);
+return;
+}
+setTimeout("__oldDoPostBack('"+eventTarget+"', '"+eventArgument+"');",1);
+}
+function ipjPrepIronPointForm(){
+for (var formIndex=0; formIndex<document.forms.length; formIndex++){
+var innerForm=document.forms[formIndex];
+if (innerForm.name.indexOf("IronPointForm_") > -1) {
+for (var elementIndex=0; elementIndex<innerForm.elements.length; elementIndex++){
+var element=innerForm.elements[elementIndex];
+var tagName=element.tagName.toLowerCase();
+var type=element.type;
+switch (tagName){
+case 'input':
+if (type == "file") {
+var copiedElement=element.cloneNode(true);
+copiedElement.style.display="none";
+element.insertAdjacentElement("afterEnd", copiedElement);
+element.style.display="none";
+theForm.appendChild(element);
+copiedElement.style.display="block";
+}
+if (type == "text" || type == "hidden" || type == "password" ||
+((type == "checkbox" || type == "radio") && element.checked)) {
+ipjAddHiddenFieldToForm(theForm, element.name, element.value);
+}
+break;
+case 'select':
+var fieldValue="";
+for (var i=0; i<element.options.length; i++){
+var selectChild=element.options[i];
+if (selectChild.selected==true) ipjAddHiddenFieldToForm(theForm, element.name, selectChild.value);
+}
+break;
+case 'textarea':
+ipjAddHiddenFieldToForm(theForm, element.name, element.value);
+break;
+}
+}
+}
+}
+if (ipjSelectedSubmitButton!=null){
+if (ipjSelectedSubmitButton.type=="image") {
+ipjAddHiddenFieldToForm(theForm, ipjSelectedSubmitButton.name+".x", 0);
+ipjAddHiddenFieldToForm(theForm, ipjSelectedSubmitButton.name+".y", 0);
+}
+else{
+ipjAddHiddenFieldToForm(theForm, ipjSelectedSubmitButton.name, ipjSelectedSubmitButton.value);
+}
+}
+}
+function ipjAddHiddenFieldToForm(form, name, value){
+var el = document.createElement("input");
+el.type = "hidden";
+el.name=name;
+el.value=value;
+form.appendChild(el);
+}
+function ipjMoveViewstateFromFooter()
+{
+if (typeof theForm != 'undefined' && theForm)
+{
+var footerForm = document.forms['IronPointForm_Footer'];
+if (!footerForm)
+{
+footerForm=document.IronPointForm_Footer;
+}
+if (footerForm && footerForm.__VIEWSTATEFOOTER && theForm.__VIEWSTATE)
+{
+theForm.__VIEWSTATE.value=footerForm.__VIEWSTATEFOOTER.value;
+document.getElementById('__VIEWSTATEFOOTER').parentNode.removeChild(document.getElementById('__VIEWSTATEFOOTER'));
+}
+}
+return;
+}
+function IPHTicker (strContainerDivID, isLeftToRight, intSpeed, delay){
+this.containerDivID=strContainerDivID;
+this.isLeftToRight=isLeftToRight;
+this.speed=intSpeed;
+this.content=document.getElementById(this.containerDivID).innerHTML;
+this.mouseoverBol=0;
+this.width=400;
+this.delay=delay;
+}
+IPHTicker.prototype.initialize=function(){
+var instanceOfTicker=this
+var containerDiv=document.getElementById(this.containerDivID)
+var tickerSupported=false;
+var img = "<img src='"+ ipSysImageDir +"/px.gif' width="+this.width+" height=0>";
+var tickerBodyID = this.containerDivID + 'TICKER_BODY';
+containerDiv.onmouseover=function(){instanceOfTicker.mouseoverBol=1}
+containerDiv.onmouseout=function(){instanceOfTicker.mouseoverBol=0}
+if (ipjIsFF || ipjIsSafari){
+containerDiv.innerHTML = "<TABLE  cellspacing='0' cellpadding='0' width='100%'><TR><TD nowrap='nowrap'>"+img+"<SPAN ID='"+ tickerBodyID + "' width='100%'>&nbsp;</SPAN>"+img+"</TD></TR></TABLE>";
+tickerSupported=true;
+}
+if (ipjIsIE){
+containerDiv.innerHTML = "<DIV nowrap='nowrap' style='width:100%;'>"+img+"<SPAN ID='" + tickerBodyID + "' width='100%'></SPAN>"+img+"</DIV>";
+tickerSupported=true;
+}
+if(tickerSupported){
+containerDiv.scrollLeft=this.isLeftToRight ? containerDiv.scrollWidth-containerDiv.offsetWidth : 0;
+document.getElementById(tickerBodyID).innerHTML=this.content;
+containerDiv.style.display="block";
+this.tick();
+}
+}
+IPHTicker.prototype.tick=function(){
+var containerDiv=document.getElementById(this.containerDivID)
+var instanceOfTicker=this
+if(!this.mouseoverBol) containerDiv.scrollLeft+=this.speed * (this.isLeftToRight ?-1 : 1);
+if(this.isLeftToRight && containerDiv.scrollLeft<=0) containerDiv.scrollLeft=containerDiv.scrollWidth-containerDiv.offsetWidth;
+if(!this.isLeftToRight && containerDiv.scrollLeft>=containerDiv.scrollWidth-containerDiv.offsetWidth) containerDiv.scrollLeft=0;
+setTimeout(function(){instanceOfTicker.tick()}, this.delay)
+}
+function IPVTicker (strContainerDivID, intSpeed, delay, initialDelay){
+this.containerDivID=strContainerDivID;
+this.speed=intSpeed;
+this.content=document.getElementById(this.containerDivID).innerHTML;
+this.mouseoverBol=0;
+this.delay=delay;
+this.initialDelay=initialDelay;
+this.actualHeight = '';
+this.containerHeight = '';
+}
+IPVTicker.prototype.initialize=function(){
+var instanceOfTicker=this
+var containerDiv=document.getElementById(this.containerDivID)
+var tickerBodyDiv = document.getElementById(this.containerDivID + '_TICKER_BODY')
+containerDiv.onmouseover=function(){instanceOfTicker.mouseoverBol=1}
+containerDiv.onmouseout=function(){instanceOfTicker.mouseoverBol=0}
+tickerBodyDiv.style.top=0
+this.actualHeight=tickerBodyDiv.offsetHeight
+if (ipjIsOpera || ipjIsNS7){
+tickerBodyDiv.style.height = containerDiv.offsetHeight + "px"
+tickerBodyDiv.style.overflow = "scroll"
+return
+}
+setTimeout(function(){instanceOfTicker.tick()}, this.initialDelay)
+}
+IPVTicker.prototype.tick=function(){
+var containerDiv=document.getElementById(this.containerDivID)
+var instanceOfTicker=this
+var tickerBodyDiv = document.getElementById(this.containerDivID + '_TICKER_BODY')
+if(!this.mouseoverBol){
+if (parseInt(tickerBodyDiv.style.top)>(this.actualHeight*(-1)+8))
+tickerBodyDiv.style.top=parseInt(tickerBodyDiv.style.top)-this.speed+"px"
+else
+tickerBodyDiv.style.top=parseInt(containerDiv.offsetHeight)+8+"px"
+}
+setTimeout(function(){instanceOfTicker.tick()}, this.delay)
+}

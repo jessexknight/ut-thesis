@@ -1,0 +1,19 @@
+#sidebar .ipf-sectionmenu, #sidebar .ipf-sectionmenu ul {padding: 0;margin: 0;list-style: none;float:left; margin-bottom: 2em;}
+	#sidebar .ipf-sectionmenu li {float: left; position: relative;}
+	#sidebar .ipf-sectionmenu li ul {position:absolute;left: -999em;margin-left:215px; top: -1px; width: 215px; z-index: 12039;}
+	#sidebar .ipf-sectionmenu li ul ul {left: -999em;}
+	#sidebar .ipf-sectionmenu li a {width: 205px;display:block;background: #dde4e6; border-bottom: 1px solid #bfbfbf; color: black; 
+		text-decoration: none; padding: 7px 5px; font-size: 1.1em;}
+	#sidebar .ipf-sectionmenu li a:hover {background-color: #c4cacc;}
+	#sidebar .ipf-sectionmenu li li a {background-color: #c4cacc; border-bottom: none; border-top: 1px solid #bfbfbf;}
+	#sidebar .ipf-sectionmenu li li a:hover {background-color: #b8bdbf;}
+	#sidebar .ipf-sectionmenu li.ipf-parent a {}
+	#sidebar .ipf-sectionmenu li.ipf-parent a, #sidebar .ipf-sectionmenu li.ipf-parent li.ipf-parent a{background-image: url(sgs/nav-arrow.gif); background-repeat: no-repeat; background-position: 100% 50%;}
+	#sidebar .ipf-sectionmenu li.ipf-parent li a, #sidebar .ipf-sectionmenu li.ipf-parent li.ipf-parent li a{background-image:none;}
+	#sidebar .ipf-sectionmenu li.ipf-parent li.ipf-parent a{background-image: url(sgs/nav-arrow.gif); background-repeat: no-repeat; background-position: 100% 50%;}
+	#sidebar .ipf-sectionmenu li:hover ul ul, #sidebar .ipf-sectionmenu li:hover ul ul ul, #sidebar .ipf-sectionmenu li.sfhover ul ul, #sidebar .ipf-sectionmenu li.sfhover ul ul ul {left: -999em;}
+	#sidebar .ipf-sectionmenu li:hover ul, #sidebar .ipf-sectionmenu li li:hover ul, #sidebar .ipf-sectionmenu li li li:hover ul, #sidebar .ipf-sectionmenu li.sfhover ul, #sidebar .ipf-sectionmenu li li.sfhover ul, #sidebar .ipf-sectionmenu li li li.sfhover ul {left: auto;}
+
+
+/* fix sticky flyouts in IE7 
+#sidebar .ipf-sectionmenu li:hover, #sidebar .ipf-sectionmenu li.hover {position:static;}*/

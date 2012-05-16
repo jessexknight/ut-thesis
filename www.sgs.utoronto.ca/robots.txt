@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /*.asp$
+Disallow: /prospective/
+Disallow: /SGSCalendar/
+Disallow: /current/
+Disallow: /elws/

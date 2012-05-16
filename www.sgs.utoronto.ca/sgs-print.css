@@ -1,0 +1,51 @@
+/* Print-only CSS Document */
+
+/* reset floats */
+* {float: none !important;}
+
+/* remove unnecessary stuFF */
+#sidebar,
+#nav,
+#header ul.mininav,
+#uoftlink,
+#flashContent,
+#footer
+{display: none;}
+
+/* remove backgrounds */
+body, #nougat, #mainContent, #header {background: white;}
+
+/* fix widths/margins */
+#header, #nav, #nougat, #content, #mainContent {width: auto;}
+#mainContent {margin: 0 5%; padding: 0;}
+
+/* extra styling */
+body {font-size: 11pt;}
+#nougat {border: none;}
+#content {margin: 0;}
+#header {border-bottom: 1px solid black; height: auto;}
+#locationline {font-size: 10pt;}
+#content {font-size: 11pt;}
+#subpage #content h1 {font-size: 20pt;}
+#subpage #content h2 {font-size: 17pt; color: black;}
+#subpage #content h3 {font-size: 14pt; color: black;}
+#subpage #content h4 {font-size: 12pt; color: black;}
+#subpage #content h5 {font-size: 12pt; color: black;}
+
+/* fix header uhh.. headings */
+#sgslink {position: relative; top: 0; left: 0;}
+#sgslink a {display: inline; text-indent: 0; height: auto; width: auto; text-decoration: none; font-size: 21pt;}
+
+
+/*
+#header {width: 759px; margin: 0 auto;position: relative; background: url(../images/sgs/header-bg.gif) #ffffff 12px 10px no-repeat; height: 98px;}
+	#header ul.mininav {position: absolute; top: 10px; right: 12px;}
+		#header ul.mininav a {color: #002f63; text-decoration: none;}
+		#header ul.mininav a:hover {text-decoration: underline;}
+	#sgslink, #uoftlink {position: absolute;}
+		#sgslink a, #uoftlink a {display: block; text-indent: -9999px;}
+		#uoftlink {top: 30px; left: 50px;}
+			#uoftlink a {height: 18px; width: 295px;}
+		#sgslink {top: 50px; left: 50px;}
+			#sgslink a {height: 18px; width: 290px;}		
+*/

@@ -1,0 +1,658 @@
+/****************************************
+ PAGE TYPE - GENERAL  
+
+.ipf-PageChildLinks {font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px;}
+	.ipf-PageChildLinks a, .ipf-PageChildLinks a:visited {color: #7AA54B}
+	.ipf-PageChildLinks a:hover {color: #4C7B18}
+*/
+.ipf-PageQuickLinks, 
+.ipf-PageQuickLinks:link, 
+.ipf-PageQuickLinks:visited, 
+.ipf-PageQuickLinks:active {
+	color: #495979;	font: bold 12px Verdana, Arial, Helvetica, sans-serif;}
+.ipf-WorkflowStatusText {color: #868893;font: 11px Tahoma, Arial, Verdana, Helvetica, sans-serif;}
+.ipf-PageNews {font: 11px Tahoma, Arial, Verdana, Helvetica, sans-serif;}
+
+
+
+/************************************
+SEARCH
+*/
+
+/*#_ctl1_txtSearchText ID applied to search field{}
+#_ctl1_btnSearch ID applied to search button {}*/
+
+.ipf-PageSearch /*not sure where this is applied*/ {font: 11px Verdana, Arial, Helvetica, sans-serif;}
+.ipf-PageSearch-Button /*class applied to search button*/{
+	background: #eeeeee;
+	border: solid 2px #444444;
+	cursor: pointer;
+	font: bold 11px Verdana, Arial, Helvetica, sans-serif;
+	margin-right: 1px;
+	padding: 1px 3px;
+	/*text-transform: uppercase;*/}
+
+.ipf-PageSearch-TextField /*class applied to search field*/ {font: 11px Verdana, Arial, Helvetica, sans-serif;}
+
+
+/*SEARCH RESULTS*/
+
+.ipf-PageSearchResult-Title 
+	{display: block;margin: 20px 0 -15px 0;FONT-SIZE: 12px; FONT-FAMILY: Verdana, Arial, sans-serif; }
+.ipf-PageSearchResult-Text 
+	{color: #000000;	FONT-SIZE: 12px; FONT-FAMILY: Verdana, Arial, sans-serif; TEXT-DECORATION: none}
+.ipf-PageSearchResult-URLText 
+	{FONT-SIZE: 10px; COLOR: #666666; FONT-FAMILY: Verdana, Arial, sans-serif; TEXT-DECORATION: none;}
+.ipb-webgrid-pager 
+	{font: 10px Tahoma, Arial, Verdana, Helvetica, sans-serif;color: #666666;}
+.ipb-webgrid-rowc-nosort 
+	{FONT-WEIGHT: bold; FONT-SIZE: 18px; COLOR: #495979; FONT-FAMILY: Verdana, Arial, sans-serif}
+/****************************************
+ PAGE TYPE - LOGIN (LoginView.aspx)
+*/
+
+.ipf-PageLogin {font: 11px Verdana, Arial, Helvetica, sans-serif;}
+
+.ipf-PageLogin-Button {
+	background: #F1F1F1;
+	border: solid 2px #444444;
+	cursor: pointer;
+	font: bold 10px Verdana, Arial, Helvetica, sans-serif;
+	margin-right: 1px;
+	padding: 1px 3px;
+	text-transform: uppercase;
+}
+
+.ipf-PageLogin-TextField {font: 11px Verdana, Arial, Helvetica, sans-serif;}
+
+
+div#ipf-login-contain {
+	/* styles the div containing the login box */
+	background: #E3E3E3;
+	padding: 8px;
+	width: 375px;
+}
+
+table#ipf-login {
+  /* styles the table that contains the login */
+	color: #000000;
+	font: 11px Verdana, Arial, Helvetica, sans-serif;
+	width: 100%;
+}
+
+table#ipf-login td {
+  /* cell style for login tabl */
+	color: #000000;
+	font: 11px Verdana, Arial, Helvetica, sans-serif;
+}
+
+table.ipf-login-head {
+  /* header of login */
+	background: #555555;
+	border-bottom: solid 3px #E3E3E3;
+	color: #FFFFFF;
+	font: bold 11px Verdana, Arial, Helvetica, sans-serif;
+	padding: 0;
+	text-transform: uppercase;
+	width: 100%;
+}
+
+.ipf-login-head td 
+{
+	/* cell in login header */
+	color: #FFFFFF;
+	font: bold 11px Verdana, Arial, Helvetica, sans-serif;
+	padding: 4px 5px;
+}
+
+.ipf-login-rowa td {
+	/* first row of login table (user name) */
+	background: #FFFFFF;
+	border-bottom: solid 1px #E3E3E3;
+}
+
+.ipf-login-rowb td {
+	/* second row of login table (pasword) */
+	background: #FFFFFF;
+	border-bottom: solid 3px #E3E3E3;
+}
+
+#ipf-login-rowc td {
+	/* third row of login table (login button and remember password) */
+	background: #878787;
+	border: solid 4px #878787;
+	border-width: 4px 0;
+	padding: 3px 6px;
+}
+
+#ipf-login-rowd td {
+	/* fourth row of login table (join form and forgot password) */
+	background: #E3E3E3;
+	border-top: solid 4px #E3E3E3;
+	font: 11px Verdana, Arial, Helvetica, sans-serif;
+}
+
+.ipf-login-txtfield {
+	/* styling for textbox fields */
+	color: #000000;
+	font: 11px Verdana, Arial, Helvetica, sans-serif;
+	padding: 2px;
+	width: 225px;
+}
+
+.ipf-login-mainbutton {
+	/* styling for the main login button */
+	background: #DDDDDD;
+	border: solid 2px #666666;
+	font: bold 10px Verdana, Arial, Helvetica, sans-serif;
+	margin-right: 2px;
+	padding: 1px 2px;
+}
+
+.ipf-login-forgetpassbutton 
+{
+	/* styling for the forget password button */
+	background: #F1F1F1;
+	border: solid 2px #444444;
+	cursor: pointer;
+	font: bold 10px Verdana, Arial, Helvetica, sans-serif;
+	margin-right: 1px;
+	padding: 1px 3px;
+	text-transform: uppercase;
+}
+
+.ipf-login-left {
+	/* styling for the left column in the main table */
+	color: #767676;
+	font: 11px Verdana, Arial, Helvetica, sans-serif;
+	text-align: right;
+	width: 75px;
+}
+
+#ipf-login-remember-span {
+	/* styling for remember username */
+	color: #EEEEEE;
+	font: 11px Verdana, Arial, Helvetica, sans-serif;
+	margin-left: 14px;
+}
+
+.ipf-login-failed-span {
+  /* style for login failed message */
+	color: #FF0000;
+	font: bold 16px Verdana, Arial, Helvetica, sans-serif;
+	padding: 2px;
+}
+
+table#ipf-login-forgotpassword-head {
+	/* header table styling */
+	background: #555555;
+	border-bottom: solid 1px #FFFFFF;
+	color: #FFFFFF;
+	font: bold 11px Verdana, Arial, Helvetica, sans-serif;
+	text-transform: uppercase;
+	width: 100%;
+}
+
+table#ipf-login-forgotpassword-head td {
+	/* header table cell styling */
+	color: #FFFFFF;
+	font: bold 11px Verdana, Arial, Helvetica, sans-serif;
+	padding: 4px 5px;
+}
+
+table#ipf-login-forgotpassword-main {
+	/* table styling for forgot password */
+	color: #000000;
+	font: 11px Verdana, Arial, Helvetica, sans-serif;
+}
+
+table#ipf-login-forgotpassword-main td {
+	/* cell styling for forgot password */
+	color: #000000;
+	font: 11px Verdana, Arial, Helvetica, sans-serif;
+}
+
+a.ipf-login-link:link, a.ipf-login-link:visited, a.ipf-login-link:active  {
+	/* styling for links used in login */
+	color: #CC0000;
+	font: 11px Verdana, Arial, Helvetica, sans-serif;
+	text-decoration: underline;
+}
+
+
+/* PAGE TYPE - SITE MAP */
+
+#ipf-sitemap-contain {width: 100%;}
+#ipf-sitemap-table {width: 100%;}
+/*.ipf-sitemap-tr-level1 {}
+.ipf-sitemap-tr-level2 {}
+.ipf-sitemap-tr-level3 {}
+.ipf-sitemap-tr-level4 {}
+.ipf-sitema-tr-level5 {}*/
+
+.ipf-sitemap-td-level1 {
+	width: 500px;
+	font-weight: bold}
+	
+.ipf-sitemap-td-level1 a
+	{border-bottom: solid 1px #586989;
+	display: block;
+	padding: 4px 2px 5px 4px;
+	background-color: #EAEBED;
+	margin: 5px 0 0 0;
+	}
+	
+.ipf-sitemap-td-level2 {padding-left: 20px;	padding-top:4px;}
+.ipf-sitemap-td-level3 {padding-left: 40px;	padding-top:4px;}
+.ipf-sitemap-td-level4 {padding-left: 60px;	padding-top:4px;}
+.ipf-sitemap-td-level5 {padding-left: 80px;	padding-top:4px;}
+.ipf-sitemap-td-level6 {padding-left: 100px; padding-top:4px;}
+.ipf-sitemap-td-level7 {padding-left: 120px; padding-top:4px;}
+.ipf-sitemap-td-level8 {padding-left: 140px; padding-top:4px;}
+.ipf-sitemap-td-level9 {padding-left: 160px; padding-top:4px;}
+.ipf-sitemap-td-level10 {padding-left: 180px; padding-top:4px;}
+
+.ipf-sitemap-td-level1 a:link, .ipf-sitemap-td-level1 a:visited, 
+.ipf-sitemap-td-level2 a:link, .ipf-sitemap-td-level2 a:visited,
+.ipf-sitemap-td-level3 a:link, .ipf-sitemap-td-level3 a:visited,
+.ipf-sitemap-td-level4 a:link, .ipf-sitemap-td-level4 a:visited,
+.ipf-sitemap-td-level5 a:link, .ipf-sitemap-td-level5 a:visited,
+.ipf-sitemap-td-level6 a:link, .ipf-sitemap-td-level6 a:visited,
+.ipf-sitemap-td-level7 a:link, .ipf-sitemap-td-level7 a:visited,
+.ipf-sitemap-td-level8 a:link, .ipf-sitemap-td-level8 a:visited,
+.ipf-sitemap-td-level9 a:link, .ipf-sitemap-td-level9 a:visited,
+.ipf-sitemap-td-level10 a:link, .ipf-sitemap-td-level10 a:visited {
+	text-decoration: underline;}
+	
+.ipf-sitemap-td-level1 a:hover,
+.ipf-sitemap-td-level2 a:hover,
+.ipf-sitemap-td-level3 a:hover,
+.ipf-sitemap-td-level4 a:hover,
+.ipf-sitemap-td-level5 a:hover,
+.ipf-sitemap-td-level6 a:hover,
+.ipf-sitemap-td-level7 a:hover,
+.ipf-sitemap-td-level8 a:hover,
+.ipf-sitemap-td-level9 a:hover,
+.ipf-sitemap-td-level10 a:hover
+	{text-decoration: underline;}
+
+/* QItems */
+#ipbf-tblStdResponseControl {
+	border: 1px solid #FFFFFF;
+	color: #000000;
+	width: 100%;
+}
+.ipbf-qitem-preview-table {
+	border: 0;
+	color: #F0F0F0 ;
+	font: bold 12px Verdana, Arial, Helvetica, sans-serif;
+	width: 100%;
+	padding: 0px;
+	border-top: 1px solid #999999;
+}
+
+.ipbf-qitem-preview-table td, th { font-size: 11px;}
+
+/************
+Added by Wesley Hodgson, to ensure text is visible on white background
+*************/
+.ipbf-qitem-preview-table {color: #000;}
+
+
+.ipbf-qitem-rowa, .ipbf-qitem-rowb {
+	background: #ffffff;
+	border-top: solid 1px #999999;
+	font: bold 12px Verdana, Arial, Helvetica, sans-serif;
+	}
+
+.ipbf-qitem-rowa td, .ipbf-qitem-rowb td{
+	border-bottom: 1px solid #999999;
+	padding: 5px 0 5px 0;
+}
+
+.ipbf-qitem-category {
+	background: #ffffff;
+	border-top: solid 1px #999999;
+	border-bottom: solid 1px #999999;
+	padding: 5px 0 5px 0;
+	font: normal 12px Verdana, Arial, Helvetica, sans-serif;
+}
+
+.ipbf-qitem-category {
+	background: #F1F1F1;
+	border-top: solid 1px #FFFFFF;
+	color: #000000;
+	font: bold 14px Verdana, Arial, Helvetica, sans-serif;
+	height: 30px;
+	padding-bottom: 2px;
+	text-transform: uppercase;
+	vertical-align: middle;
+  	text-align: center;}
+
+.ipbf-qitem-column-left {
+	color: #666666;
+	padding: 0;
+	text-align: left;
+	vertical-align: top;
+	width: 200px;
+	font-weight: bold;}
+
+ipbf-qitem-column-left img {margin: 0 0 0 20px;}
+
+.ipbf-qitem-prev-PageNo {font: bold 12px Verdana, Arial, Helvetica, sans-serif;}
+
+.ipbf-qitem-button { 
+	background-color: transparent; 
+	border: none; 
+	width: 87px; 
+	height: 22px; 
+	font-weight: bold; 
+	color: #FFFFFF; 
+	background-image: url("modalbutton.gif"); 
+	margin: 3px 0 3px 0;
+}
+
+.ipbf-field {
+	color: #000000;
+	font: 11px Verdana, Arial, Helvetica, sans-serif;
+	padding: 2px;
+	width: 300px;
+}
+
+.ipbf-errormsg {
+	color: #CC0000;
+	font:  11px Verdana, Arial, Helvetica, sans-serif;
+}
+
+.ipbf-qitem-prompt {
+	font: bold 11px Verdana, Arial, Helvetica, sans-serif;
+}
+
+.ipbf-qitem-prompt td {
+	border: 0;
+	vertical-align: top;
+	padding: 0px;
+}
+/* Used for input responses. Style table, row and cell */
+.ipbf-input {font:  11px Verdana, Arial, Helvetica, sans-serif;}
+/* Used for select responses. */
+.ipbf-select {font:  bold 9px Verdana, Arial, Helvetica, sans-serif;width: 400px;}
+/************
+Added by Gabriel Slamnoiu, in order to correct survey's font size for several elements
+*************/
+.ipbf-Checkbox {font:  11px Verdana, Arial, Helvetica, sans-serif;}
+
+.ipbf-TextInput-email {
+	color: #000000;
+	font: 11px Verdana, Arial, Helvetica, sans-serif;
+	padding: 2px;
+	width: 200px;
+}
+.ipbf-TextInput-Telephone {
+	color: #000000;
+	font: 11px Verdana, Arial, Helvetica, sans-serif;
+	padding: 2px;
+	width: 200px;
+}
+.ipbf-TextInput-SingleLine {
+	color: #000000;
+	font: 11px Verdana, Arial, Helvetica, sans-serif;
+	padding: 2px;
+	width: 400px;
+}
+.ipbf-TextInput-Attachment {
+	color: #000000;
+	font: 11px Verdana, Arial, Helvetica, sans-serif;
+	padding: 2px;
+	width: 150px;
+}
+.ipbf-TextInput-Area {
+	color: #000000;
+	font: 11px Verdana, Arial, Helvetica, sans-serif;
+	padding: 2px;
+	width: 280px;
+	height: 100px;
+}
+
+
+/******** CALENDAR ************/
+
+/*#_ctl1_pnlGraphical all-encompassing div graphical calendar is stored in{}*/
+/*#_ctl1_pnlNonGraphical /*all-encompassing div non-graphical calendar is stored in{}*/
+/*#objCalendar Table Graphical Calendar is stored in{}*/
+
+.ipf-calendar-alldiv {width: 100%;}
+  
+.ipf-calendar-nongraphical-hdrdiv /*div that holds non-graphical calendar*/{
+  	width: 100%;
+	border: 1px solid #999999;
+	padding: 10px 3px;
+	margin: 5px 0px 5px 0px;
+}
+
+table.ipf-calendar-nongraphical-hdryear tr td /*ID of table that holds year information*/{font: 12px Verdana, Arial, Helvetica, sans-serif;}
+
+.ipf-calendar-nongraphical-hdryear-tdleft /*td that holds title 'year'*/{font-weight: bold !important;width: 50px !important;}
+
+/*.ipf-calendar-nongraphical-hdryear-tdright     td that holds year link*/
+
+table.ipf-calendar-nongraphical-hdrmonth tr td {font: 12px Verdana, Arial, Helvetica, sans-serif;}
+
+.ipf-calendar-nongraphical-hdrmonth-tdleft /*where title 'month' is stored*/{
+	font-weight: bold !important;width: 50px !important;}
+
+.ipf-calendar-nongraphical-hdrmonth-tdright /*where list of months are stored*/ {font-style: italic !important;}
+
+.ipf-calendar-nongraphical-eventdiv { width: 100%;margin: 5px 0px 5px 0px;}
+
+table.ipf-calendar-nongraphical-event-monthhdr { width: 100%; border-bottom: 2px solid #000; margin: 0px 0px 0px 0px;}
+
+.ipf-calendar-nongraphical-event-monthhdr-tdleft {font: bold 11px  Verdana, Arial, Helvetica, sans-serif;}
+
+.ipf-calendar-nongraphical-event-monthhdr-tdright {font: 11px Verdana, Arial, Helvetica, sans-serif; text-align: right;}
+
+table.ipf-calendar-nongraphical-hdrmonth td /*table that holds non-graphical calendar*/{font: 16px Verdana, Arial, Helvetica, sans-serif;}
+
+table.ipf-calendar-nongraphical-event {font-size: 1em; width: 100%; border: none;  font: 11px italic Verdana, Arial, Helvetica, sans-serif;}
+
+.ipf-calendar-nongraphical-event-tdleft {font-size: 1em; width: 100px !important;font-weight: bold !important;}
+
+.ipf-calendar-nongraphical-event-tdright {font-size: 1em;}
+
+/*#ipf-calendar-html2 div after calendar{}*/
+
+
+/***************************************
+DIGITAL ASSETS GALLERY STYLING */
+/*
+#_ctl1_assetsTable table that holds all digital asset gallery
+#_ctl1_assetsTable td {}
+#_ctl1_assetsTable td span each asset image and link is then stored in a span in a td
+	the item description is also stored in another span
+#_ctl1_assetsTable td table td for tables that act as spacers between each asset 
+
+.ipf-photogallery-text class applied to all paragraphs in gallery; paragraph also surrounds tables */
+
+/*#tblThumbs table that holds thumbnails along the top*/
+#_ctl1_ctlButtonLeft /*ID of the left arrow input*/{}
+#_ctl1_ctlButtonRight /*ID of the right arrow input*/{}
+#_ctl1_ctlImage /*Image shown at bottom*/ {}
+#_ctl1_ctlLabelImageCaption /*span holding main image text*/
+	/*also has .ipf-photogallery-text applied*/ {}
+#_ctl1_ctlButtonSlideShow /*Slideshow button*/{}
+#btnClose /*ID applied to 'close' button in Slideshow; also has .ipf-photogallery-buttons applied*/ {}
+	.ipf-photogallery-buttons /*photogallery button class*/{}
+	
+#speedMenu /*dropdown menu to change slideshow speed*/{}
+
+#pnumBgDiv, #pnumDiv, #pem {} /*ID's on Divs -- unknown purpose*/
+#slideDiv, #imgDiv, #imgp {} /*nested DIVs holding featured slide*/
+
+
+
+/************************************NEW GRAPHICAL CALENDAR STYLES*/
+
+/**//**//**//**//**//**//**//**//**/  
+/**//**//**//*ADD NEW EVENT*//**//**/
+/**//**//**//**//**//**//**//**//**/
+	.ipf-calendar-addevent-columnleft /*ipb-column-left*/ {width: 120px; font-size: 12px;}
+	.ipf-calendar-header /*ipb-headfull*/ {margin: 5px 0 10px 0;}
+		.ipf-calendar-header td {font-weight: bold;}
+	.ipb-calendar-full /*ipb-all-full*/{width: 100%;}
+	.ipf-calendar-rowa td/*ipf-rowa*/{}
+	.ipf-calendar-rowb td/*ipf-rowb*/{}
+		.ipf-calendar-rowa td table td/*ipf-rowa*/{border-bottom: 0;}
+		.ipf-calendar-rowb td table td/*ipf-rowb*/{border-bottom: 0;}
+	.ipf-calendar-addevent-div {width: 500px}
+		.ipf-calendar-addevent-div table {margin: 0 0 10px 0; width: 100%;}
+			.ipf-calendar-addevent-div table td {font-size: 11px}
+			.ipf-calendar-addevent-div table td table {margin: 0; width: 100%;}
+		.ipf-calendar-addevent-div label {font-size: 11px;}
+		input, option, select {font-size: 11px !Important;}
+ 
+
+
+	
+		/*ipb-all-744 -- deleted from code*/
+ 
+ 
+
+/**//**//**//**//**//**//**//**//**/  
+/**//**//**//*MONTH VIEW*//**//**/
+/**//**//**//**//**//**//**//**//**/
+
+	.ipf-graphicalcalendar-monthview {}
+	
+	.ipf-graphicalcalendar-monthview .ipf-calendar-graphical-calendar {}
+	.ipf-graphicalcalendar-monthview .ipf-calendar-graphical-table {empty-cells: show; border-left: 1px solid #000000; border-right: 1px solid #000000; border-top: 1px solid #000000; }
+		.ipf-graphicalcalendar-monthview .ipf-calendar-graphical-table td {empty-cells: show; border-bottom:1px solid #000000 }
+	
+	.ipf-graphicalcalendar-monthview .ipf-calendar-graphical-header {background-color: #3C5771; }
+		.ipf-graphicalcalendar-monthview .ipf-calendar-graphical-header td {font-weight: bold;color: #ffffff; border: 0 !Important; padding: 3px; border: 0;}
+		.ipf-graphicalcalendar-monthview .ipf-calendar-graphical-header td a, 
+		.ipf-graphicalcalendar-monthview .ipf-calendar-graphical-header td a:visited  {font-weight: normal; color: #ffffff;}
+	
+	.ipf-graphicalcalendar-monthview .ipf-selected-date {background-color: #ececec;}
+	
+	.ipf-graphicalcalendar-monthview .ipf-calendar-graphical-date {font-size: 10px; border-right: 1px solid #000000; }
+		.ipf-graphicalcalendar-monthview .ipf-calendar-graphical-date a {display: block; position: relative; top: 0;}
+
+	.ipf-graphicalcalendar-monthview .ipf-calendar-graphical-selecteddate {font-size: 10px; border-right: 1px solid #000000; background: #cccccc; }
+		.ipf-graphicalcalendar-monthview .ipf-calendar-graphical-selecteddate a {display: block; position: relative; top: 0;}
+		
+	.ipf-graphicalcalendar-monthview .ipf-calendar-graphical-day /*class applied to td for day of the week*/ {/*text-align: center;*/}
+	
+	.ipf-graphicalcalendar-monthview .ipf-calendar-graphical-alleventstitle /*a around event title*/{}
+
+/**//**//**//**//**//**//**//**//**/  
+/**//**//**//*DAY VIEW*//**//**/
+
+/**//**//**//**//**//**//**//**//**/
+
+	.ipf-graphicalcalendar-dayview {width: 400px; border: 1px solid #000000; border-bottom: 0;}
+	.ipf-graphicalcalendar-dayview .ipf-graphical-calendar-table div {margin: 0 0 5px 0;}
+	
+	.ipf-graphicalcalendar-dayview .ipf-calendar-graphical-header {background-color: #3C5771; border-bottom: 1px solid #000000;}
+		.ipf-graphicalcalendar-dayview .ipf-calendar-graphical-header td {font-weight: bold; color: #ffffff; border: 0; padding: 3px; font-size: 14px;}
+		.ipf-graphicalcalendar-dayview .ipf-calendar-graphical-header td a, 
+		.ipf-graphicalcalendar-dayview .ipf-calendar-graphical-header td a:visited  {font-weight: normal; color: #ffffff;}
+		
+	.ipf-graphicalcalendar-dayview .ipf-calendar-graphical-time /*class applied to td around time*/ 
+		{color: #3C5771; font-size: 24px; text-align: center; padding: 2px 5px; border-right: 1px solid #000000; border-bottom: 1px solid #000000;}
+
+	.ipf-graphicalcalendar-dayview .ipf-calendar-graphical-rowb {background-color: #EFEFEF; }
+	
+	.ipf-graphical-calendar-onhour, .ipf-graphical-calendar-onhalfhour {width: 100%; padding: 5px; font-size: 11px}
+	.ipf-graphical-calendar-onhour {border-bottom: 1px solid #000000 !Important;}
+	.ipf-graphical-calendar-onhalfhour {border-bottom: 1px solid #000000 !Important;}
+	
+	.ipf-graphicalcalendar-dayview .ipf-calendar-graphical-calendar-eventtime {}
+	.ipf-graphicalcalendar-dayview .ipf-calendar-graphical-calendar-eventtitle {font-weight: bold;}
+
+
+/**//**//**//**//**//**//**//**//**/  
+/**//**//**//*WEEK VIEW ONE*//**//**/
+/**//**//**//**//**//**//**//**//**/
+
+
+.ipf-graphicalcalendar-weekview01 /*one column*/{ width: 400px;}	
+
+	.ipf-graphicalcalendar-weekview01 .ipf-graphical-calendar-table {border-right: 1px solid #000000; border-left: 1px solid #000000;}
+	
+		.ipf-graphicalcalendar-weekview01 .ipf-calendar-graphical-header {background-color: #3C5771; border-top: 1px solid #000000; border-bottom: 1px solid #000000; padding: 2px;}
+		.ipf-graphicalcalendar-weekview01 .ipf-calendar-graphical-header {font-weight: bold; color: #ffffff; font-size: 14px; }
+			.ipf-graphicalcalendar-weekview01 .ipf-calendar-graphical-header td {padding: 3px; } 
+		.ipf-graphicalcalendar-weekview01 .ipf-calendar-graphical-header a, 
+		.ipf-graphicalcalendar-weekview01 .ipf-calendar-graphical-header a:visited  {font-weight: normal; color: #ffffff !Important;}
+
+	.ipf-graphicalcalendar-weekview01 .ipf-calendar-graphical-dayheader {background-color: #efefef; padding: 3px; border-bottom: 1px solid #999999; font-size: 11px;}
+	.ipf-graphicalcalendar-weekview01 .ipf-calendar-graphical-day {border-bottom: 1px solid #000000; font-size: 11px; padding: 5px;}
+		.ipf-graphicalcalendar-weekview01 .ipf-calendar-graphical-day {height: 50px;} 
+		.ipf-graphicalcalendar-weekview01 .ipf-calendar-graphical-day div {margin: 0 0 5px 0;}
+	
+	.ipf-graphicalcalendar-weekview01 .ipf-calendar-graphical-calendar-eventtitle {font-weight: bold;}
+
+
+
+/**//**//**//**//**//**//**//**//**/  
+/**//**//**//*WEEK VIEW TWO*//**//**/
+/**//**//**//**//**//**//**//**//**/
+
+.ipf-graphicalcalendar-weekview02 /*two column*/{width: 400px; }
+	
+	.ipf-graphicalcalendar-weekview02 .ipf-graphical-calendar-table {border-right: 1px solid #000000; }
+	
+		.ipf-graphicalcalendar-weekview02 .ipf-calendar-graphical-header {background-color: #3C5771; border-top: 1px solid #000000; border-bottom: 1px solid #000000; padding: 2px;}
+		.ipf-graphicalcalendar-weekview02 .ipf-calendar-graphical-header {font-weight: bold; color: #ffffff; font-size: 14px; }
+			.ipf-graphicalcalendar-weekview02 .ipf-calendar-graphical-header td {padding: 3px; } 
+		.ipf-graphicalcalendar-weekview02 .ipf-calendar-graphical-header a, 
+		.ipf-graphicalcalendar-weekview02 .ipf-calendar-graphical-header a:visited  {font-weight: normal; color: #ffffff !Important;}
+
+
+	.ipf-graphicalcalendar-weekview02 .ipf-calendar-graphical-dayheader {background-color: #efefef; padding: 3px; border-bottom: 1px solid #999999; border-left: 1px solid #000000; font-size: 11px;}
+	.ipf-graphicalcalendar-weekview02 .ipf-calendar-graphical-day, .ipf-graphicalcalendar-weekview02 .ipf-calendar-graphical-weekend {border-bottom: 1px solid #000000; border-left: 1px solid #000000; font-size: 11px; padding: 5px;}
+		.ipf-graphicalcalendar-weekview02 .ipf-calendar-graphical-day {height: 150px;} 
+		.ipf-graphicalcalendar-weekview02 .ipf-calendar-graphical-weekend {height: 75px;}
+		.ipf-graphicalcalendar-weekview02 .ipf-calendar-graphical-day div, .ipf-graphicalcalendar-weekview02 .ipf-calendar-graphical-weekend div {margin: 0 0 5px 0;}
+	
+	.ipf-graphicalcalendar-weekview02 .ipf-calendar-graphical-calendar-eventtitle {font-weight: bold;}
+
+
+
+/************************************ CONFERENCE PAGETYPE STYLES*/
+/************************************ CONFERENCE PAGETYPE STYLES*/
+/************************************ CONFERENCE PAGETYPE STYLES*/
+
+.ipf-ci-searchtable{width:100%;border-collapse:collapse;background:#f1f5f8}
+.ipf-ci-searchtable th{border-bottom:1px solid #FFFFFF;text-align:right;padding:5px 8px;font-weight:bold;vertical-align:top;width:150px}
+.ipf-ci-searchtable td{border-bottom:1px solid #FFFFFF;padding:5px 8px;}
+.ipf-ci-querycheckbox{width:25%;float:left;margin:0 0 5px 0;}
+
+.ipf-ci-searchresultsheader{margin:0 0 15px 0;color:#8e98a1}
+.ipf-ci-searchresults-summary{margin:0 0 20px 0;}
+.ipf-ci-searchresults-title{font-weight:bold;color:#670201;text-transform:uppercase}
+.ipf-ci-searchresults-title a, .ipf-ci-searchresults-title a:link{color:#670201}
+.ipf-ci-searchresults-date{text-transform:none;color:#216da1;font-weight:bold;font-size:11px}
+.ipf-ci-searchresults-location{color:#8e98a1;font-size:11px}
+
+.ipf-ci-searchresults-index{text-align:center;}
+.ipf-ci-searchresults-index-page{padding:0 10px}
+.ipf-ci-searchresults-index-page-current{font-weight:bold;padding:0 10px}
+.ipf-ci-searchresults-index-nav{padding:0 20px;color:#a8b1b8}
+
+/* RSS Feed Pagetype */
+#ipf-rss-container li{margin:0 0 10px 0}
+.ipf-subscribetorss img{border:0;vertical-align:middle;}
+
+/* Modal dialog css */
+.ipf-ci-modaltypical-table{width:420px;border-collapse:collapse;background:#d4d0c8}
+.ipf-ci-modaltypical-textfield{width:100%;}
+.ipf-ci-modaltypical-textarea{width:100%;}
+.ipf-ci-modaltypical-buttoncolumn{width:75px;text-align:right}
+.ipf-ci-modaltypical-acceptcolumn{text-align:right;}
+.ipf-ci-modaltypical-button-insert{width:65px}
+.ipf-ci-modaltypical-button-remove{width:65px;margin:0 0 10px 0}
+.ipf-ci-modaltypical-button-up{width:65px}
+.ipf-ci-modaltypical-button-down{width:65px}
+.ipf-ci-modaltypical-button-ok{margin:5px 0 0 0}
+.ipf-ci-modaltypical-button-cancel{margin:5px 0 0 0}
