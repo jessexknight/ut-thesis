@@ -1,7 +1,7 @@
 %%  ut-thesis.cls -- document class for formatting theses at UofT
 %%
 %%  Copyright (c) 1998-2012 Francois Pitt <fpitt@cs.utoronto.ca>
-%%  last updated at 08:41 (EDT) on Wed 23 May 2012
+%%  last updated at 16:51 (EDT) on Wed 23 May 2012
 %%
 %%  This work may be distributed and/or modified under the conditions of
 %%  the LaTeX Project Public License, either version 1.3 of this license
@@ -187,6 +187,8 @@
 %% Switch for testing line spacing of notes.
 \newif\if@singlespacednotes
 
+%% 
+
 
 %%%%%%%%%%%%      OPTION DECLARATION      %%%%%%%%%%%%
 
@@ -206,10 +208,14 @@
    \@drafttrue}
 
 %% Margin options.
-\DeclareOption{narrowmargins}{\renewcommand{\@marginsize}{0}}
-\DeclareOption{normalmargins}{\renewcommand{\@marginsize}{1}}
-\DeclareOption{widemargins}{\renewcommand{\@marginsize}{2}}
-\DeclareOption{extrawidemargins}{\renewcommand{\@marginsize}{3}}
+\DeclareOption{narrowmargins}%
+  {}
+\DeclareOption{normalmargins}%
+  {}
+\DeclareOption{widemargins}%
+  {}
+\DeclareOption{extrawidemargins}%
+  {}
 
 %% Line Spacing options.
 \DeclareOption{singlespaced}{\renewcommand{\@thesislnsp}{1}}
@@ -261,7 +267,7 @@
 
 %% Change the line spacing.  If the argument is less than 1.33 (for
 %% 1.5-spaced) a warning message is displayed when not in draft mode.
-\newcommand{\linespacing}[1]%
+\newcommand*{\linespacing}[1]%
   {\newlinestretch{#1}\if@draft\else\ifdim #1pt < 1.33pt\typeout
    {UT-Thesis Class Warning: line spacing less than 1 1/2}\fi\fi}
 
@@ -622,40 +628,27 @@
 %% Adjust \headsep to include height of running head.
 %
 \addtolength{\headsep}{-\headheight}
-%
-%% Adjust the vertical spacing between the main text and the notes,
-%% and between successive notes if they are not single-spaced.
-%% >> Added in v1.2 on 1998/10/20 by Francois Pitt. << %%
-%% >> Changed in v1.3 on 1998/11/01 by Francois Pitt. << %%
-%
+
+%% Adjust the vertical spacing between the main text and the notes, and
+%% between successive notes if they are not single-spaced.
 \setlength{\skip\footins}{.75\baselineskip}
 \if@singlespacednotes\else
-\let\oldtextsize=\currenttextsize
+\let\oldtextsize\currenttextsize
 \footnotesize
 \setlength{\marginparpush}{\baselineskip}
 \setlength{\footnotesep}{\baselineskip}
 \oldtextsize
 \fi%@singlespacednotes
-%
+
 %% Make each page fill up the entire page.
-%
 \flushbottom
-%
+
 %% Default page style.
-%
 \pagestyle{utthesis}
-%
+
 %% Default values for the required fields.
-%
 \degree{\mbox{}}
 \department{\mbox{}}
 \gradyear{\number\year}
 \author{\mbox{}}
 \title{\mbox{}}
-%
-%% ...\setcounter{tocdepth}{2}...
-%% >> Removed in v1.5 on 1999/02/17 by Francois Pitt. << %%
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%  End of UT-THESIS.CLS
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
