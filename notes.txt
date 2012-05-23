@@ -1,0 +1,13 @@
+* font size >= 10pt
+* line spacing: >= 1.5
+  singlespaced long quotes and footnotes are OK
+* margins: >= 1.25" left, >= .75" all others
+* page numbers: preliminary section plain roman; rest arabic standard
+* Title Page
+  Abstract [double-spaced]
+  Acknowledgements [and Dedication]
+  Table of Contents
+  List of Tables
+  List of Plates
+  List of Figures
+  List of Appendices

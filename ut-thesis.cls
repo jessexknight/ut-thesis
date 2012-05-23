@@ -1,7 +1,7 @@
 %%  ut-thesis.cls -- document class for formatting theses at UofT
 %%
 %%  Copyright (c) 1998-2012 Francois Pitt <fpitt@cs.utoronto.ca>
-%%  last updated at 16:48 (EDT) on Tue 15 May 2012
+%%  last updated at 08:41 (EDT) on Wed 23 May 2012
 %%
 %%  This work may be distributed and/or modified under the conditions of
 %%  the LaTeX Project Public License, either version 1.3 of this license
@@ -17,9 +17,6 @@
 %%  Francois Pitt <fpitt@cs.utoronto.ca>.
 %%
 %%  This work consists of the files listed in the accompanying README.
-
-\newcommand{\utthesisversion}{v2.0} % current version number
-\newcommand{\utthesisupdated}{2012/05/20} % date of last change(s)
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%  
@@ -169,272 +166,188 @@
 
 %%%%%%%%%%%%        IDENTIFICATION        %%%%%%%%%%%%
 
-\NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{ut-thesis}%
- [\utthesisupdated\space\utthesisversion\space LaTeX2e document class]
+\newcommand*{\utthesisversion}{v2.0} % current version number
+\newcommand*{\utthesisupdated}{2012/05/22} % date of last change(s)
+
+\NeedsTeXFormat{LaTeX2e}[1995/12/01] % robust macros with * form
+\ProvidesClass{ut-thesis}[\utthesisupdated\space\utthesisversion\space
+   LaTeX2e document class
+   for graduate theses at the University of Toronto]
 
 
 %%%%%%%%%%%%         INITIAL CODE         %%%%%%%%%%%%
 
-%% To comment out parts of a file.
-%% >> Added in v1.5 on 1999/02/17 by Francois Pitt. << %%
-%
-\newcommand{\ignore}[1]{}
-
 %% Switch for testing draft mode (toggled by `draft' option).
-%
 \newif\if@draft
-\@draftfalse % initially false by default
+\@draftfalse % false by default
 
 %% Switch for testing current page style.
-%% >> Added in v1.3 on 1998/11/01 by Francois Pitt. << %%
-%
 \newif\if@thesispage
- % no default value (set by \pagestyle)
 
 %% Switch for testing line spacing of notes.
-%% >> Added in v1.1 on 1998/10/01 by Francois Pitt. << %%
-%
 \newif\if@singlespacednotes
-\@singlespacednotestrue % initially true by default
-
-%% Macro for testing the size of margins.
-%% >> Added in v1.1 on 1998/10/01 by Francois Pitt. << %%
-%
-\newcommand{\@marginsize}{}
-
-%% Because of the draft option, and to allow users to override
-%% defaults, we don't want to be passing conflicting options back to
-%% the report class, so we define our own temporary toggles holding
-%% the most recent setting for each of four basic options: point size,
-%% number of page sides, whether new chapters open on right-hand pages
-%% or on any page, and line spacing.  These toggles will be set from
-%% the corresponding options below.
-%
-\newcommand{\@thesisptsz}{}
-\newcommand{\@thesisside}{}
-\newcommand{\@thesisopen}{}
-\newcommand{\@thesislnsp}{}
 
 
 %%%%%%%%%%%%      OPTION DECLARATION      %%%%%%%%%%%%
 
 %% `draft' option: change default document settings.
-%% >> Changed in v1.1 on 1998/10/01 by Francois Pitt. << %%
-%% >> Changed in v1.7 on 1999/05/20 by Francois Pitt. << %%
-%
-\DeclareOption{draft}{\@drafttrue
-   \typeout{UT-Thesis Class Option: `draft'}
-   \ExecuteOptions{10pt,twoside,openany,doublespaced,normalmargins}
+\DeclareOption{draft}
+  {\typeout{UT-Thesis Class Option: `draft'}
    \PassOptionsToClass{draft}{report}
    %% Macros for printing "DRAFT" at the corners of a page.
-   \newcommand{\tlDRAFT}%
+   \newcommand*{\tlDRAFT}%
      {\raisebox{ 3ex}[0pt][0pt]{\llap{\sffamily\scriptsize DRAFT\ \ }}}
-   \newcommand{\trDRAFT}%
+   \newcommand*{\trDRAFT}%
      {\raisebox{ 3ex}[0pt][0pt]{\rlap{\sffamily\scriptsize \ \ DRAFT}}}
-   \newcommand{\blDRAFT}%
+   \newcommand*{\blDRAFT}%
      {\raisebox{-3ex}[0pt][0pt]{\llap{\sffamily\scriptsize DRAFT\ \ }}}
-   \newcommand{\brDRAFT}%
+   \newcommand*{\brDRAFT}%
      {\raisebox{-3ex}[0pt][0pt]{\rlap{\sffamily\scriptsize \ \ DRAFT}}}
-}%DeclareOption{draft}
+   \@drafttrue}
 
-%% `spacednotes' option: make notes share the line spacing of the rest
-%% of the document.
-%% >> Added in v1.1 on 1998/10/01 by Francois Pitt. << %%
-%% >> Changed in v1.2 on 1998/10/20 by Francois Pitt. << %%
-%
-\DeclareOption{spacednotes}{\@singlespacednotesfalse}
-
-%% Margin options: change the size of margins.
-%% >> Added in v1.1 on 1998/10/01 by Francois Pitt. << %%
-%
+%% Margin options.
 \DeclareOption{narrowmargins}{\renewcommand{\@marginsize}{0}}
 \DeclareOption{normalmargins}{\renewcommand{\@marginsize}{1}}
 \DeclareOption{widemargins}{\renewcommand{\@marginsize}{2}}
 \DeclareOption{extrawidemargins}{\renewcommand{\@marginsize}{3}}
 
-%% Point Size options: change current setting.
-%
-\DeclareOption{10pt}{\renewcommand{\@thesisptsz}{10pt}}
-\DeclareOption{11pt}{\renewcommand{\@thesisptsz}{11pt}}
-\DeclareOption{12pt}{\renewcommand{\@thesisptsz}{12pt}}
-
-%% Number of Page Sides options: change current setting.
-%
-\DeclareOption{twoside}{\renewcommand{\@thesisside}{twoside}}
-\DeclareOption{oneside}{\renewcommand{\@thesisside}{oneside}}
-
-%% New Chapter Openings options: change current setting.
-%
-\DeclareOption{openany}{\renewcommand{\@thesisopen}{openany}}
-\DeclareOption{openright}{\renewcommand{\@thesisopen}{openright}}
-
-%% Line Spacing options: change current setting.
-%
+%% Line Spacing options.
 \DeclareOption{singlespaced}{\renewcommand{\@thesislnsp}{1}}
 \DeclareOption{oneandahalfspaced}{\renewcommand{\@thesislnsp}{1.33}}
 \DeclareOption{doublespaced}{\renewcommand{\@thesislnsp}{1.66}}
 
+%% `spacednotes' option: make notes share the line spacing of the rest
+%% of the document.
+\DeclareOption{singlespacednotes}{\@singlespacednotestrue}
+\DeclareOption{regularspacednotes}{\@singlespacednotesfalse}
+
 %% All other options are passed to the base class directly.
-%
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{report}}
 
 
 %%%%%%%%%%%%       OPTION EXECUTION       %%%%%%%%%%%%
 
 %% Default settings.
-%% >> Changed in v1.1 on 1998/10/01 by Francois Pitt. << %%
-%
-\ExecuteOptions{12pt,oneside,openright,doublespaced,normalmargins}
-%
+\ExecuteOptions{12pt,oneside,openright,oneandahalfspaced,singlespacednotes}
+
 %% Process options.
-%
 \ProcessOptions
 
 
 %%%%%%%%%%%%       PACKAGE  LOADING       %%%%%%%%%%%%
 
 %% Load base class using current setting for basic options.
-%
-\LoadClass[\@thesisptsz,\@thesisside,\@thesisopen]{report}
+\LoadClass{report}
 
 
 %%%%%%%%%%%%          MAIN  CODE          %%%%%%%%%%%%
 
 %%%%%%    Parameters
-%
-%% The following five commands set the respective field values so we
-%% can generate the title page and abstract page automatically.
-%% >> Changed in v1.6 on 1999/03/06 by Francois Pitt. << %%
-%
-\newcommand{\degree}[1]%
+
+%% The following five commands set the respective field values so we can
+%% generate the title page and abstract page automatically.
+\newcommand*{\degree}[1]%
   {\ifx\empty#1\empty\else\gdef\@degree{#1}\fi}
-\newcommand{\department}[1]%
+\newcommand*{\department}[1]%
   {\ifx\empty#1\empty\else\gdef\@department{#1}\fi}
-\newcommand{\gradyear}[1]%
+\newcommand*{\gradyear}[1]%
   {\ifx\empty#1\empty\else\gdef\@gradyear{#1}\fi}
-\renewcommand{\author}[1]%
+\renewcommand*{\author}[1]%
   {\ifx\empty#1\empty\else\gdef\@author{#1}\fi}
-\renewcommand{\title}[1]%
+\renewcommand*{\title}[1]%
   {\ifx\empty#1\empty\else\gdef\@title{#1}\fi}
 
 %%%%%%    Line Spacing
-%
-%% \linespacing is used to define the line spacing.  If the argument
-%% is less than 1.33 (for 1.5-spaced) a warning message is displayed
-%% when not in draft mode.
-%% >> Changed in v1.1 on 1998/10/01 by Francois Pitt. << %%
-%
+
+%% Change the line spacing.  If the argument is less than 1.33 (for
+%% 1.5-spaced) a warning message is displayed when not in draft mode.
 \newcommand{\linespacing}[1]%
   {\newlinestretch{#1}\if@draft\else\ifdim #1pt < 1.33pt\typeout
    {UT-Thesis Class Warning: line spacing less than 1 1/2}\fi\fi}
-%
+
 %% `longquote' and `longquotation' produce single-spaced quotes, while
-%% `newspacing' encloses paragraphs with a different line spacing,
-%% such as `singlespaced', `oneandahalfspaced', or `doublespaced'.
-%
-\newenvironment{longquote}%
+%% `newspacing' encloses paragraphs with a different line spacing, such
+%% as `singlespaced', `oneandahalfspaced', or `doublespaced'.
+\newenvironment*{longquote}%
   {\begin{quote}\newlinestretch{1}}{\end{quote}}
-\newenvironment{longquotation}%
+\newenvironment*{longquotation}%
   {\begin{quotation}\newlinestretch{1}}{\end{quotation}}
-%% >> Changed in v1.2 on 1998/10/20 by Francois Pitt. << %%
-\newenvironment{singlespaced}%
+\newenvironment*{singlespaced}%
   {\begin{newspacing}{1}}{\end{newspacing}}
-%% >> Added in v1.2 on 1998/10/20 by Francois Pitt. << %%
-\newenvironment{oneandahalfspaced}%
+\newenvironment*{oneandahalfspaced}%
   {\begin{newspacing}{1.33}}{\end{newspacing}}
-\newenvironment{doublespaced}%
+\newenvironment*{doublespaced}%
   {\begin{newspacing}{1.66}}{\end{newspacing}}
-\newenvironment{newspacing}[1]%
+\newenvironment*{newspacing}[1]%
   {\par\begingroup\newlinestretch{#1}}%
   {\par\vskip\parskip\vskip\baselineskip\endgroup
    \vskip-\parskip\vskip-\baselineskip}
-%
-%% To change the actual line spacing.
-%% >> Changed in v1.2 on 1998/10/20 by Francois Pitt. << %%
-%% >> Changed in v1.3 on 1998/11/01 by Francois Pitt. << %%
-%
-\newcommand{\newlinestretch}[1]%
-  {\renewcommand{\baselinestretch}{#1}\currenttextsize}
-%
-%% To keep track of the current text size.
-%% >> Added in v1.2 on 1998/10/20 by Francois Pitt. << %%
-%% >> Changed in v1.3 on 1998/11/01 by Francois Pitt. << %%
-%% >> Changed in v1.7 on 1999/05/13 by Francois Pitt. << %%
-%
-\let\currenttextsize=\normalsize
-%
-%% Redefine size-changing commands to update \currenttextsize.
-%% >> Added in v1.2 on 1998/10/20 by Francois Pitt. << %%
-%% >> Changed in v1.3 on 1998/11/01 by Francois Pitt. << %%
-%% >> Changed in v1.7 on 1999/05/13 by Francois Pitt. << %%
-%% >> Changed in v1.8 on 1999/12/10 by Francois Pitt. << %%
-%
-\let\tmp@tiny=\tiny
+
+%% Change the actual line spacing.
+\newcommand*{\newlinestretch}[1]%
+  {\renewcommand*{\baselinestretch}{#1}\currenttextsize}
+
+%% Keep track of the current text size.
+\let\currenttextsize\normalsize
+\let\tmp@tiny\tiny
 \renewcommand{\tiny}%
-  {\let\currenttextsize=\tmp@tiny\tmp@tiny}
-\let\tmp@scriptsize=\scriptsize
+  {\let\currenttextsize\tmp@tiny\tmp@tiny}
+\let\tmp@scriptsize\scriptsize
 \renewcommand{\scriptsize}%
-  {\let\currenttextsize=\tmp@scriptsize\tmp@scriptsize}
-\let\tmp@footnotesize=\footnotesize
+  {\let\currenttextsize\tmp@scriptsize\tmp@scriptsize}
+\let\tmp@footnotesize\footnotesize
 \renewcommand{\footnotesize}%
-  {\let\currenttextsize=\tmp@footnotesize\tmp@footnotesize}
-\let\tmp@small=\small
+  {\let\currenttextsize\tmp@footnotesize\tmp@footnotesize}
+\let\tmp@small\small
 \renewcommand{\small}%
-  {\let\currenttextsize=\tmp@small\tmp@small}
-\let\tmp@normalsize=\normalsize
+  {\let\currenttextsize\tmp@small\tmp@small}
+\let\tmp@normalsize\normalsize
 \renewcommand{\normalsize}%
-  {\let\currenttextsize=\tmp@normalsize\tmp@normalsize}
-\let\tmp@large=\large
+  {\let\currenttextsize\tmp@normalsize\tmp@normalsize}
+\let\tmp@large\large
 \renewcommand{\large}%
-  {\let\currenttextsize=\tmp@large\tmp@large}
-\let\tmp@Large=\Large
+  {\let\currenttextsize\tmp@large\tmp@large}
+\let\tmp@Large\Large
 \renewcommand{\Large}%
-  {\let\currenttextsize=\tmp@Large\tmp@Large}
-\let\tmp@LARGE=\LARGE
+  {\let\currenttextsize\tmp@Large\tmp@Large}
+\let\tmp@LARGE\LARGE
 \renewcommand{\LARGE}%
-  {\let\currenttextsize=\tmp@LARGE\tmp@LARGE}
-\let\tmp@huge=\huge
+  {\let\currenttextsize\tmp@LARGE\tmp@LARGE}
+\let\tmp@huge\huge
 \renewcommand{\huge}%
-  {\let\currenttextsize=\tmp@huge\tmp@huge}
-\let\tmp@Huge=\Huge
+  {\let\currenttextsize\tmp@huge\tmp@huge}
+\let\tmp@Huge\Huge
 \renewcommand{\Huge}%
-  {\let\currenttextsize=\tmp@Huge\tmp@Huge}
-%
-%% Make notes single-spaced if `spacednotes' option was not given.
-%% Note that this does _not_ change the spacing of figures or tables.
-%% >> Changed in v1.1 on 1998/10/01 by Francois Pitt. << %%
-%
+  {\let\currenttextsize\tmp@Huge\tmp@Huge}
+
+%% Set the linespacing for footnotes and marginal notes.
 \if@singlespacednotes
 %% Make footnotes single-spaced.
-\let\tmp@@footnotetext=\@footnotetext
+\let\tmp@@footnotetext\@footnotetext
 \renewcommand{\@footnotetext}[1]%
   {{\newlinestretch{1}\tmp@@footnotetext{#1}}}
 %% Make footnotes inside a minipage single-spaced.
-\let\tmp@@mpfootnotetext=\@mpfootnotetext
+\let\tmp@@mpfootnotetext\@mpfootnotetext
 \renewcommand{\@mpfootnotetext}[1]%
   {{\newlinestretch{1}\tmp@@mpfootnotetext{#1}}}
 %% Make marginal notes single-spaced.
-\let\tmp@@marginparreset=\@marginparreset
+\let\tmp@@marginparreset\@marginparreset
 \renewcommand{\@marginparreset}%
   {\newlinestretch{1}\tmp@@marginparreset}
 \fi%@singlespacednotes
 
 %%%%%%    New formatting environments and commands.
-%
+
 %% \begin{preliminary} sets the pagestyle and pagenumbering for the
 %% preliminary sections; \end{preliminary} resets the pagenumbering.
 %% The default page style is used outside of the preliminary block.
-%% >> Changed in v1.3 on 1998/11/01 by Francois Pitt. << %%
-%
-\newenvironment{preliminary}%
+\newenvironment*{preliminary}%
   {\pagestyle{plain}\pagenumbering{roman}}%
   {\cleardoublepage\pagenumbering{arabic}}
-%
+
 %% Change \maketitle to follow SGS guidelines.
-%
-\renewcommand{\maketitle}{
-   \begingroup
+\renewcommand{\maketitle}%
+  {\begingroup
    \newlinestretch{1}
    \begin{titlepage}
    \begin{large}
@@ -461,15 +374,12 @@
    \setcounter{page}{1}
    \end{titlepage}
    \endgroup
-   \setcounter{page}{2}
-}%maketitle
-%
-%% Change \begin{abstract}...\end{abstract} to follow SGS guidelines
-%% and put the abstract on a separate page (checking @openright).
-%% >> Changed in v1.4 on 1998/11/05 by Francois Pitt. << %%
-%
-\renewenvironment{abstract}{
-   \if@openright\cleardoublepage\else\clearpage\fi
+   \setcounter{page}{2}}
+
+%% Change \begin{abstract}...\end{abstract} to follow SGS guidelines and
+%% put the abstract on a separate page (checking @openright).
+\renewenvironment{abstract}%
+  {\if@openright\cleardoublepage\else\clearpage\fi
    \begin{center}
       \section*{Abstract}
    \end{center}
@@ -486,54 +396,38 @@
    %% increase it to 1 1/2; if it was between 1 1/2 and 2,
    %% increase it to 2; otherwise, leave it as is.
    \ifdim \baselinestretch pt < 1.33pt \newlinestretch{1.33}\else
-   \ifdim \baselinestretch pt < 1.66pt \newlinestretch{1.66}\fi\fi
-}{\par\endgroup\newpage}%abstract
-%
-%% \begin{dedication}...\end{dedication} formats a
-%% dedication section (*not* on a separate page).
-%% >> Added in v1.4 on 1998/11/05 by Francois Pitt. << %%
-%
+   \ifdim \baselinestretch pt < 1.66pt \newlinestretch{1.66}\fi\fi}%
+  {\par\endgroup\newpage}
+
+%% \begin{dedication}...\end{dedication} formats a dedication section
+%% (*not* on a separate page).
 \newenvironment{dedication}%
   {\begin{center}
       \section*{Dedication}
    \end{center}
    \begingroup}%
   {\par\endgroup}
-%
+
 %% \begin{acknowledgements}...\end{acknowledgements} formats an
 %% acknowledgements section (*not* on a separate page).
-%% >> Changed in v1.4 on 1998/11/05 by Francois Pitt. << %%
-%
 \newenvironment{acknowledgements}%
   {\begin{center}
       \section*{Acknowledgements}
    \end{center}
    \begingroup}%
   {\par\endgroup}
-%
-%% ...\renewcommand{\tableofcontents}...
-%% ...\renewcommand{\listoftables}...
-%% ...\renewcommand{\listoffigures}...
-%% >> Removed in v1.5 on 1999/02/17 by Francois Pitt. << %%
-%
-%% Redefine `thebibliography' environment so that it generates
-%% headers in the same style as the rest of the document.
-%% >> Added in v1.3 on 1998/11/01 by Francois Pitt. << %%
-%
-\let\tmp@thebibliography=\thebibliography
-\renewcommand{\thebibliography}[1]{\tmp@thebibliography{#1}
+
+%% Redefine `thebibliography' environment so that it generates headers
+%% in the same style as the rest of the document.
+\let\tmp@thebibliography\thebibliography
+\renewcommand*{\thebibliography}[1]{\tmp@thebibliography{#1}
    \if@thesispage\@mkboth{\textsc{\bibname}}{\textsc{\bibname}}\fi}
-%
-%% ...\renewcommand{\cleardoublepage}...
-%% >> Removed in v1.5 on 1999/02/17 by Francois Pitt. << %%
-%
-%% Variations of \cleardoublepage that explicitly set the pagestyle
-%% of any inserted blank page.
-%% >> Added in v1.5 on 1999/02/17 by Francois Pitt. << %%
-%
-\newcommand{\clearemptydoublepage}%
+
+%% Variations of \cleardoublepage that explicitly set the pagestyle of
+%% any inserted blank page.
+\newcommand*{\clearemptydoublepage}%
   {{\pagestyle{empty}\cleardoublepage}}
-\newcommand{\clearplaindoublepage}%
+\newcommand*{\clearplaindoublepage}%
   {{\pagestyle{plain}\cleardoublepage}}
 
 %%%%%%    Page Styles
