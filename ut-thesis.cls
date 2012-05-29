@@ -1,7 +1,7 @@
 %% ut-thesis.cls -- document class for formatting theses at UofT
 %%
 %% Copyright (c) 1998-2012 Francois Pitt <fpitt@cs.utoronto.ca>
-%% last updated at 08:00 (EDT) on Fri 25 May 2012
+%% last updated at 10:04 (EDT) on Tue 29 May 2012
 %%
 %% This work may be distributed and/or modified under the conditions of
 %% the LaTeX Project Public License, either version 1.3 of this license
@@ -20,25 +20,25 @@
 
 %% USAGE:  \documentclass{ut-thesis}
 %%         \documentclass[...options...]{ut-thesis}
-%% 
+%%
 %% The default settings produce a final copy, ready for submission to
 %% SGS (12pt font, single-sided, one-and-a-half-spaced, normal margins,
 %% with single-spaced notes).
-%% 
+%%
 %% OPTIONS:
-%% 
+%%
 %%  - Any standard option for the LaTeX2e `report' class, including
 %%    `10pt', `11pt', `12pt', `oneside', `twoside', etc.
-%% 
+%%
 %%  - `singlespaced', `oneandahalfspaced', or `doublespaced':  Set the
 %%    entire document's default line spacing, except for notes, which
 %%    are single-spaced by default.
-%% 
+%%
 %%  - `singlespacednotes' or `regularspacednotes':  Set line spacing for
 %%    footnotes and marginal notes: either single-spaced or the same as
 %%    the rest of the document (`spacednotes' is a synomym for
 %%    `regularspacednotes').
-%% 
+%%
 %%  - `narrowmargins', `normalmargins', `widemargins', or
 %%    `extrawidemargins':  Set the size of the margins, as follows:
 %%     . `narrow': 1 1/4" on the left, 3/4" on all other sides,
@@ -50,44 +50,46 @@
 %%       headers & footers 5/8" from body;
 %%     . `extrawide': 1 1/2" on all sides,
 %%       headers & footers 3/4" from body.
-%%    (If you have more than just a few marginal notes, it is
-%%    recommended that you use at least `wide' margins.)
-%% 
+%%    If you have more than just a few marginal notes, it is recommended
+%%    that you use at least `wide' margins.
+%%
 %%  - `draft':  Produce a draft copy (10pt font, double-sided,
 %%    double-spaced, normal margins, with the word "DRAFT" printed at
 %%    all four corners of every page).
-%% 
+%%
 %% Note that these options can be used to override the default or draft
 %% document settings, so that it is possible, for example, to create a
 %% double-sided final copy, or a 1 1/2-spaced draft copy with wide
-%% margins, etc.  Also note that when producing double-sided documents,
-%% new chapters and preliminary sections will always start on a
-%% right-hand page under the default settings (inserting a blank page if
-%% needed), but not if the `draft' option was used.  (This can be
-%% overriden by using the `openany' or `openright' options.  To achieve
-%% this effect for individual sections or chapters, use the
-%% \cleardoublepage command.)  Note that the blank page inserted in
-%% these cases will still contain the header and page number that is
-%% present on all pages.  For `empty' or `plain' pages, explicitly use
-%% one of the commands \clearemptydoublepage or \clearplaindoublepage.
-%% 
+%% margins, etc.  You may use standard LaTeX packages to tailor the
+%% layout and formatting in other ways.
+%% Also note that when producing double-sided documents, new chapters
+%% and preliminary sections will always start on a right-hand page under
+%% the default settings (inserting a blank page if needed), but not if
+%% the `draft' option was used.  (This can be overriden by using the
+%% `openany' or `openright' options.  To achieve this effect for
+%% individual sections or chapters, use the \cleardoublepage command.)
+%% Note that the blank page inserted in these cases will still contain
+%% the header and page number that is present on all pages.  For `empty'
+%% or `plain' pages, explicitly use one of the commands
+%% \clearemptydoublepage or \clearplaindoublepage.
+%%
 %% NEW ENVIRONMENTS and COMMANDS:
-%% 
+%%
 %%  * \degree{...}:  (preamble only; REQUIRED)
 %%    Specify the name of the degree (e.g., "Doctor of Philosophy").
-%% 
+%%
 %%  * \department{...}:  (preamble only; REQUIRED)
 %%    Specify the name of the graduate department.
-%% 
+%%
 %%  * \gradyear{...}:  (preamble only; REQUIRED)
 %%    Specify the year of graduation (defaults to current year).
-%% 
+%%
 %%  * \author{...}:  (preamble only; REQUIRED)
 %%    Specify the name of the author.
-%% 
+%%
 %%  * \title{...}:  (preamble only; REQUIRED)
 %%    Specify the title of the thesis.
-%% 
+%%
 %%  - \linespacing{...}:  (preamble only)
 %%    Set the interline spacing directly, overriding document defaults
 %%    and options; should be used only if none of the document options
@@ -98,60 +100,60 @@
 %%       single-spaced = \linespacing{1},
 %%        1 1/2-spaced = \linespacing{1.33}, and
 %%       double-spaced = \linespacing{1.66}).
-%% 
+%%
 %%  - \clearemptydoublepage, \clearplaindoublepage:
 %%    Same as \cleardoublepage except that it sets the pagestyle of any
 %%    inserted blank page to `empty' or `plain', respectively.
-%% 
+%%
 %%  - \begin{preliminary}...\end{preliminary}:
 %%    Delimit head matter (title page, abstract, table of contents,
 %%    lists of tables and figures, etc.): set the page style and
 %%    numbering for the preliminary sections and reset them for the main
 %%    document.
-%% 
+%%
 %%     - \maketitle:
 %%       Generate the title page from the information supplied in the
 %%       preamble.
-%% 
+%%
 %%     - \begin{abstract}...\end{abstract}:
 %%       Generate the abstract page, double-sided.  (According to SGS
 %%       guidelines, this must immediately follow the title page.)
-%% 
+%%
 %%     - \begin{dedication}...\end{dedication}:
 %%       Generate a dedication section, if needed.
-%% 
+%%
 %%     - \begin{acknowledgements}...\end{acknowledgements}:
 %%       Generate an acknowledgements section, if needed.
-%% 
+%%
 %%    Note that neither the `dedication' nor the `acknowledgements' are
 %%    put on a separate page by default (use \newpage to do this
 %%    explicitly).  Also note that the table of contents, list of
 %%    tables, and list of figures can be generated using the usual LaTeX
 %%    commands.
-%% 
+%%
 %%  - \begin{longquote}...\end{longquote}:
 %%    Single-spaced version of the `quote' environment.
-%% 
+%%
 %%  - \begin{longquotation}...\end{longquotation}:
 %%    Single-spaced version of the `quotation' environment.
-%% 
+%%
 %%  - \begin{singlespaced}...\end{singlespaced}:
 %%    Format single-spaced paragraphs.
-%% 
+%%
 %%  - \begin{oneandahalfspaced}...\end{oneandahalfspaced}:
 %%    Format 1 1/2-spaced paragraphs.
-%% 
+%%
 %%  - \begin{doublespaced}...\end{doublespaced}:
 %%    Format double-spaced paragraphs.
-%% 
+%%
 %%  - \begin{newspacing}{<n>}...\end{newspacing}:
 %%    Format paragraphs with an interline spacing of `n' (see the
 %%    note for `\linespacing' above regarding the value of `n').
-%% 
+%%
 %% (Note that the last four environments can be used to change the
 %% default line spacing of any enclosed text, including figures, tables,
 %% abstract or acknowledgement pages, table of contents, etc.)
-%% 
+%%
 %% The companion file `ut-thesis.tex' contains a skeleton illustrating
 %% the use of this class.
 
@@ -159,11 +161,11 @@
 %%%%%%%%%%%%        IDENTIFICATION        %%%%%%%%%%%%
 
 \newcommand*{\utthesisversion}{v1.9} % current version number
-\newcommand*{\utthesisupdated}{2012/05/25} % date of last change(s)
+\newcommand*{\utthesisupdated}{2012/05/30} % date of last change(s)
 
 \NeedsTeXFormat{LaTeX2e}[1995/12/01] % robust macros with * form
 \ProvidesClass{ut-thesis}[\utthesisupdated\space\utthesisversion\space
-   for graduate theses at the University of Toronto]
+   graduate thesis at the University of Toronto]
 
 
 %%%%%%%%%%%%         INITIAL CODE         %%%%%%%%%%%%
@@ -229,6 +231,8 @@
 
 %% Process options.
 \ProcessOptions
+
+%% TODO: Figure out how to reset defaults when `draft' is selected.
 
 
 %%%%%%%%%%%%       PACKAGE  LOADING       %%%%%%%%%%%%
@@ -345,6 +349,12 @@
   {{\pagestyle{empty}\cleardoublepage}}
 \newcommand*{\clearplaindoublepage}%
   {{\pagestyle{plain}\cleardoublepage}}
+
+% TODO: Provide an option or command to allow all "cleared" pages to be
+% formatted in the same style (`empty', `plain', ...).  Currently, the
+% default pagestyle is used and if this is not desired, each individual
+% occurrence must be overriden with an explicit \clearemptydoublepage,
+% \clearplaindoublepage, ...
 
 %%%%%%    Line Spacing
 
