@@ -1,7 +1,7 @@
 %% ut-thesis.cls -- document class for formatting theses at UofT
 %%
 %% Copyright (c) 1998-2012 Francois Pitt <fpitt@cs.utoronto.ca>
-%% last updated at 10:04 (EDT) on Tue 29 May 2012
+%% last updated at 16:24 (EDT) on Tue 29 May 2012
 %%
 %% This work may be distributed and/or modified under the conditions of
 %% the LaTeX Project Public License, either version 1.3 of this license
@@ -22,8 +22,8 @@
 %%         \documentclass[...options...]{ut-thesis}
 %%
 %% The default settings produce a final copy, ready for submission to
-%% SGS (12pt font, single-sided, one-and-a-half-spaced, normal margins,
-%% with single-spaced notes).
+%% SGS (single-sided, one-and-a-half-spaced, normal margins, with
+%% single-spaced notes).
 %%
 %% OPTIONS:
 %%
@@ -36,8 +36,7 @@
 %%
 %%  - `singlespacednotes' or `regularspacednotes':  Set line spacing for
 %%    footnotes and marginal notes: either single-spaced or the same as
-%%    the rest of the document (`spacednotes' is a synomym for
-%%    `regularspacednotes').
+%%    the rest of the document.
 %%
 %%  - `narrowmargins', `normalmargins', `widemargins', or
 %%    `extrawidemargins':  Set the size of the margins, as follows:
@@ -53,9 +52,9 @@
 %%    If you have more than just a few marginal notes, it is recommended
 %%    that you use at least `wide' margins.
 %%
-%%  - `draft':  Produce a draft copy (10pt font, double-sided,
-%%    double-spaced, normal margins, with the word "DRAFT" printed at
-%%    all four corners of every page).
+%%  - `draft':  Produce a draft copy (double-sided, double-spaced,
+%%    normal margins, with the word "DRAFT" printed at all four corners
+%%    of every page).
 %%
 %% Note that these options can be used to override the default or draft
 %% document settings, so that it is possible, for example, to create a
@@ -161,11 +160,11 @@
 %%%%%%%%%%%%        IDENTIFICATION        %%%%%%%%%%%%
 
 \newcommand*{\utthesisversion}{v1.9} % current version number
-\newcommand*{\utthesisupdated}{2012/05/30} % date of last change(s)
+\newcommand*{\utthesisupdated}{2012/05/29} % date of last change(s)
 
 \NeedsTeXFormat{LaTeX2e}[1995/12/01] % robust macros with * form
 \ProvidesClass{ut-thesis}[\utthesisupdated\space\utthesisversion\space
-   graduate thesis at the University of Toronto]
+   graduate theses at the University of Toronto]
 
 
 %%%%%%%%%%%%         INITIAL CODE         %%%%%%%%%%%%
@@ -201,6 +200,7 @@
    \newcommand*{\brDRAFT}%
      {\raisebox{-3ex}[0pt][0pt]{\rlap{\sffamily\scriptsize \ \ DRAFT}}}
    \typeout{UT-Thesis Class Option: `draft'}
+   \ExecuteOptions{twoside,doublespaced}
    \PassOptionsToClass{draft}{report}\@drafttrue}
 
 %% Margin options.
@@ -217,8 +217,6 @@
 %% Line spacing for notes.
 \DeclareOption{singlespacednotes}{\@singlespacednotestrue}
 \DeclareOption{regularspacednotes}{\@singlespacednotesfalse}
-\DeclareOption{spacednotes}{\@singlespacednotesfalse}
- % for backward compatibility
 
 %% All other options are passed to the base class directly.
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{report}}
@@ -227,12 +225,10 @@
 %%%%%%%%%%%%       OPTION EXECUTION       %%%%%%%%%%%%
 
 %% Default settings -- other than the ones above.
-\ExecuteOptions{12pt,oneside,openright}
+\ExecuteOptions{oneside,openright}
 
 %% Process options.
 \ProcessOptions
-
-%% TODO: Figure out how to reset defaults when `draft' is selected.
 
 
 %%%%%%%%%%%%       PACKAGE  LOADING       %%%%%%%%%%%%
@@ -349,12 +345,6 @@
   {{\pagestyle{empty}\cleardoublepage}}
 \newcommand*{\clearplaindoublepage}%
   {{\pagestyle{plain}\cleardoublepage}}
-
-% TODO: Provide an option or command to allow all "cleared" pages to be
-% formatted in the same style (`empty', `plain', ...).  Currently, the
-% default pagestyle is used and if this is not desired, each individual
-% occurrence must be overriden with an explicit \clearemptydoublepage,
-% \clearplaindoublepage, ...
 
 %%%%%%    Line Spacing
 

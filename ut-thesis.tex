@@ -1,7 +1,7 @@
 %% ut-thesis.tex -- document template for formatting theses at UofT
 %%
 %% Copyright (c) 1998-2012 Francois Pitt <fpitt@cs.utoronto.ca>
-%% last updated at 10:03 (EDT) on Tue 29 May 2012
+%% last updated at 15:22 (EDT) on Tue 29 May 2012
 %%
 %% This work may be distributed and/or modified under the conditions of
 %% the LaTeX Project Public License, either version 1.3 of this license
@@ -39,12 +39,12 @@
 
 %%%%%%%%%%%%         PREAMBLE         %%%%%%%%%%%%
 
-%% Default settings format a final copy (12pt font, single-sided,
+%% Default settings format a final copy (single-sided,
 %% one-and-a-half-spaced, normal margins, single-spaced notes).  For a
-%% rough copy (10pt font, double-sided, double-spaced, normal margins,
-%% with the word "DRAFT" printed at each corner of every page), use the
-%% `draft' option.  The default line spacing can be changed with one of
-%% the following options: `singlespaced', `oneandahalfspaced', or
+%% rough copy (double-sided, double-spaced, normal margins, with the
+%% word "DRAFT" printed at each corner of every page), use the `draft'
+%% option.  The default line spacing can be changed with one of the
+%% following options: `singlespaced', `oneandahalfspaced', or
 %% `doublespaced'.  The notes are always single-spaced by default, but
 %% can be made to have the same spacing as the rest of the document by
 %% using the option `regularspacednotes'.  The size of the margins can
@@ -52,9 +52,9 @@
 %% left, 3/4" others), `normalmargins' (1 1/4" left, 1" others),
 %% `widemargins' (1 1/4" all), `extrawidemargins' (1 1/2" all).  Any
 %% other standard option for the `report' document class can be used to
-%% override the default or draft settings, and standard LaTeX packages
-%% can be used to further customize the layout and/or formatting of the
-%% document.
+%% override the default or draft settings (such as `10pt', `11pt',
+%% `12pt'), and standard LaTeX packages can be used to further customize
+%% the layout and/or formatting of the document.
 
 %% *** Add any desired options. ***
 \documentclass{ut-thesis}
@@ -164,7 +164,8 @@
 %\listoffigures
 
 %% You can add commands here to generate any other material that belongs
-%% in the head matter (for example, an "Index of Symbols").
+%% in the head matter (for example, List of Plates, Index of Symbols, or
+%% List of Appendices).
 
 %% End of the preliminary sections: reset page style and numbering.
 \end{preliminary}
