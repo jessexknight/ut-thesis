@@ -1,7 +1,7 @@
-%% ut-thesis.cls -- document class for formatting theses at UofT
+%% ut-thesis.cls -- document class for graduate theses at UofT
 %%
 %% Copyright (c) 1998-2012 Francois Pitt <fpitt@cs.utoronto.ca>
-%% last updated at 16:24 (EDT) on Tue 29 May 2012
+%% last updated at 14:00 (EDT) on Wed 30 May 2012
 %%
 %% This work may be distributed and/or modified under the conditions of
 %% the LaTeX Project Public License, either version 1.3 of this license
@@ -31,8 +31,8 @@
 %%    `10pt', `11pt', `12pt', `oneside', `twoside', etc.
 %%
 %%  - `singlespaced', `oneandahalfspaced', or `doublespaced':  Set the
-%%    entire document's default line spacing, except for notes, which
-%%    are single-spaced by default.
+%%    entire document's default line spacing (except for notes, which
+%%    are single-spaced by default).
 %%
 %%  - `singlespacednotes' or `regularspacednotes':  Set line spacing for
 %%    footnotes and marginal notes: either single-spaced or the same as
@@ -63,14 +63,13 @@
 %% layout and formatting in other ways.
 %% Also note that when producing double-sided documents, new chapters
 %% and preliminary sections will always start on a right-hand page under
-%% the default settings (inserting a blank page if needed), but not if
-%% the `draft' option was used.  (This can be overriden by using the
-%% `openany' or `openright' options.  To achieve this effect for
-%% individual sections or chapters, use the \cleardoublepage command.)
-%% Note that the blank page inserted in these cases will still contain
-%% the header and page number that is present on all pages.  For `empty'
-%% or `plain' pages, explicitly use one of the commands
-%% \clearemptydoublepage or \clearplaindoublepage.
+%% the default settings (inserting a blank page if needed).  This can be
+%% overridden by using the `openany' or `openright' options.  To achieve
+%% this effect for individual sections or chapters, use the
+%% \cleardoublepage command.  Note that the blank page inserted in these
+%% cases will still contain the header and page number that is present
+%% on all pages.  For `empty' or `plain' pages, explicitly use one of
+%% the commands \clearemptydoublepage or \clearplaindoublepage.
 %%
 %% NEW ENVIRONMENTS and COMMANDS:
 %%
@@ -88,17 +87,6 @@
 %%
 %%  * \title{...}:  (preamble only; REQUIRED)
 %%    Specify the title of the thesis.
-%%
-%%  - \linespacing{...}:  (preamble only)
-%%    Set the interline spacing directly, overriding document defaults
-%%    and options; should be used only if none of the document options
-%%    given above are adequate.  Note that in order to get the correct
-%%    appearance, the argument to \linespacing must be equal to
-%%    approximately 1/3 + 2/3 times the desired line spacing (for
-%%    example:
-%%       single-spaced = \linespacing{1},
-%%        1 1/2-spaced = \linespacing{1.33}, and
-%%       double-spaced = \linespacing{1.66}).
 %%
 %%  - \clearemptydoublepage, \clearplaindoublepage:
 %%    Same as \cleardoublepage except that it sets the pagestyle of any
@@ -136,31 +124,14 @@
 %%  - \begin{longquotation}...\end{longquotation}:
 %%    Single-spaced version of the `quotation' environment.
 %%
-%%  - \begin{singlespaced}...\end{singlespaced}:
-%%    Format single-spaced paragraphs.
-%%
-%%  - \begin{oneandahalfspaced}...\end{oneandahalfspaced}:
-%%    Format 1 1/2-spaced paragraphs.
-%%
-%%  - \begin{doublespaced}...\end{doublespaced}:
-%%    Format double-spaced paragraphs.
-%%
-%%  - \begin{newspacing}{<n>}...\end{newspacing}:
-%%    Format paragraphs with an interline spacing of `n' (see the
-%%    note for `\linespacing' above regarding the value of `n').
-%%
-%% (Note that the last four environments can be used to change the
-%% default line spacing of any enclosed text, including figures, tables,
-%% abstract or acknowledgement pages, table of contents, etc.)
-%%
 %% The companion file `ut-thesis.tex' contains a skeleton illustrating
 %% the use of this class.
 
 
 %%%%%%%%%%%%        IDENTIFICATION        %%%%%%%%%%%%
 
-\newcommand*{\utthesisversion}{v1.9} % current version number
-\newcommand*{\utthesisupdated}{2012/05/29} % date of last change(s)
+\newcommand*{\utthesisversion}{v2.0} % current version number
+\newcommand*{\utthesisupdated}{2012/05/30} % date of last change(s)
 
 \NeedsTeXFormat{LaTeX2e}[1995/12/01] % robust macros with * form
 \ProvidesClass{ut-thesis}[\utthesisupdated\space\utthesisversion\space
@@ -176,14 +147,6 @@
 %% Switch for testing current page style.
 \newif\if@thesispage
 \@thesispagetrue
-
-%% Switch for testing line spacing of notes.
-\newif\if@singlespacednotes
-\@singlespacednotestrue
-
-%% Initial definitions for options below.
-\newcommand*{\@marginsize}{1} % 1 = normal margins
-\newcommand*{\@thesislnsp}{1.33} % 1.33 = one-and-a-half spaced
 
 
 %%%%%%%%%%%%      OPTION DECLARATION      %%%%%%%%%%%%
@@ -204,19 +167,42 @@
    \PassOptionsToClass{draft}{report}\@drafttrue}
 
 %% Margin options.
-\DeclareOption{narrowmargins}{\renewcommand*{\@marginsize}{0}}
-\DeclareOption{normalmargins}{\renewcommand*{\@marginsize}{1}}
-\DeclareOption{widemargins}{\renewcommand*{\@marginsize}{2}}
-\DeclareOption{extrawidemargins}{\renewcommand*{\@marginsize}{3}}
+\DeclareOption{narrowmargins}{\AtEndOfClass % 1 1/4" left, 3/4" others
+  {\geometry{includemp,vcentering,margin=.75in,left=1.25in,
+             headsep=.375in-\headheight,footskip=.375in,
+             marginparwidth=.5in,marginparsep=.125in}}}
+\DeclareOption{normalmargins}{\AtEndOfClass % 1 1/4" left, 1" others
+  {\geometry{includemp,vcentering,margin=1in,left=1.25in,
+             headsep=.5in-\headheight,footskip=.5in,
+             marginparwidth=.75in,marginparsep=.125in}}}
+\DeclareOption{widemargins}{\AtEndOfClass % 1 1/4" all around
+  {\geometry{includemp,vcentering,margin=1.25in,
+             headsep=.625in-\headheight,footskip=.625in,
+             marginparwidth=.75in,marginparsep=.25in}}}
+\DeclareOption{extrawidemargins}{\AtEndOfClass % 1 1/2" all around
+  {\geometry{includemp,vcentering,margin=1.5in,
+             headsep=.75in-\headheight,footskip=.75in,
+             marginparwidth=1in,marginparsep=.25in}}}
 
 %% Line Spacing options.
-\DeclareOption{singlespaced}{\renewcommand*{\@thesislnsp}{1}}
-\DeclareOption{oneandahalfspaced}{\renewcommand*{\@thesislnsp}{1.33}}
-\DeclareOption{doublespaced}{\renewcommand*{\@thesislnsp}{1.66}}
+\DeclareOption{singlespaced}{\AtEndOfClass{\singlespacing}}
+\DeclareOption{onehalfspaced}{\AtEndOfClass{\onehalfspacing}}
+\DeclareOption{doublespaced}{\AtEndOfClass{\doublespacing}}
 
 %% Line spacing for notes.
-\DeclareOption{singlespacednotes}{\@singlespacednotestrue}
-\DeclareOption{regularspacednotes}{\@singlespacednotesfalse}
+\DeclareOption{singlespacednotes}{\AtBeginDocument
+  {\let\thesis@@footnotetext\@footnotetext
+   \renewcommand{\@footnotetext}[1]%
+     {{\singlespacing\thesis@@footnotetext{#1}}}
+   \let\thesis@@mpfootnotetext\@mpfootnotetext
+   \renewcommand{\@mpfootnotetext}[1]%
+     {{\singlespacing\thesis@@mpfootnotetext{#1}}}
+   \let\thesis@@marginparreset\@marginparreset
+   \renewcommand{\@marginparreset}%
+     {\singlespacing\thesis@@marginparreset}}
+\DeclareOption{regularspacednotes}{\AtBeginDocument
+  {\setlength\marginparpush{\baselineskip}
+   \setlength\footnotesep{\baselineskip}}}
 
 %% All other options are passed to the base class directly.
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{report}}
@@ -224,8 +210,9 @@
 
 %%%%%%%%%%%%       OPTION EXECUTION       %%%%%%%%%%%%
 
-%% Default settings -- other than the ones above.
-\ExecuteOptions{oneside,openright}
+%% Default settings.
+\ExecuteOptions{letterpaper,oneside,openright}
+\ExecuteOptions{normalmargins,onehalfspaced,singlespacednotes}
 
 %% Process options.
 \ProcessOptions
@@ -235,6 +222,12 @@
 
 %% Load base class using current setting for basic options.
 \LoadClass{report}
+
+%% To set/change page layout.
+\RequirePackage{geometry}
+
+%% To set/change line spacing.
+\RequirePackage{setspace}
 
 
 %%%%%%%%%%%%          MAIN  CODE          %%%%%%%%%%%%
@@ -254,10 +247,17 @@
 \renewcommand*{\title}[1]%
   {\ifx\empty#1\empty\else\gdef\@title{#1}\fi}
 
+%% Default values for the required fields.
+\degree{\emph{(degree)}}
+\department{\emph{(department)}}
+\gradyear{\number\year}
+\author{\emph{(author)}}
+\title{\emph{(title)}}
+
 %%%%%%    New formatting environments and commands.
 
-%% \begin{preliminary} sets the pagestyle and pagenumbering for the
-%% preliminary sections; \end{preliminary} resets the pagenumbering.
+%% \begin{preliminary} sets the pagestyle and page numbering for the
+%% preliminary sections; \end{preliminary} resets the page numbering.
 %% The default page style is used outside of the preliminary block.
 \newenvironment*{preliminary}%
   {\pagestyle{plain}\pagenumbering{roman}}%
@@ -265,10 +265,8 @@
 
 %% Change \maketitle to follow SGS guidelines.
 \renewcommand*{\maketitle}%
-  {\begingroup
-   \newlinestretch{1}
-   \begin{titlepage}
-   \begin{large}
+  {\begin{titlepage}
+   \large\singlespacing
    \begin{center}
       \mbox{}
       \vfill
@@ -288,10 +286,8 @@
       \vspace{.01\textheight}
       \mbox{}
    \end{center}
-   \end{large}
    \setcounter{page}{1}
    \end{titlepage}
-   \endgroup
    \setcounter{page}{2}}
 
 %% Change \begin{abstract}...\end{abstract} to follow SGS guidelines and
@@ -312,7 +308,7 @@
    \begingroup
    %% Adjust line spacing: if it was less than 2, increase it to 2;
    %% otherwise, leave it as is.
-   \ifdim \baselinestretch pt < 1.66pt \newlinestretch{1.66}\fi}%
+   \ifdim \baselinestretch pt < 1.6pt \doublespacing\fi}%
   {\par\endgroup\newpage}
 
 %% \begin{dedication}...\end{dedication} formats a dedication section
@@ -335,8 +331,8 @@
 
 %% Redefine `thebibliography' environment so that it generates headers
 %% in the same style as the rest of the document.
-\let\tmp@thebibliography\thebibliography
-\renewcommand*{\thebibliography}[1]{\tmp@thebibliography{#1}
+\let\thesis@thebibliography\thebibliography
+\renewcommand*{\thebibliography}[1]{\thesis@thebibliography{#1}
    \if@thesispage\@mkboth{\textsc{\bibname}}{\textsc{\bibname}}\fi}
 
 %% Variations of \cleardoublepage that explicitly set the pagestyle of
@@ -346,84 +342,11 @@
 \newcommand*{\clearplaindoublepage}%
   {{\pagestyle{plain}\cleardoublepage}}
 
-%%%%%%    Line Spacing
-
-%% Set the line spacing for footnotes and marginal notes.
-\if@singlespacednotes
-%% footnotes
-\let\tmp@@footnotetext\@footnotetext
-\renewcommand{\@footnotetext}[1]%
-  {{\newlinestretch{1}\tmp@@footnotetext{#1}}}
-%% footnotes inside a minipage
-\let\tmp@@mpfootnotetext\@mpfootnotetext
-\renewcommand{\@mpfootnotetext}[1]%
-  {{\newlinestretch{1}\tmp@@mpfootnotetext{#1}}}
-%% marginal notes
-\let\tmp@@marginparreset\@marginparreset
-\renewcommand{\@marginparreset}%
-  {\newlinestretch{1}\tmp@@marginparreset}
-\fi%@singlespacednotes
-
-%% Change the line spacing.  If the argument is less than 1.33 (for
-%% 1.5-spaced) a warning message is displayed when not in draft mode.
-\newcommand*{\linespacing}[1]%
-  {\newlinestretch{#1}\if@draft\else\ifdim #1pt < 1.33pt\typeout
-   {UT-Thesis Class Warning: line spacing less than 1 1/2}\fi\fi}
-
-%% `longquote' and `longquotation' produce single-spaced quotes, while
-%% `newspacing' encloses paragraphs with a different line spacing, such
-%% as `singlespaced', `oneandahalfspaced', or `doublespaced'.
+%% Single-spaced quotes and quotations.
 \newenvironment*{longquote}%
-  {\begin{quote}\newlinestretch{1}}{\end{quote}}
+  {\begin{quote}\singlespacing}{\end{quote}}
 \newenvironment*{longquotation}%
-  {\begin{quotation}\newlinestretch{1}}{\end{quotation}}
-\newenvironment*{singlespaced}%
-  {\begin{newspacing}{1}}{\end{newspacing}}
-\newenvironment*{oneandahalfspaced}%
-  {\begin{newspacing}{1.33}}{\end{newspacing}}
-\newenvironment*{doublespaced}%
-  {\begin{newspacing}{1.66}}{\end{newspacing}}
-\newenvironment*{newspacing}[1]%
-  {\par\begingroup\newlinestretch{#1}}%
-  {\par\vskip\parskip\vskip\baselineskip\endgroup
-   \vskip-\parskip\vskip-\baselineskip}
-
-%% Change the actual line spacing.
-\newcommand*{\newlinestretch}[1]%
-  {\renewcommand*{\baselinestretch}{#1}\currenttextsize}
-
-%% Keep track of the current text size -- required for \newlinestretch.
-\let\currenttextsize\normalsize
-\let\tmp@tiny\tiny
-\renewcommand*{\tiny}%
-  {\let\currenttextsize\tmp@tiny\tmp@tiny}
-\let\tmp@scriptsize\scriptsize
-\renewcommand*{\scriptsize}%
-  {\let\currenttextsize\tmp@scriptsize\tmp@scriptsize}
-\let\tmp@footnotesize\footnotesize
-\renewcommand*{\footnotesize}%
-  {\let\currenttextsize\tmp@footnotesize\tmp@footnotesize}
-\let\tmp@small\small
-\renewcommand*{\small}%
-  {\let\currenttextsize\tmp@small\tmp@small}
-\let\tmp@normalsize\normalsize
-\renewcommand*{\normalsize}%
-  {\let\currenttextsize\tmp@normalsize\tmp@normalsize}
-\let\tmp@large\large
-\renewcommand*{\large}%
-  {\let\currenttextsize\tmp@large\tmp@large}
-\let\tmp@Large\Large
-\renewcommand*{\Large}%
-  {\let\currenttextsize\tmp@Large\tmp@Large}
-\let\tmp@LARGE\LARGE
-\renewcommand*{\LARGE}%
-  {\let\currenttextsize\tmp@LARGE\tmp@LARGE}
-\let\tmp@huge\huge
-\renewcommand*{\huge}%
-  {\let\currenttextsize\tmp@huge\tmp@huge}
-\let\tmp@Huge\Huge
-\renewcommand*{\Huge}%
-  {\let\currenttextsize\tmp@Huge\tmp@Huge}
+  {\begin{quotation}\singlespacing}{\end{quotation}}
 
 %%%%%%    Page Styles
 
@@ -528,91 +451,6 @@
       {\textsc{\ifnum \c@secnumdepth >\m@ne
          \@chapapp\ \thechapter. \ \fi ##1}}}}
 \fi%@twoside
-
-%%%%%%    Document Layout
-
-%% Page layout (see The LaTeX Companion pp.84-86).
-
-%% By default, TeX puts the `reference point' one inch down and to the
-%% right of the top-left corner of the page.  This moves it back to the
-%% top-left corner (making the rest of the layout easier to define).
-\setlength{\voffset}{-1in}
-\setlength{\hoffset}{-1in}
-
-%% Instead of hard-coding the page layout for letter paper (8.5" x 11"),
-%% we will base it on \paperheight and \paperwidth, so that it works
-%% with options that change the paper size.
-\setlength{\textheight}{\paperheight}
-\setlength{\textwidth}{\paperwidth}
-
-%% Now, set the margin-dependent values.
-\ifcase\@marginsize % narrow margins: 1 1/4" left, 3/4" others
-\addtolength{\textheight}{-1.5in}
-\setlength{\topmargin}{.375in}
-\setlength{\headsep}{.375in}
-\setlength{\footskip}{.375in}
-\addtolength{\textwidth}{-2in}
-\setlength{\oddsidemargin}{1.25in}
-\setlength{\evensidemargin}{.75in}
-\setlength{\marginparwidth}{.5in}
-\setlength{\marginparsep}{.125in}
-\or % normal margins: 1 1/4" left, 1" others
-\addtolength{\textheight}{-2in}
-\setlength{\topmargin}{.5in}
-\setlength{\headsep}{.5in}
-\setlength{\footskip}{.5in}
-\addtolength{\textwidth}{-2.25in}
-\setlength{\oddsidemargin}{1.25in}
-\setlength{\evensidemargin}{1in}
-\setlength{\marginparwidth}{.75in}
-\setlength{\marginparsep}{.125in}
-\or % wide margins: 1 1/4" all around
-\addtolength{\textheight}{-2.5in}
-\setlength{\topmargin}{.625in}
-\setlength{\headsep}{.625in}
-\setlength{\footskip}{.625in}
-\addtolength{\textwidth}{-2.5in}
-\setlength{\oddsidemargin}{1.25in}
-\setlength{\evensidemargin}{1.25in}
-\setlength{\marginparwidth}{.75in}
-\setlength{\marginparsep}{.25in}
-\or % extra wide margins: 1 1/2" all around
-\addtolength{\textheight}{-3in}
-\setlength{\topmargin}{.75in}
-\setlength{\headsep}{.75in}
-\setlength{\footskip}{.75in}
-\addtolength{\textwidth}{-3in}
-\setlength{\oddsidemargin}{1.5in}
-\setlength{\evensidemargin}{1.5in}
-\setlength{\marginparwidth}{1in}
-\setlength{\marginparsep}{.25in}
-\fi%@marginsize
-
-%% Adjust \headsep to include height of running head.
-\addtolength{\headsep}{-\headheight}
-
-%% Adjust the vertical spacing between the main text and the notes, and
-%% between successive notes if they are not single-spaced.
-\setlength{\skip\footins}{.75\baselineskip}
-\if@singlespacednotes\else
-\let\oldtextsize\currenttextsize
-\footnotesize
-\setlength{\marginparpush}{\baselineskip}
-\setlength{\footnotesep}{\baselineskip}
-\oldtextsize
-\fi%@singlespacednotes
-
-%%%%%%    Default values.
-
-%% Default values for the required fields.
-\degree{\mbox{}}
-\department{\mbox{}}
-\gradyear{\number\year}
-\author{\mbox{}}
-\title{\mbox{}}
-
-%% Default line spacing: use current setting from options.
-\linespacing{\@thesislnsp}
 
 %% Default page style.
 \pagestyle{utthesis}
