@@ -1,15 +1,15 @@
 %% ut-thesis.cls -- document class for graduate theses at UofT
 %%
 %% Copyright (c) 1998-2012 Francois Pitt <fpitt@cs.utoronto.ca>
-%% last updated at 14:00 (EDT) on Wed 30 May 2012
+%% last updated at 15:10 (EDT) on Thu 31 May 2012
 %%
 %% This work may be distributed and/or modified under the conditions of
-%% the LaTeX Project Public License, either version 1.3 of this license
+%% the LaTeX Project Public License, either version 1.3c of this license
 %% or (at your option) any later version.
 %% The latest version of this license is in
 %%     http://www.latex-project.org/lppl.txt
-%% and version 1.3 or later is part of all distributions of LaTeX
-%% version 2003/12/01 or later.
+%% and version 1.3c or later is part of all distributions of LaTeX
+%% version 2005/12/01 or later.
 %%
 %% This work has the LPPL maintenance status "maintained".
 %%
@@ -131,7 +131,7 @@
 %%%%%%%%%%%%        IDENTIFICATION        %%%%%%%%%%%%
 
 \newcommand*{\utthesisversion}{v2.0} % current version number
-\newcommand*{\utthesisupdated}{2012/05/30} % date of last change(s)
+\newcommand*{\utthesisupdated}{2012/05/31} % date of last change(s)
 
 \NeedsTeXFormat{LaTeX2e}[1995/12/01] % robust macros with * form
 \ProvidesClass{ut-thesis}[\utthesisupdated\space\utthesisversion\space
@@ -148,12 +148,23 @@
 \newif\if@thesispage
 \@thesispagetrue
 
+%% Save original definitions of footnote and marginal note macros and
+%% lengths, to be able to reset them below as needed (when changing
+%% between single-spaced and regular-spaced notes).
+\let\thesis@@footnotetext\@footnotetext
+\let\thesis@@mpfootnotetext\@mpfootnotetext
+\let\thesis@@marginparreset\@marginparreset
+\newlength{\thesis@footnotesep}
+\newlength{\thesis@marginparpush}
+\AtBeginDocument
+  {\setlength\thesis@footnotesep{\footnotesep}
+   \setlength\thesis@marginparpush{\marginparpush}}
+
 
 %%%%%%%%%%%%      OPTION DECLARATION      %%%%%%%%%%%%
 
 %% `draft' option: change default document settings.
-\DeclareOption{draft}
-  {%% Macros for printing "DRAFT" at the corners of a page.
+\DeclareOption{draft}{\@drafttrue
    \newcommand*{\tlDRAFT}%
      {\raisebox{ 3ex}[0pt][0pt]{\llap{\sffamily\scriptsize DRAFT\ \ }}}
    \newcommand*{\trDRAFT}%
@@ -162,27 +173,22 @@
      {\raisebox{-3ex}[0pt][0pt]{\llap{\sffamily\scriptsize DRAFT\ \ }}}
    \newcommand*{\brDRAFT}%
      {\raisebox{-3ex}[0pt][0pt]{\rlap{\sffamily\scriptsize \ \ DRAFT}}}
-   \typeout{UT-Thesis Class Option: `draft'}
-   \ExecuteOptions{twoside,doublespaced}
-   \PassOptionsToClass{draft}{report}\@drafttrue}
+   \ExecuteOptions{doublespaced}
+   \PassOptionsToClass{draft,twoside}{report}}
 
 %% Margin options.
 \DeclareOption{narrowmargins}{\AtEndOfClass % 1 1/4" left, 3/4" others
-  {\geometry{includemp,vcentering,margin=.75in,left=1.25in,
-             headsep=.375in-\headheight,footskip=.375in,
-             marginparwidth=.5in,marginparsep=.125in}}}
+  {\geometry{margin=.75in,left=1.25in,headsep=.375in-\headheight,
+             footskip=.375in,marginparwidth=.5in,marginparsep=.125in}}}
 \DeclareOption{normalmargins}{\AtEndOfClass % 1 1/4" left, 1" others
-  {\geometry{includemp,vcentering,margin=1in,left=1.25in,
-             headsep=.5in-\headheight,footskip=.5in,
-             marginparwidth=.75in,marginparsep=.125in}}}
+  {\geometry{margin=1in,left=1.25in,headsep=.5in-\headheight,
+             footskip=.5in,marginparwidth=.75in,marginparsep=.125in}}}
 \DeclareOption{widemargins}{\AtEndOfClass % 1 1/4" all around
-  {\geometry{includemp,vcentering,margin=1.25in,
-             headsep=.625in-\headheight,footskip=.625in,
-             marginparwidth=.75in,marginparsep=.25in}}}
+  {\geometry{margin=1.25in,headsep=.625in-\headheight,
+             footskip=.625in,marginparwidth=.75in,marginparsep=.25in}}}
 \DeclareOption{extrawidemargins}{\AtEndOfClass % 1 1/2" all around
-  {\geometry{includemp,vcentering,margin=1.5in,
-             headsep=.75in-\headheight,footskip=.75in,
-             marginparwidth=1in,marginparsep=.25in}}}
+  {\geometry{margin=1.5in,headsep=.75in-\headheight,
+             footskip=.75in,marginparwidth=1in,marginparsep=.25in}}}
 
 %% Line Spacing options.
 \DeclareOption{singlespaced}{\AtEndOfClass{\singlespacing}}
@@ -191,18 +197,20 @@
 
 %% Line spacing for notes.
 \DeclareOption{singlespacednotes}{\AtBeginDocument
-  {\let\thesis@@footnotetext\@footnotetext
+  {\setlength\footnotesep{\thesis@footnotesep}
+   \setlength\marginparpush{\thesis@marginparpush}
    \renewcommand{\@footnotetext}[1]%
-     {{\singlespacing\thesis@@footnotetext{#1}}}
-   \let\thesis@@mpfootnotetext\@mpfootnotetext
+     {\thesis@@footnotetext{#1\setstretch{\setspace@singlespace}}}
    \renewcommand{\@mpfootnotetext}[1]%
-     {{\singlespacing\thesis@@mpfootnotetext{#1}}}
-   \let\thesis@@marginparreset\@marginparreset
-   \renewcommand{\@marginparreset}%
-     {\singlespacing\thesis@@marginparreset}}
+     {\thesis@@mpfootnotetext{#1\setstretch{\setspace@singlespace}}}
+   \renewcommand*{\@marginparreset}%
+     {\thesis@@marginparreset\setstretch{\setspace@singlespace}}}}
 \DeclareOption{regularspacednotes}{\AtBeginDocument
-  {\setlength\marginparpush{\baselineskip}
-   \setlength\footnotesep{\baselineskip}}}
+  {\setlength\footnotesep{\baselineskip-\thesis@footnotesep}
+   \setlength\marginparpush{\baselineskip-\thesis@marginparpush}
+   \let\@footnotetext\thesis@@footnotetext
+   \let\@mpfootnotetext\thesis@@mpfootnotetext
+   \let\@marginparreset\thesis@@marginparreset}}
 
 %% All other options are passed to the base class directly.
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{report}}
@@ -224,6 +232,7 @@
 \LoadClass{report}
 
 %% To set/change page layout.
+\RequirePackage{calc}
 \RequirePackage{geometry}
 
 %% To set/change line spacing.
@@ -266,7 +275,7 @@
 %% Change \maketitle to follow SGS guidelines.
 \renewcommand*{\maketitle}%
   {\begin{titlepage}
-   \large\singlespacing
+   \large\setstretch{\setspace@singlespace}
    \begin{center}
       \mbox{}
       \vfill
@@ -290,11 +299,9 @@
    \end{titlepage}
    \setcounter{page}{2}}
 
-%% Change \begin{abstract}...\end{abstract} to follow SGS guidelines and
-%% put the abstract on a separate page (checking @openright).
+%% Change \begin{abstract}...\end{abstract} to follow SGS guidelines.
 \renewenvironment*{abstract}%
-  {\if@openright\cleardoublepage\else\clearpage\fi
-   \begin{center}
+  {\begin{center}
       \section*{Abstract}
    \end{center}
    \begin{center}
@@ -341,12 +348,14 @@
   {{\pagestyle{empty}\cleardoublepage}}
 \newcommand*{\clearplaindoublepage}%
   {{\pagestyle{plain}\cleardoublepage}}
+%% TODO: Look at .../texmf-dist/source/latex/koma-script/scrkpage.dtx
+%% for ways to generalize this and define new document options.
 
 %% Single-spaced quotes and quotations.
 \newenvironment*{longquote}%
-  {\begin{quote}\singlespacing}{\end{quote}}
+  {\begin{quote}\setstretch{\setspace@singlespace}}{\end{quote}}
 \newenvironment*{longquotation}%
-  {\begin{quotation}\singlespacing}{\end{quotation}}
+  {\begin{quotation}\setstretch{\setspace@singlespace}}{\end{quotation}}
 
 %%%%%%    Page Styles
 

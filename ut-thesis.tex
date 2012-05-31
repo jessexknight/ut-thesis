@@ -1,15 +1,15 @@
 %% ut-thesis.tex -- document template for graduate theses at UofT
 %%
 %% Copyright (c) 1998-2012 Francois Pitt <fpitt@cs.utoronto.ca>
-%% last updated at 13:46 (EDT) on Wed 30 May 2012
+%% last updated at 15:22 (EDT) on Thu 31 May 2012
 %%
 %% This work may be distributed and/or modified under the conditions of
-%% the LaTeX Project Public License, either version 1.3 of this license
+%% the LaTeX Project Public License, either version 1.3c of this license
 %% or (at your option) any later version.
 %% The latest version of this license is in
 %%     http://www.latex-project.org/lppl.txt
-%% and version 1.3 or later is part of all distributions of LaTeX
-%% version 2003/12/01 or later.
+%% and version 1.3c or later is part of all distributions of LaTeX
+%% version 2005/12/01 or later.
 %%
 %% This work has the LPPL maintenance status "maintained".
 %%
@@ -38,7 +38,7 @@
 %% one-and-a-half-spaced with single-spaced notes).  For a rough copy
 %% (double-sided, normal margins, double-spaced, with the word "DRAFT"
 %% printed at each corner of every page), use the `draft' option.  The
-%% default line spacing can be changed with one of the following
+%% default global line spacing can be changed with one of the following
 %% options: `singlespaced', `onehalfspaced', or `doublespaced'.  The
 %% notes are always single-spaced by default, but can be made to have
 %% the same spacing as the rest of the document by using the option
@@ -106,6 +106,11 @@
 \maketitle
 
 %% There should be NOTHING between the title page and abstract.
+%% However, if your document is two-sided and you want the abstract
+%% _not_ to appear on the back of the title page, then uncomment the
+%% following line.  (This can be used anywhere to guarantee that the
+%% next page appears on a right-hand page.)
+%\cleardoublepage
 
 %% This generates the abstract page, with the line spacing adjusted
 %% according to SGS guidelines.
