@@ -1,7 +1,7 @@
 %% ut-thesis.cls -- document class for graduate theses at UofT
 %%
 %% Copyright (c) 1998-2012 Francois Pitt <fpitt@cs.utoronto.ca>
-%% last updated at 15:52 (EDT) on Thu 31 May 2012
+%% last updated at 16:57 (EDT) on Thu 31 May 2012
 %%
 %% This work may be distributed and/or modified under the conditions of
 %% the LaTeX Project Public License, either version 1.3c of this license
@@ -48,14 +48,16 @@
 %%    entire document's default line spacing (except for notes, which
 %%    are single-spaced by default).
 %%
-%%  - `singlespacednotes' or `regularspacednotes':  Set line spacing for
-%%    footnotes and marginal notes: either single-spaced or the same as
-%%    the rest of the document.
+%%  - `singlespacednotes' or `standardspacednotes':  Set line spacing
+%%    for footnotes and marginal notes: either single-spaced or the same
+%%    as the rest of the document.
 %%
-%%  - `cleardoublepageempty' or `cleardoublepageplain':  Set the page
-%%    style for all "cleared" pages (empty pages inserted in two-sided
-%%    documents to put the next page on the right-hand side) to either
-%%    `empty' or `plain' (instead of the default thesis page style).
+%%  - `cleardoublepagestyleempty', `cleardoublepagestyleplain', or
+%%    `cleardoublepagestylestandard':  Set the page style for all
+%%    "cleared" pages (empty pages inserted in two-sided documents to
+%%    put the next page on the right-hand side) to either `empty',
+%%    `plain', or whatever style is in effect when the page is cleared
+%%    (the default).
 %%
 %%  - `draft':  Produce a draft copy (double-sided, double-spaced,
 %%    normal margins, with the word "DRAFT" printed at all four corners
@@ -72,7 +74,8 @@
 %% overridden by using the `openany' or `openright' options.  To achieve
 %% this effect for individual sections or chapters, use \cleardoublepage
 %% -- or one of the more specific \clearemptydoublepage,
-%% \clearplaindoublepage, or \clearthesisdoublepage.
+%% \clearplaindoublepage, \clearthesisdoublepage, or
+%% \clearstandarddoublepage (see below for details).
 %%
 %% NEW ENVIRONMENTS and COMMANDS:
 %%
@@ -125,8 +128,13 @@
 %%
 %%  - \clearemptydoublepage, \clearplaindoublepage,
 %%    \clearthesisdoublepage:
-%%    Same as \cleardoublepage except that it sets the pagestyle of any
-%%    inserted blank page to `empty', `plain', or `thesis' respectively.
+%%    Same as \cleardoublepage except that cleared pages have style
+%%    `empty', `plain', or `thesis' respectively.
+%%
+%%  - \clearstandarddoublepage:
+%%    Same as the original \cleardoublepage -- use the pagestyle
+%%    currently in effect -- used to override the effects of options
+%%    `cleardoublepagestyleempty' or `cleardoublepagestyleplain'.
 %%
 %% The companion file `ut-thesis.tex' contains a skeleton illustrating
 %% the use of this class.
@@ -154,7 +162,7 @@
 
 %% Save original definitions of footnote and marginal note macros and
 %% lengths, to be able to reset them below as needed (when changing
-%% between single-spaced and regular-spaced notes).
+%% between single-spaced and standard-spaced notes).
 \let\@thesis@footnotetext\@footnotetext
 \let\@thesis@mpfootnotetext\@mpfootnotetext
 \let\@thesis@marginparreset\@marginparreset
@@ -165,7 +173,7 @@
    \setlength\@thesismarginparpush{\marginparpush}}
 
 %% Save original definition of \cleardoublepage.
-\let\@thesiscleardoublepage\cleardoublepage
+\let\clearstandarddoublepage\cleardoublepage
 
 
 %%%%%%%%%%%%      OPTION DECLARATION      %%%%%%%%%%%%
@@ -212,7 +220,7 @@
      {\@thesis@mpfootnotetext{#1\setstretch{\setspace@singlespace}}}
    \renewcommand*{\@marginparreset}%
      {\@thesis@marginparreset\setstretch{\setspace@singlespace}}}}
-\DeclareOption{regularspacednotes}{\AtBeginDocument
+\DeclareOption{standardspacednotes}{\AtBeginDocument
   {\setlength\footnotesep{\baselineskip-\@thesisfootnotesep}
    \setlength\marginparpush{\baselineskip-\@thesismarginparpush}
    \let\@footnotetext\@thesis@footnotetext
@@ -220,10 +228,12 @@
    \let\@marginparreset\@thesis@marginparreset}}
 
 %% Page styles for cleared pages.
-\DeclareOption{cleardoublepageempty}
+\DeclareOption{cleardoublepagestyleempty}
   {\AtEndOfClass{\let\cleardoublepage\clearemptydoublepage}}
-\DeclareOption{cleardoublepageplain}
+\DeclareOption{cleardoublepagestyleplain}
   {\AtEndOfClass{\let\cleardoublepage\clearplaindoublepage}}
+\DeclareOption{cleardoublepagestylestandard}
+  {\AtEndOfClass{\let\cleardoublepage\clearstandarddoublepage}}
 
 %% All other options are passed to the base class directly.
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{report}}
@@ -358,11 +368,11 @@
 %% Variations of \cleardoublepage that explicitly set the pagestyle of
 %% any inserted blank page.
 \newcommand*{\clearemptydoublepage}%
-  {{\pagestyle{empty}\@thesiscleardoublepage}}
+  {{\pagestyle{empty}\clearstandarddoublepage}}
 \newcommand*{\clearplaindoublepage}%
-  {{\pagestyle{plain}\@thesiscleardoublepage}}
+  {{\pagestyle{plain}\clearstandarddoublepage}}
 \newcommand*{\clearthesisdoublepage}%
-  {{\pagestyle{thesis}\@thesiscleardoublepage}}
+  {{\pagestyle{thesis}\clearstandarddoublepage}}
 
 %% Single-spaced quotes and quotations.
 \newenvironment*{longquote}%
@@ -376,6 +386,8 @@
 %% myheadings), based on the definitions in `report', so that they
 %% conform to the SGS guidelines (and include draft information if
 %% applicable).  Then, define a new pagestyle `thesis'.
+
+%% TODO: Get rid of copy-pasted definitions for pagestyles?
 
 %% Pagestyle `empty'.
 \renewcommand*{\ps@empty}%

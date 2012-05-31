@@ -4,7 +4,7 @@ University of Toronto (as of 2008).  [http://www.sgs.utoronto.ca/+
 informationfor/students/finup/producingthesis/formatting.htm]
 
 Copyright (c) 1998-2012 Francois Pitt <fpitt@cs.utoronto.ca>
-last updated at 15:48 (EDT) on Thu 31 May 2012
+last updated at 16:56 (EDT) on Thu 31 May 2012
 
 This work may be distributed and/or modified under the conditions of
 the LaTeX Project Public License, either version 1.3c of this license
@@ -36,13 +36,15 @@ v2.0: 2012/05/30 (Francois Pitt)
 - Renamed `oneandahalfspaced' option to `onehalfspaced' (for consistency
   with `setspace' package).
 - Removed `singlespaced', `oneandahalfspaced', `doublespaced', and
-  `spacing' environments (use environments from `setspace' package).
-- Renamed `spacednotes' option to `regularspacednotes' and added
+  `spacing' environments -- use environments from `setspace' package
+  instead.
+- Renamed `spacednotes' option to `standardspacednotes' and added
   `singlespacednotes' option.
 - Renamed `utthesis' page style to `thesis'.
-- Added options `cleardoublepageempty' and `cleardoublepageplain' to set
-  the default style for cleared pages, and a new macro
-  `\clearthesisdoublepage' to clear pages with pagestyle `thesis'.
+- Added options `cleardoublepagestyleempty', `cleardoublepagestyleplain'
+  and `cleardoublepagestylestandard' to set the default style for
+  cleared pages, and new macros `\clearthesisdoublepage' and
+  `\clearstandarddoublepage'.
 - The abstract is no longer put on a separate page by default.
 
 v1.9: 2012/05/29 (Francois Pitt)
