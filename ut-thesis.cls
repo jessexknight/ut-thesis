@@ -1,7 +1,7 @@
 %% ut-thesis.cls -- document class for graduate theses at UofT
 %%
 %% Copyright (c) 1998-2012 Francois Pitt <fpitt@cs.utoronto.ca>
-%% last updated at 15:10 (EDT) on Thu 31 May 2012
+%% last updated at 15:52 (EDT) on Thu 31 May 2012
 %%
 %% This work may be distributed and/or modified under the conditions of
 %% the LaTeX Project Public License, either version 1.3c of this license
@@ -30,14 +30,6 @@
 %%  - Any standard option for the LaTeX2e `report' class, including
 %%    `10pt', `11pt', `12pt', `oneside', `twoside', etc.
 %%
-%%  - `singlespaced', `oneandahalfspaced', or `doublespaced':  Set the
-%%    entire document's default line spacing (except for notes, which
-%%    are single-spaced by default).
-%%
-%%  - `singlespacednotes' or `regularspacednotes':  Set line spacing for
-%%    footnotes and marginal notes: either single-spaced or the same as
-%%    the rest of the document.
-%%
 %%  - `narrowmargins', `normalmargins', `widemargins', or
 %%    `extrawidemargins':  Set the size of the margins, as follows:
 %%     . `narrow': 1 1/4" on the left, 3/4" on all other sides,
@@ -52,6 +44,19 @@
 %%    If you have more than just a few marginal notes, it is recommended
 %%    that you use at least `wide' margins.
 %%
+%%  - `singlespaced', `oneandahalfspaced', or `doublespaced':  Set the
+%%    entire document's default line spacing (except for notes, which
+%%    are single-spaced by default).
+%%
+%%  - `singlespacednotes' or `regularspacednotes':  Set line spacing for
+%%    footnotes and marginal notes: either single-spaced or the same as
+%%    the rest of the document.
+%%
+%%  - `cleardoublepageempty' or `cleardoublepageplain':  Set the page
+%%    style for all "cleared" pages (empty pages inserted in two-sided
+%%    documents to put the next page on the right-hand side) to either
+%%    `empty' or `plain' (instead of the default thesis page style).
+%%
 %%  - `draft':  Produce a draft copy (double-sided, double-spaced,
 %%    normal margins, with the word "DRAFT" printed at all four corners
 %%    of every page).
@@ -65,11 +70,9 @@
 %% and preliminary sections will always start on a right-hand page under
 %% the default settings (inserting a blank page if needed).  This can be
 %% overridden by using the `openany' or `openright' options.  To achieve
-%% this effect for individual sections or chapters, use the
-%% \cleardoublepage command.  Note that the blank page inserted in these
-%% cases will still contain the header and page number that is present
-%% on all pages.  For `empty' or `plain' pages, explicitly use one of
-%% the commands \clearemptydoublepage or \clearplaindoublepage.
+%% this effect for individual sections or chapters, use \cleardoublepage
+%% -- or one of the more specific \clearemptydoublepage,
+%% \clearplaindoublepage, or \clearthesisdoublepage.
 %%
 %% NEW ENVIRONMENTS and COMMANDS:
 %%
@@ -87,10 +90,6 @@
 %%
 %%  * \title{...}:  (preamble only; REQUIRED)
 %%    Specify the title of the thesis.
-%%
-%%  - \clearemptydoublepage, \clearplaindoublepage:
-%%    Same as \cleardoublepage except that it sets the pagestyle of any
-%%    inserted blank page to `empty' or `plain', respectively.
 %%
 %%  - \begin{preliminary}...\end{preliminary}:
 %%    Delimit head matter (title page, abstract, table of contents,
@@ -124,6 +123,11 @@
 %%  - \begin{longquotation}...\end{longquotation}:
 %%    Single-spaced version of the `quotation' environment.
 %%
+%%  - \clearemptydoublepage, \clearplaindoublepage,
+%%    \clearthesisdoublepage:
+%%    Same as \cleardoublepage except that it sets the pagestyle of any
+%%    inserted blank page to `empty', `plain', or `thesis' respectively.
+%%
 %% The companion file `ut-thesis.tex' contains a skeleton illustrating
 %% the use of this class.
 
@@ -145,20 +149,23 @@
 \@draftfalse
 
 %% Switch for testing current page style.
-\newif\if@thesispage
-\@thesispagetrue
+\newif\if@thesispagestyle
+\@thesispagestyletrue
 
 %% Save original definitions of footnote and marginal note macros and
 %% lengths, to be able to reset them below as needed (when changing
 %% between single-spaced and regular-spaced notes).
-\let\thesis@@footnotetext\@footnotetext
-\let\thesis@@mpfootnotetext\@mpfootnotetext
-\let\thesis@@marginparreset\@marginparreset
-\newlength{\thesis@footnotesep}
-\newlength{\thesis@marginparpush}
+\let\@thesis@footnotetext\@footnotetext
+\let\@thesis@mpfootnotetext\@mpfootnotetext
+\let\@thesis@marginparreset\@marginparreset
+\newlength{\@thesisfootnotesep}
+\newlength{\@thesismarginparpush}
 \AtBeginDocument
-  {\setlength\thesis@footnotesep{\footnotesep}
-   \setlength\thesis@marginparpush{\marginparpush}}
+  {\setlength\@thesisfootnotesep{\footnotesep}
+   \setlength\@thesismarginparpush{\marginparpush}}
+
+%% Save original definition of \cleardoublepage.
+\let\@thesiscleardoublepage\cleardoublepage
 
 
 %%%%%%%%%%%%      OPTION DECLARATION      %%%%%%%%%%%%
@@ -197,20 +204,26 @@
 
 %% Line spacing for notes.
 \DeclareOption{singlespacednotes}{\AtBeginDocument
-  {\setlength\footnotesep{\thesis@footnotesep}
-   \setlength\marginparpush{\thesis@marginparpush}
+  {\setlength\footnotesep{\@thesisfootnotesep}
+   \setlength\marginparpush{\@thesismarginparpush}
    \renewcommand{\@footnotetext}[1]%
-     {\thesis@@footnotetext{#1\setstretch{\setspace@singlespace}}}
+     {\@thesis@footnotetext{#1\setstretch{\setspace@singlespace}}}
    \renewcommand{\@mpfootnotetext}[1]%
-     {\thesis@@mpfootnotetext{#1\setstretch{\setspace@singlespace}}}
+     {\@thesis@mpfootnotetext{#1\setstretch{\setspace@singlespace}}}
    \renewcommand*{\@marginparreset}%
-     {\thesis@@marginparreset\setstretch{\setspace@singlespace}}}}
+     {\@thesis@marginparreset\setstretch{\setspace@singlespace}}}}
 \DeclareOption{regularspacednotes}{\AtBeginDocument
-  {\setlength\footnotesep{\baselineskip-\thesis@footnotesep}
-   \setlength\marginparpush{\baselineskip-\thesis@marginparpush}
-   \let\@footnotetext\thesis@@footnotetext
-   \let\@mpfootnotetext\thesis@@mpfootnotetext
-   \let\@marginparreset\thesis@@marginparreset}}
+  {\setlength\footnotesep{\baselineskip-\@thesisfootnotesep}
+   \setlength\marginparpush{\baselineskip-\@thesismarginparpush}
+   \let\@footnotetext\@thesis@footnotetext
+   \let\@mpfootnotetext\@thesis@mpfootnotetext
+   \let\@marginparreset\@thesis@marginparreset}}
+
+%% Page styles for cleared pages.
+\DeclareOption{cleardoublepageempty}
+  {\AtEndOfClass{\let\cleardoublepage\clearemptydoublepage}}
+\DeclareOption{cleardoublepageplain}
+  {\AtEndOfClass{\let\cleardoublepage\clearplaindoublepage}}
 
 %% All other options are passed to the base class directly.
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{report}}
@@ -338,18 +351,18 @@
 
 %% Redefine `thebibliography' environment so that it generates headers
 %% in the same style as the rest of the document.
-\let\thesis@thebibliography\thebibliography
-\renewcommand*{\thebibliography}[1]{\thesis@thebibliography{#1}
-   \if@thesispage\@mkboth{\textsc{\bibname}}{\textsc{\bibname}}\fi}
+\let\@thesisthebibliography\thebibliography
+\renewcommand*{\thebibliography}[1]{\@thesisthebibliography{#1}
+   \if@thesispagestyle\@mkboth{\textsc{\bibname}}{\textsc{\bibname}}\fi}
 
 %% Variations of \cleardoublepage that explicitly set the pagestyle of
 %% any inserted blank page.
 \newcommand*{\clearemptydoublepage}%
-  {{\pagestyle{empty}\cleardoublepage}}
+  {{\pagestyle{empty}\@thesiscleardoublepage}}
 \newcommand*{\clearplaindoublepage}%
-  {{\pagestyle{plain}\cleardoublepage}}
-%% TODO: Look at .../texmf-dist/source/latex/koma-script/scrkpage.dtx
-%% for ways to generalize this and define new document options.
+  {{\pagestyle{plain}\@thesiscleardoublepage}}
+\newcommand*{\clearthesisdoublepage}%
+  {{\pagestyle{thesis}\@thesiscleardoublepage}}
 
 %% Single-spaced quotes and quotations.
 \newenvironment*{longquote}%
@@ -362,11 +375,11 @@
 %% Redefine all four standard page styles (empty, plain, headings,
 %% myheadings), based on the definitions in `report', so that they
 %% conform to the SGS guidelines (and include draft information if
-%% applicable).  Then, define a new pagestyle `utthesis'.
+%% applicable).  Then, define a new pagestyle `thesis'.
 
 %% Pagestyle `empty'.
 \renewcommand*{\ps@empty}%
-  {\@thesispagefalse
+  {\@thesispagestylefalse
    \let\@mkboth\@gobbletwo
    \def\@oddfoot{\if@draft\blDRAFT\hfil
       {\slshape\small\today}\hfil\brDRAFT\fi}%
@@ -377,7 +390,7 @@
 
 %% Pagestyle `plain'.
 \renewcommand*{\ps@plain}%
-  {\@thesispagefalse
+  {\@thesispagestylefalse
    \let\@mkboth\@gobbletwo
    \def\@oddfoot{\if@draft\blDRAFT\fi\hfil
       \thepage\hfil\if@draft\brDRAFT\fi}%
@@ -389,7 +402,7 @@
 %% Pagestyle `headings'.
 \if@twoside % two-sided printing
 \renewcommand*{\ps@headings}%
-  {\@thesispagefalse
+  {\@thesispagestylefalse
    \let\@mkboth\markboth
    \def\@oddfoot{\if@draft\blDRAFT\hfil
       {\slshape\small\today}\hfil\brDRAFT\fi}%
@@ -406,7 +419,7 @@
          \thesection. \ \fi ##1}}}}
 \else % one-sided printing
 \renewcommand*{\ps@headings}%
-  {\@thesispagefalse
+  {\@thesispagestylefalse
    \let\@mkboth\markboth
    \def\@oddfoot{\if@draft\blDRAFT\hfil
       {\slshape\small\today}\hfil\brDRAFT\fi}%
@@ -419,7 +432,7 @@
 
 %% Pagestyle `myheadings'.
 \renewcommand*{\ps@myheadings}%
-  {\@thesispagefalse
+  {\@thesispagestylefalse
    \let\@mkboth\@gobbletwo
    \def\@oddfoot{\if@draft\blDRAFT\hfil
       {\slshape\small\today}\hfil\brDRAFT\fi}%
@@ -430,10 +443,10 @@
       {\slshape\leftmark}\if@draft\trDRAFT\fi}%
    \let\chaptermark\@gobble\let\sectionmark\@gobble}
 
-%% Pagestyle `utthesis' (based on `headings').
+%% Pagestyle `thesis' (based on `headings').
 \if@twoside % two-sided printing
-\newcommand*{\ps@utthesis}%
-  {\@thesispagetrue
+\newcommand*{\ps@thesis}%
+  {\@thesispagestyletrue
    \let\@mkboth\markboth
    \def\@oddfoot{\if@draft\blDRAFT\hfil
       {\slshape\small\today}\hfil\brDRAFT\fi}%
@@ -449,8 +462,8 @@
       {\textsc{\ifnum \c@secnumdepth >\z@
          \thesection. \ \fi ##1}}}}
 \else % one-sided printing
-\newcommand*{\ps@utthesis}%
-  {\@thesispagetrue
+\newcommand*{\ps@thesis}%
+  {\@thesispagestyletrue
    \let\@mkboth\markboth
    \def\@oddfoot{\if@draft\blDRAFT\hfil
       {\slshape\small\today}\hfil\brDRAFT\fi}%
@@ -462,4 +475,4 @@
 \fi%@twoside
 
 %% Default page style.
-\pagestyle{utthesis}
+\pagestyle{thesis}

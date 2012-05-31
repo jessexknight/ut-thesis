@@ -1,7 +1,7 @@
 %% ut-thesis.tex -- document template for graduate theses at UofT
 %%
 %% Copyright (c) 1998-2012 Francois Pitt <fpitt@cs.utoronto.ca>
-%% last updated at 15:22 (EDT) on Thu 31 May 2012
+%% last updated at 15:51 (EDT) on Thu 31 May 2012
 %%
 %% This work may be distributed and/or modified under the conditions of
 %% the LaTeX Project Public License, either version 1.3c of this license
@@ -25,8 +25,8 @@
 %% in the document.  See the file `ut-thesis.cls' for more details.
 %%
 %% To explicitly set the pagestyle of any inserted blank page when
-%% \cleardoublepage occurs, use one of \clearemptydoublepage or
-%% \clearplaindoublepage instead.
+%% \cleardoublepage occurs, use one of \clearemptydoublepage,
+%% \clearplaindoublepage, or \clearthesisdoublepage.
 %%
 %% For single-spaced quotes or quotations, use the `longquote' and
 %% `longquotation' environments.
@@ -45,11 +45,15 @@
 %% `regularspacednotes'.  The size of the margins can be changed with
 %% one of the following options: `narrowmargins' (1 1/4" left, 3/4"
 %% others), `normalmargins' (1 1/4" left, 1" others), `widemargins' (1
-%% 1/4" all), `extrawidemargins' (1 1/2" all).  Any other standard
-%% option for the `report' document class can be used to override the
-%% default or draft settings (such as `10pt', `11pt', `12pt'), and
-%% standard LaTeX packages can be used to further customize the layout
-%% and/or formatting of the document.
+%% 1/4" all), `extrawidemargins' (1 1/2" all).  The pagestyle of
+%% "cleared" pages (empty pages inserted in two-sided documents to put
+%% the next page on the right-hand side) is `thesis' by default, but
+%% this can be overridden with one of the options `cleardoublepageempty'
+%% or `cleardoublepageplain'.  Any other standard option for the
+%% `report' document class can be used to override the default or draft
+%% settings (such as `10pt', `11pt', `12pt'), and standard LaTeX
+%% packages can be used to further customize the layout and/or
+%% formatting of the document.
 
 %% *** Add any desired options. ***
 \documentclass{ut-thesis}
