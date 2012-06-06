@@ -1,10 +1,10 @@
-LaTeX2e document class and template for formatting graduate theses
-according to the guidelines of the School of Graduate Studies at the
-University of Toronto (as of 2008).  [http://www.sgs.utoronto.ca/+
-informationfor/students/finup/producingthesis/formatting.htm]
+LaTeX2e document class and template for graduate theses that conform to
+the guidelines of the School of Graduate Studies at the University of
+Toronto (as of 2008).  [http://www.sgs.utoronto.ca/informationfor/+
+students/finup/producingthesis/formatting.htm]
 
 Copyright (c) 1998-2012 Francois Pitt <fpitt@cs.utoronto.ca>
-last updated at 16:56 (EDT) on Thu 31 May 2012
+last updated at 09:43 (EDT) on Fri  1 Jun 2012
 
 This work may be distributed and/or modified under the conditions of
 the LaTeX Project Public License, either version 1.3c of this license
@@ -30,9 +30,11 @@ See the comments inside each file for further details.
 Version History
 ---------------
 
-v2.0: 2012/05/30 (Francois Pitt)
+v2.0: 2012/06/01 (Francois Pitt)
 - Rewritten to use standard packages: `setspace' to handle line spacing
-  and `geometry' for page layout.
+  and `geometry' for page layout.  Some options and macros have been
+  renamed from v1.8, hence the change of major version number -- this
+  version is _not_ fully backward-compatible because of these changes.
 - Renamed `oneandahalfspaced' option to `onehalfspaced' (for consistency
   with `setspace' package).
 - Removed `singlespaced', `oneandahalfspaced', `doublespaced', and
@@ -40,16 +42,14 @@ v2.0: 2012/05/30 (Francois Pitt)
   instead.
 - Renamed `spacednotes' option to `standardspacednotes' and added
   `singlespacednotes' option.
-- Renamed `utthesis' page style to `thesis'.
 - Added options `cleardoublepagestyleempty', `cleardoublepagestyleplain'
   and `cleardoublepagestylestandard' to set the default style for
   cleared pages, and new macros `\clearthesisdoublepage' and
   `\clearstandarddoublepage'.
-- The abstract is no longer put on a separate page by default.
-
-v1.9: 2012/05/29 (Francois Pitt)
+- Changed default options: now 1 1/2-spaced and LaTeX default font size.
+- Renamed `utthesis' page style to `thesis'.
+- The abstract is no longer put on a right-side page by default.
 - Cleaned up the code and comments throughout.
-- Changed a few default options: 1 1/2-spaced, not 12pt.
 
 v1.8: 2000/02/20, 1999/12/10 (Francois Pitt)
 - Minor formatting changes to comments.

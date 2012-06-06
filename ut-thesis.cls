@@ -1,7 +1,7 @@
 %% ut-thesis.cls -- document class for graduate theses at UofT
 %%
 %% Copyright (c) 1998-2012 Francois Pitt <fpitt@cs.utoronto.ca>
-%% last updated at 16:57 (EDT) on Thu 31 May 2012
+%% last updated at 09:43 (EDT) on Fri  1 Jun 2012
 %%
 %% This work may be distributed and/or modified under the conditions of
 %% the LaTeX Project Public License, either version 1.3c of this license
@@ -22,8 +22,9 @@
 %%         \documentclass[...options...]{ut-thesis}
 %%
 %% The default settings produce a final copy, ready for submission to
-%% SGS (single-sided, one-and-a-half-spaced, normal margins, with
-%% single-spaced notes).
+%% the School of Graduate Studies (SGS) at the University of Toronto:
+%% single-sided, "normal" margins (see below), one-and-a-half spaced
+%% with single-spaced notes.
 %%
 %% OPTIONS:
 %%
@@ -42,11 +43,13 @@
 %%     . `extrawide': 1 1/2" on all sides,
 %%       headers & footers 3/4" from body.
 %%    If you have more than just a few marginal notes, it is recommended
-%%    that you use at least `wide' margins.
+%%    that you use at least `wide' margins.  For other settings, use the
+%%    \geometry command (see the template for details).
 %%
 %%  - `singlespaced', `oneandahalfspaced', or `doublespaced':  Set the
 %%    entire document's default line spacing (except for notes, which
-%%    are single-spaced by default).
+%%    are single-spaced by default).  For other settings, use the
+%%    \setstretch command (see the template for details).
 %%
 %%  - `singlespacednotes' or `standardspacednotes':  Set line spacing
 %%    for footnotes and marginal notes: either single-spaced or the same
@@ -68,14 +71,14 @@
 %% double-sided final copy, or a 1 1/2-spaced draft copy with wide
 %% margins, etc.  You may use standard LaTeX packages to tailor the
 %% layout and formatting in other ways.
-%% Also note that when producing double-sided documents, new chapters
-%% and preliminary sections will always start on a right-hand page under
-%% the default settings (inserting a blank page if needed).  This can be
-%% overridden by using the `openany' or `openright' options.  To achieve
-%% this effect for individual sections or chapters, use \cleardoublepage
-%% -- or one of the more specific \clearemptydoublepage,
-%% \clearplaindoublepage, \clearthesisdoublepage, or
-%% \clearstandarddoublepage (see below for details).
+%% Also note that when producing double-sided documents while _not_ in
+%% draft mode, new chapters and preliminary sections will always start
+%% on a right-hand page under the default settings (inserting a blank
+%% page if needed).  This can be overridden by using the `openany' or
+%% `openright' options.  To achieve this effect for individual sections
+%% or chapters, use \cleardoublepage -- or one of the more specific
+%% \clearemptydoublepage, \clearplaindoublepage, \clearthesisdoublepage,
+%% or \clearstandarddoublepage (see below for details).
 %%
 %% NEW ENVIRONMENTS and COMMANDS:
 %%
@@ -132,8 +135,8 @@
 %%    `empty', `plain', or `thesis' respectively.
 %%
 %%  - \clearstandarddoublepage:
-%%    Same as the original \cleardoublepage -- use the pagestyle
-%%    currently in effect -- used to override the effects of options
+%%    Same as the original \cleardoublepage (cleared pages use the style
+%%    currently in effect) -- used to override the effects of options
 %%    `cleardoublepagestyleempty' or `cleardoublepagestyleplain'.
 %%
 %% The companion file `ut-thesis.tex' contains a skeleton illustrating
@@ -143,7 +146,7 @@
 %%%%%%%%%%%%        IDENTIFICATION        %%%%%%%%%%%%
 
 \newcommand*{\utthesisversion}{v2.0} % current version number
-\newcommand*{\utthesisupdated}{2012/05/31} % date of last change(s)
+\newcommand*{\utthesisupdated}{2012/06/01} % date of last change(s)
 
 \NeedsTeXFormat{LaTeX2e}[1995/12/01] % robust macros with * form
 \ProvidesClass{ut-thesis}[\utthesisupdated\space\utthesisversion\space
@@ -175,6 +178,12 @@
 %% Save original definition of \cleardoublepage.
 \let\clearstandarddoublepage\cleardoublepage
 
+%% The \singlespacing macro from `setspace' includes some vertical space
+%% (to make it easier to change line spacing within the document).
+%% Unfortunately, this has undesirable side-effects within macros, so we
+%% define our own replacement here for use within the class.
+\newcommand*{\singlespacingnoskip}{\setstretch{\setspace@singlespace}}
+
 
 %%%%%%%%%%%%      OPTION DECLARATION      %%%%%%%%%%%%
 
@@ -189,7 +198,7 @@
    \newcommand*{\brDRAFT}%
      {\raisebox{-3ex}[0pt][0pt]{\rlap{\sffamily\scriptsize \ \ DRAFT}}}
    \ExecuteOptions{doublespaced}
-   \PassOptionsToClass{draft,twoside}{report}}
+   \PassOptionsToClass{draft,twoside,openany}{report}}
 
 %% Margin options.
 \DeclareOption{narrowmargins}{\AtEndOfClass % 1 1/4" left, 3/4" others
@@ -206,7 +215,7 @@
              footskip=.75in,marginparwidth=1in,marginparsep=.25in}}}
 
 %% Line Spacing options.
-\DeclareOption{singlespaced}{\AtEndOfClass{\singlespacing}}
+\DeclareOption{singlespaced}{\AtEndOfClass{\singlespacingnoskip}}
 \DeclareOption{onehalfspaced}{\AtEndOfClass{\onehalfspacing}}
 \DeclareOption{doublespaced}{\AtEndOfClass{\doublespacing}}
 
@@ -215,11 +224,11 @@
   {\setlength\footnotesep{\@thesisfootnotesep}
    \setlength\marginparpush{\@thesismarginparpush}
    \renewcommand{\@footnotetext}[1]%
-     {\@thesis@footnotetext{#1\setstretch{\setspace@singlespace}}}
+     {\@thesis@footnotetext{#1\singlespacingnoskip}}
    \renewcommand{\@mpfootnotetext}[1]%
-     {\@thesis@mpfootnotetext{#1\setstretch{\setspace@singlespace}}}
+     {\@thesis@mpfootnotetext{#1\singlespacingnoskip}}
    \renewcommand*{\@marginparreset}%
-     {\@thesis@marginparreset\setstretch{\setspace@singlespace}}}}
+     {\@thesis@marginparreset\singlespacingnoskip}}}
 \DeclareOption{standardspacednotes}{\AtBeginDocument
   {\setlength\footnotesep{\baselineskip-\@thesisfootnotesep}
    \setlength\marginparpush{\baselineskip-\@thesismarginparpush}
@@ -241,7 +250,7 @@
 
 %%%%%%%%%%%%       OPTION EXECUTION       %%%%%%%%%%%%
 
-%% Default settings.
+%% Default settings: standard options followed by ut-thesis options.
 \ExecuteOptions{letterpaper,oneside,openright}
 \ExecuteOptions{normalmargins,onehalfspaced,singlespacednotes}
 
@@ -282,7 +291,7 @@
 %% Default values for the required fields.
 \degree{\emph{(degree)}}
 \department{\emph{(department)}}
-\gradyear{\number\year}
+\gradyear{\emph{(year of graduation)}}
 \author{\emph{(author)}}
 \title{\emph{(title)}}
 
@@ -298,7 +307,7 @@
 %% Change \maketitle to follow SGS guidelines.
 \renewcommand*{\maketitle}%
   {\begin{titlepage}
-   \large\setstretch{\setspace@singlespace}
+   \large\singlespacingnoskip
    \begin{center}
       \mbox{}
       \vfill
@@ -376,9 +385,9 @@
 
 %% Single-spaced quotes and quotations.
 \newenvironment*{longquote}%
-  {\begin{quote}\setstretch{\setspace@singlespace}}{\end{quote}}
+  {\begin{quote}\singlespacingnoskip}{\end{quote}}
 \newenvironment*{longquotation}%
-  {\begin{quotation}\setstretch{\setspace@singlespace}}{\end{quotation}}
+  {\begin{quotation}\singlespacingnoskip}{\end{quotation}}
 
 %%%%%%    Page Styles
 

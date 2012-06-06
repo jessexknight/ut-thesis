@@ -1,7 +1,7 @@
 %% ut-thesis.tex -- document template for graduate theses at UofT
 %%
 %% Copyright (c) 1998-2012 Francois Pitt <fpitt@cs.utoronto.ca>
-%% last updated at 17:04 (EDT) on Thu 31 May 2012
+%% last updated at 09:43 (EDT) on Fri  1 Jun 2012
 %%
 %% This work may be distributed and/or modified under the conditions of
 %% the LaTeX Project Public License, either version 1.3c of this license
@@ -42,9 +42,9 @@
 %%    the `draft' option.
 %%  - The default global line spacing can be changed with one of the
 %%    options `singlespaced', `onehalfspaced', or `doublespaced'.
-%%  - The notes are always single-spaced by default, but can be made to
-%%    have the same spacing as the rest of the document by using the
-%%    option `standardspacednotes'.
+%%  - Footnotes and marginal notes are all single-spaced by default, but
+%%    can be made to have the same spacing as the rest of the document
+%%    by using the option `standardspacednotes'.
 %%  - The size of the margins can be changed with one of the options:
 %%     . `narrowmargins' (1 1/4" left, 3/4" others),
 %%     . `normalmargins' (1 1/4" left, 1" others),
@@ -65,7 +65,12 @@
 %% *** Add \usepackage declarations here. ***
 %% The standard packages `geometry' and `setspace' are already loaded by
 %% `ut-thesis' -- see their documentation for details of the features
-%% they provide.
+%% they provide.  In particular, you may use the \geometry command here
+%% to adjust the margins if none of the ut-thesis options are suitable
+%% (see the `geometry' package for details).  You may also use the
+%% \setstretch command to set the line spacing to a value other than
+%% single, one-and-a-half, or double spaced (see the `setspace' package
+%% for details).
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -118,8 +123,7 @@
 %% There should be NOTHING between the title page and abstract.
 %% However, if your document is two-sided and you want the abstract
 %% _not_ to appear on the back of the title page, then uncomment the
-%% following line.  (This can be used anywhere to guarantee that the
-%% next page appears on a right-hand page.)
+%% following line.
 %\cleardoublepage
 
 %% This generates the abstract page, with the line spacing adjusted
@@ -131,7 +135,8 @@
 
 %% Anything placed between the abstract and table of contents will
 %% appear on a separate page since the abstract ends with \newpage and
-%% the table of contents starts with \clearpage.
+%% the table of contents starts with \clearpage.  Use \cleardoublepage
+%% for anything that you want to appear on a right-hand page.
 
 %% This generates a "dedication" section, if needed
 %% (uncomment to have it appear in the document).
@@ -170,12 +175,11 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%  Put your Chapters here; the easiest way to do this is to keep     %%
-%%  each chapter in a separate file and `\include' all the files      %%
-%%  right here.  Note that each chapter file should start with the    %%
-%%  line "\chapter{ChapterName}".  Note that using `\include'         %%
-%%  instead of `\input' makes each chapter start on a new page, and   %%
-%%  allows you to format only parts of your thesis at a time by       %%
-%%  using `\includeonly'.                                             %%
+%%  each chapter in a separate file and `\include' all the files.     %%
+%%  Each chapter file should start with "\chapter{ChapterName}".      %%
+%%  Note that using `\include' instead of `\input' will make each     %%
+%%  chapter start on a new page, and allow you to format only parts   %%
+%%  of your thesis at a time by using `\includeonly'.                 %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %% *** Include chapter files here. ***
@@ -184,10 +188,10 @@
 %% This adds a line for the Bibliography in the Table of Contents.
 \addcontentsline{toc}{chapter}{Bibliography}
 %% *** Set the bibliography style. ***
-%% (change according to your preference)
+%% (change according to your preference/requirements)
 \bibliographystyle{plain}
 %% *** Set the bibliography file. ***
-%% ("thesis.bib" by default; change if needed)
+%% ("thesis.bib" by default; change as needed)
 \bibliography{thesis}
 
 %% *** NOTE ***
