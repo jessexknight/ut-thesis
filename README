@@ -4,7 +4,7 @@ Toronto (as of 2008).  [http://www.sgs.utoronto.ca/informationfor/+
 students/finup/producingthesis/formatting.htm]
 
 Copyright (c) 1998-2012 Francois Pitt <fpitt@cs.utoronto.ca>
-last updated at 09:43 (EDT) on Fri  1 Jun 2012
+last updated at 09:47 (EST) on Thu  6 Dec 2012
 
 This work may be distributed and/or modified under the conditions of
 the LaTeX Project Public License, either version 1.3c of this license
@@ -29,6 +29,10 @@ See the comments inside each file for further details.
 ---------------
 Version History
 ---------------
+
+TODO:
+- [2012/12/06] Redefinition of \thebibliography not compatible with packages
+  like natbib. Figure out how to fix this.
 
 v2.0: 2012/06/01 (Francois Pitt)
 - Rewritten to use standard packages: `setspace' to handle line spacing
