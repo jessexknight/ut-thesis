@@ -1,7 +1,7 @@
 %% ut-thesis.cls -- document class for graduate theses at UofT
 %%
-%% Copyright (c) 1998-2012 Francois Pitt <fpitt@cs.utoronto.ca>
-%% last updated at 09:43 (EDT) on Fri  1 Jun 2012
+%% Copyright (c) 1998-2013 Francois Pitt <fpitt@cs.utoronto.ca>
+%% last updated at 16:18 (EDT) on Wed 25 Sep 2013
 %%
 %% This work may be distributed and/or modified under the conditions of
 %% the LaTeX Project Public License, either version 1.3c of this license
@@ -112,7 +112,8 @@
 %%       guidelines, this must immediately follow the title page.)
 %%
 %%     - \begin{dedication}...\end{dedication}:
-%%       Generate a dedication section, if needed.
+%%       Generate a dedication section, if needed (just a paragraph
+%%       formatted flush right).
 %%
 %%     - \begin{acknowledgements}...\end{acknowledgements}:
 %%       Generate an acknowledgements section, if needed.
@@ -351,13 +352,10 @@
   {\par\endgroup\newpage}
 
 %% \begin{dedication}...\end{dedication} formats a dedication section
-%% (*not* on a separate page).
+%% (*not* on a separate page -- just a paragraph formatted flush right).
 \newenvironment*{dedication}%
-  {\begin{center}
-      \section*{Dedication}
-   \end{center}
-   \begingroup}%
-  {\par\endgroup}
+  {\begin{flushright}}%
+  {\end{flushright}}
 
 %% \begin{acknowledgements}...\end{acknowledgements} formats an
 %% acknowledgements section (*not* on a separate page).
@@ -365,7 +363,7 @@
   {\begin{center}
       \section*{Acknowledgements}
    \end{center}
-   \begingroup}%
+   \begingroup\noindent}%
   {\par\endgroup}
 
 %% Redefine `thebibliography' environment so that it generates headers

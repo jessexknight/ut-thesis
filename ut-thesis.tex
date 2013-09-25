@@ -1,7 +1,7 @@
 %% ut-thesis.tex -- document template for graduate theses at UofT
 %%
-%% Copyright (c) 1998-2012 Francois Pitt <fpitt@cs.utoronto.ca>
-%% last updated at 09:43 (EDT) on Fri  1 Jun 2012
+%% Copyright (c) 1998-2013 Francois Pitt <fpitt@cs.utoronto.ca>
+%% last updated at 16:20 (EDT) on Wed 25 Sep 2013
 %%
 %% This work may be distributed and/or modified under the conditions of
 %% the LaTeX Project Public License, either version 1.3c of this license
@@ -138,15 +138,21 @@
 %% the table of contents starts with \clearpage.  Use \cleardoublepage
 %% for anything that you want to appear on a right-hand page.
 
-%% This generates a "dedication" section, if needed
-%% (uncomment to have it appear in the document).
+%% This generates a "dedication" section, if needed -- just a paragraph
+%% formatted flush right (uncomment to have it appear in the document).
 %\begin{dedication}
 %% *** Put your Dedication here. ***
 %\end{dedication}
 
 %% The `dedication' and `acknowledgements' sections do not create new
 %% pages so if you want the two sections to appear on separate pages,
-%% you should put an explicit \newpage between them.
+%% uncomment the following line.
+%\newpage  % separate pages for dedication and acknowledgements
+
+%% Alternatively, if you leave both on the same page, it is probably a
+%% good idea to add a bit of extra vertical space in between the two --
+%% for example, as follows (adjust as desired).
+%\vspace{.5in}  % vertical space between dedication and acknowledgements
 
 %% This generates an "acknowledgements" section, if needed
 %% (uncomment to have it appear in the document).
