@@ -4,7 +4,7 @@ Toronto (as of 2008).  [http://www.sgs.utoronto.ca/informationfor/+
 students/finup/producingthesis/formatting.htm]
 
 Copyright (c) 1998-2013 Francois Pitt <fpitt@cs.utoronto.ca>
-last updated at 16:17 (EDT) on Wed 25 Sep 2013
+last updated at 09:06 on Wed 08 May 2019
 
 This work may be distributed and/or modified under the conditions of
 the LaTeX Project Public License, either version 1.3c of this license
@@ -31,6 +31,18 @@ Version History
 ---------------
 
 TODO:
+- [2018-09-13]
+  . Remove "Graduate Department of" on title page and abstract.
+  . Add Acknowledgements, Table of Contents, etc. to Table of Contents.
+  . Do not number title page or include Abstract in the Table of Contents.
+- [2018-07-26] Request for fill-in-the-blank template -- add pointers to LaTeX
+  tutorials and resources to help novices use the template.
+- [2017/10/07] Update to follow
+  http://www.sgs.utoronto.ca/currentstudents/Pages/formatting.aspx.
+  In particular:
+  . Copyright year follows author's name.
+  . Abstract heading follows thesis title, name, degree, academic unit,
+    institution, and year.
 - [2012/12/06] Redefinition of \thebibliography not compatible with
   packages like natbib. Figure out how to fix this.
 
