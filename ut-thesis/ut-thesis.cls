@@ -6,10 +6,13 @@
 %%
 %% ut-thesis.dtx  (with options: `class')
 %% 
-%% ut-thesis.cls -- document class for graduate theses at UofT
+%% The |ut-thesis| document class and template implements
+%% the requirements of the University of Toronto School of Graduate Studies (SGS),
+%% as of Winter 2020.
 %% 
-%% Copyright (c) 1998-2013 Francois Pitt <fpitt@cs.utoronto.ca>
-%% last updated at 16:18 (EDT) on Wed 25 Sep 2013
+%% Copyright (c) 1998-2013 Francois Pitt <fpitt@cs.utoronto.ca>,
+%%               2020-2020 Jesse Knight <jesse.knight@mail.utoronto.ca>
+%% last updated at 17:00 (EST) on Wed 26 Aug 2020
 %% 
 %% This work may be distributed and/or modified under the conditions of
 %% the LaTeX Project Public License, either version 1.3c of this license
@@ -22,140 +25,20 @@
 %% This work has the LPPL maintenance status "maintained".
 %% 
 %% The Current Maintainer of this work is
-%% Francois Pitt <fpitt@cs.utoronto.ca>.
+%% Jesse Knight <jesse.knight@mail.utoronto.ca>.
 %% 
-%% This work consists of the files listed in the accompanying README.
-%% 
-%% USAGE:  /documentclass{ut-thesis}
-%%         /documentclass[...options...]{ut-thesis}
-%% 
-%% The default settings produce a final copy, ready for submission to
-%% the School of Graduate Studies (SGS) at the University of Toronto:
-%% single-sided, "normal" margins (see below), one-and-a-half spaced
-%% with single-spaced notes.
-%% 
-%% OPTIONS:
-%% 
-%%  - Any standard option for the LaTeX2e `report' class, including
-%%    `10pt', `11pt', `12pt', `oneside', `twoside', etc.
-%% 
-%%  - `narrowmargins', `normalmargins', `widemargins', or
-%%    `extrawidemargins':  Set the size of the margins, as follows:
-%%     . `narrow': 1 1/4" on the left, 3/4" on all other sides,
-%%       headers & footers 3/8" from body
-%%       (these are the minimum values required by SGS);
-%%     . `normal': 1 1/4" on the left, 1" on all other sides,
-%%       headers & footers 1/2" from body;
-%%     . `wide': 1 1/4" on all sides,
-%%       headers & footers 5/8" from body;
-%%     . `extrawide': 1 1/2" on all sides,
-%%       headers & footers 3/4" from body.
-%%    If you have more than just a few marginal notes, it is recommended
-%%    that you use at least `wide' margins.  For other settings, use the
-%%    /geometry command (see the template for details).
-%% 
-%%  - `singlespaced', `oneandahalfspaced', or `doublespaced':  Set the
-%%    entire document's default line spacing (except for notes, which
-%%    are single-spaced by default).  For other settings, use the
-%%    /setstretch command (see the template for details).
-%% 
-%%  - `singlespacednotes' or `standardspacednotes':  Set line spacing
-%%    for footnotes and marginal notes: either single-spaced or the same
-%%    as the rest of the document.
-%% 
-%%  - `cleardoublepagestyleempty', `cleardoublepagestyleplain', or
-%%    `cleardoublepagestylestandard':  Set the page style for all
-%%    "cleared" pages (empty pages inserted in two-sided documents to
-%%    put the next page on the right-hand side) to either `empty',
-%%    `plain', or whatever style is in effect when the page is cleared
-%%    (the default).
-%% 
-%%  - `draft':  Produce a draft copy (double-sided, double-spaced,
-%%    normal margins, with the word "DRAFT" printed at all four corners
-%%    of every page).
-%% 
-%% Note that these options can be used to override the default or draft
-%% document settings, so that it is possible, for example, to create a
-%% double-sided final copy, or a 1 1/2-spaced draft copy with wide
-%% margins, etc.  You may use standard LaTeX packages to tailor the
-%% layout and formatting in other ways.
-%% Also note that when producing double-sided documents while _not_ in
-%% draft mode, new chapters and preliminary sections will always start
-%% on a right-hand page under the default settings (inserting a blank
-%% page if needed).  This can be overridden by using the `openany' or
-%% `openright' options.  To achieve this effect for individual sections
-%% or chapters, use /cleardoublepage -- or one of the more specific
-%% /clearemptydoublepage, /clearplaindoublepage, /clearthesisdoublepage,
-%% or /clearstandarddoublepage (see below for details).
-%% 
-%% NEW ENVIRONMENTS and COMMANDS:
-%% 
-%%  * /degree{...}:  (preamble only; REQUIRED)
-%%    Specify the name of the degree (e.g., "Doctor of Philosophy").
-%% 
-%%  * /department{...}:  (preamble only; REQUIRED)
-%%    Specify the name of the graduate department.
-%% 
-%%  * /gradyear{...}:  (preamble only; REQUIRED)
-%%    Specify the year of graduation (defaults to current year).
-%% 
-%%  * /author{...}:  (preamble only; REQUIRED)
-%%    Specify the name of the author.
-%% 
-%%  * /title{...}:  (preamble only; REQUIRED)
-%%    Specify the title of the thesis.
-%% 
-%%  - /begin{preliminary}.../end{preliminary}:
-%%    Delimit head matter (title page, abstract, table of contents,
-%%    lists of tables and figures, etc.): set the page style and
-%%    numbering for the preliminary sections and reset them for the main
-%%    document.
-%% 
-%%     - /maketitle:
-%%       Generate the title page from the information supplied in the
-%%       preamble.
-%% 
-%%     - /begin{abstract}.../end{abstract}:
-%%       Generate the abstract page, double-sided.  (According to SGS
-%%       guidelines, this must immediately follow the title page.)
-%% 
-%%     - /begin{dedication}.../end{dedication}:
-%%       Generate a dedication section, if needed (just a paragraph
-%%       formatted flush right).
-%% 
-%%     - /begin{acknowledgements}.../end{acknowledgements}:
-%%       Generate an acknowledgements section, if needed.
-%% 
-%%    Note that neither the `dedication' nor the `acknowledgements' are
-%%    put on a separate page by default (use /newpage to do this
-%%    explicitly).  Also note that the table of contents, list of
-%%    tables, and list of figures can be generated using the usual LaTeX
-%%    commands.
-%% 
-%%  - /begin{longquote}.../end{longquote}:
-%%    Single-spaced version of the `quote' environment.
-%% 
-%%  - /begin{longquotation}.../end{longquotation}:
-%%    Single-spaced version of the `quotation' environment.
-%% 
-%%  - /clearemptydoublepage, /clearplaindoublepage,
-%%    /clearthesisdoublepage:
-%%    Same as /cleardoublepage except that cleared pages have style
-%%    `empty', `plain', or `thesis' respectively.
-%% 
-%%  - /clearstandarddoublepage:
-%%    Same as the original /cleardoublepage (cleared pages use the style
-%%    currently in effect) -- used to override the effects of options
-%%    `cleardoublepagestyleempty' or `cleardoublepagestyleplain'.
-%% 
-%% The companion file `ut-thesis.tex' contains a skeleton illustrating
-%% the use of this class.
+%% This work consists of the files:
+%% - README
+%% - ut-thesis.dtx
+%% - ut-thesis.ins
+%% - ut-thesis.pdf (derived user manual)
+%% - ut-thesis.cls (derived class file)
 %% 
 \NeedsTeXFormat{LaTeX2e}[1999/12/01]
 \ProvidesClass{ut-thesis}
 [2020/09/01 v3.0.a University of Toronto thesis class]
 
-%% Switch for testing draft mode (toggled by `draft' option).
+%% Switch for testing draft mode (toggled by |draft| option).
 \newif\if@draft
 \@draftfalse
 
@@ -178,14 +61,14 @@
 %% Save original definition of |\cleardoublepage|.
 \let\clearstandarddoublepage\cleardoublepage
 
-%% The |\singlespacing| macro from `setspace' includes some vertical space
+%% The |\singlespacing| macro from |setspace| includes some vertical space
 %% (to make it easier to change line spacing within the document).
 %% Unfortunately, this has undesirable side-effects within macros, so we
 %% define our own replacement here for use within the class.
 \newcommand*{\singlespacingnoskip}{\setstretch{\setspace@singlespace}}
 
 
-%% `draft' option: change default document settings.
+%% |draft| option: change default document settings.
 \DeclareOption{draft}{\@drafttrue
    \newcommand*{\tlDRAFT}%
      {\raisebox{ 3ex}[0pt][0pt]{\llap{\sffamily\scriptsize DRAFT\ \ }}}
@@ -355,7 +238,7 @@
    \begingroup\noindent}%
   {\par\endgroup}
 
-%% Redefine `thebibliography' environment so that it generates headers
+%% Redefine |\thebibliography| environment so that it generates headers
 %% in the same style as the rest of the document.
 \let\@thesisthebibliography\thebibliography
 \renewcommand*{\thebibliography}[1]{\@thesisthebibliography{#1}
@@ -378,13 +261,13 @@
 
 
 %% Redefine all four standard page styles (empty, plain, headings,
-%% myheadings), based on the definitions in `report', so that they
+%% myheadings), based on the definitions in |report|, so that they
 %% conform to the SGS guidelines (and include draft information if
-%% applicable).  Then, define a new pagestyle `thesis'.
+%% applicable).  Then, define a new pagestyle |thesis|.
 
 %% TODO: Get rid of copy-pasted definitions for pagestyles?
 
-%% Pagestyle `empty'.
+%% Pagestyle |empty|.
 \renewcommand*{\ps@empty}%
   {\@thesispagestylefalse
    \let\@mkboth\@gobbletwo
@@ -395,7 +278,7 @@
       {\slshape\small\today}\hfil\trDRAFT\fi}%
    \let\@evenhead\@oddhead}
 
-%% Pagestyle `plain'.
+%% Pagestyle |plain|.
 \renewcommand*{\ps@plain}%
   {\@thesispagestylefalse
    \let\@mkboth\@gobbletwo
@@ -406,7 +289,7 @@
       {\slshape\small\today}\hfil\trDRAFT\fi}%
    \let\@evenhead\@oddhead}
 
-%% Pagestyle `headings'.
+%% Pagestyle |headings|.
 \if@twoside % two-sided printing
 \renewcommand*{\ps@headings}%
   {\@thesispagestylefalse
@@ -437,7 +320,7 @@
          \@chapapp\ \thechapter. \ \fi ##1}}}}
 \fi%@twoside
 
-%% Pagestyle `myheadings'.
+%% Pagestyle |myheadings|.
 \renewcommand*{\ps@myheadings}%
   {\@thesispagestylefalse
    \let\@mkboth\@gobbletwo
@@ -450,7 +333,7 @@
       {\slshape\leftmark}\if@draft\trDRAFT\fi}%
    \let\chaptermark\@gobble\let\sectionmark\@gobble}
 
-%% Pagestyle `thesis' (based on `headings').
+%% Pagestyle |thesis| (based on |headings|).
 \if@twoside % two-sided printing
 \newcommand*{\ps@thesis}%
   {\@thesispagestyletrue
