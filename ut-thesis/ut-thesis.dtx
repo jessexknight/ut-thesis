@@ -289,8 +289,17 @@
 \DeclareOption{cleardoublepagestylestandard}
   {\AtEndOfClass{\let\cleardoublepage\clearstandarddoublepage}}
 %    \end{macrocode}
-
-%% All other options are passed to the base class directly.
+%
+% \subsubsection{Book Options}
+%
+% Finally, we try to process all remaining options using the |book| class,
+% so the usual options and default values should be defined, like:
+% \begin{itemize}
+%   \item page size: e.g. |letterpaper|, |a4paper|, \dots
+%   \item font size: e.g. |10pt|, |11pt|, |12pt|
+%   \item open side for twoside: e.g. |openright|, |openany|
+% \end{itemize}
+%
 %    \begin{macrocode}
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{book}}
 %    \end{macrocode}
@@ -318,6 +327,7 @@
 %    \end{macrocode}
 %
 % \subsection{Author Information}
+%
 % Getting the user inputs.
 %
 %    \begin{macrocode}
@@ -341,6 +351,7 @@
 % \subsection{Front Matter}
 %
 % \subsubsection{Title Page}
+%
 % We don't enforce firm distances between lines,
 % but use |\vfill| to stretch and fill the space evenly,
 % except for a double-sized gap after the author name.
@@ -373,6 +384,7 @@
 %    \end{macrocode}
 %
 % \subsubsection{Abstract Page}
+%
 % The abstract is an environment, but it creates its own page
 % (and possibly an extra empty page if using |twoside|).
 % The author and title info is centered and singlespaced.

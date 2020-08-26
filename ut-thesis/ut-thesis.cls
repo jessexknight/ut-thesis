@@ -125,7 +125,6 @@
 \DeclareOption{cleardoublepagestylestandard}
   {\AtEndOfClass{\let\cleardoublepage\clearstandarddoublepage}}
 
-%% All other options are passed to the base class directly.
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{book}}
 \ExecuteOptions{letterpaper} % from book
 \ExecuteOptions{center,onehalfspacing,chapterhead} % from ut-thesis
