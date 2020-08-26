@@ -154,7 +154,6 @@
 \NeedsTeXFormat{LaTeX2e}[1999/12/01]
 \ProvidesClass{ut-thesis}
 [2020/09/01 v3.0.a University of Toronto thesis class]
-%%%%%%%%%%%%         INITIAL CODE         %%%%%%%%%%%%
 
 %% Switch for testing draft mode (toggled by `draft' option).
 \newif\if@draft
@@ -185,7 +184,6 @@
 %% define our own replacement here for use within the class.
 \newcommand*{\singlespacingnoskip}{\setstretch{\setspace@singlespace}}
 
-%%%%%%%%%%%%      OPTION DECLARATION      %%%%%%%%%%%%
 
 %% `draft' option: change default document settings.
 \DeclareOption{draft}{\@drafttrue
@@ -247,7 +245,6 @@
 %% All other options are passed to the base class directly.
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{report}}
 
-%%%%%%%%%%%%       OPTION EXECUTION       %%%%%%%%%%%%
 
 %% Default settings: standard options followed by ut-thesis options.
 \ExecuteOptions{letterpaper,oneside,openright}
@@ -256,7 +253,6 @@
 %% Process options.
 \ProcessOptions
 
-%%%%%%%%%%%%       PACKAGE  LOADING       %%%%%%%%%%%%
 
 %% Load base class using current setting for basic options.
 \LoadClass{report}
@@ -268,9 +264,7 @@
 %% To set/change line spacing.
 \RequirePackage{setspace}
 
-%%%%%%%%%%%%          MAIN  CODE          %%%%%%%%%%%%
 
-%%%%%%    Parameters
 
 %% The following five commands set the respective field values so we can
 %% generate the title page and abstract page automatically.
@@ -292,7 +286,6 @@
 \author{\emph{(author)}}
 \title{\emph{(title)}}
 
-%%%%%%    New formatting environments and commands.
 
 %% |\begin{preliminary}| sets the pagestyle and page numbering for the
 %% preliminary sections; |\end{preliminary}| resets the page numbering.
@@ -383,7 +376,6 @@
 \newenvironment*{longquotation}%
   {\begin{quotation}\singlespacingnoskip}{\end{quotation}}
 
-%%%%%%    Page Styles
 
 %% Redefine all four standard page styles (empty, plain, headings,
 %% myheadings), based on the definitions in `report', so that they

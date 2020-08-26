@@ -10,6 +10,14 @@
 %
 %<*driver>
 \documentclass[10pt]{ltxdoc}
+\usepackage[osf]{mathpazo}
+\usepackage[margin=4cm]{geometry}
+\usepackage{xcolor}
+\definecolor{code} {HTML}{990033}
+\definecolor{link} {HTML}{000066}
+\let\ottfamily\ttfamily
+\renewcommand{\ttfamily}{\small\color{code}\ottfamily}
+\renewcommand{\MacroFont}{\ttfamily\color{code}}
 \usepackage[colorlinks,linkcolor=link]{hyperref}
 \begin{document}
   \DocInput{ut-thesis.dtx}
@@ -33,7 +41,17 @@
 %
 % \maketitle
 %
-%%%%%%%%%%%%         INITIAL CODE         %%%%%%%%%%%%
+% \begin{abstract}\noindent
+%   The |ut-thesis| document class and template implements
+%   the requirements of the University of Toronto School of Graduate Studies (SGS),
+%   as of Winter 2020.
+% \end{abstract}
+%
+% \tableofcontents
+% \clearpage
+%
+% \section{Implementation}
+% \subsection{Initial Code}
 
 %% Switch for testing draft mode (toggled by `draft' option).
 %    \begin{macrocode}
@@ -74,7 +92,7 @@
 \newcommand*{\singlespacingnoskip}{\setstretch{\setspace@singlespace}}
 %    \end{macrocode}
 
-%%%%%%%%%%%%      OPTION DECLARATION      %%%%%%%%%%%%
+% \subsection{Option Declaration}
 
 %% `draft' option: change default document settings.
 %    \begin{macrocode}
@@ -148,7 +166,7 @@
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{report}}
 %    \end{macrocode}
 
-%%%%%%%%%%%%       OPTION EXECUTION       %%%%%%%%%%%%
+% \subsection{Option Execution}
 
 %% Default settings: standard options followed by ut-thesis options.
 %    \begin{macrocode}
@@ -161,7 +179,7 @@
 \ProcessOptions
 %    \end{macrocode}
 
-%%%%%%%%%%%%       PACKAGE  LOADING       %%%%%%%%%%%%
+% \subsection{Package Loading}
 
 %% Load base class using current setting for basic options.
 %    \begin{macrocode}
@@ -179,9 +197,9 @@
 \RequirePackage{setspace}
 %    \end{macrocode}
 
-%%%%%%%%%%%%          MAIN  CODE          %%%%%%%%%%%%
+% \subsection{Main Code}
 
-%%%%%%    Parameters
+% \subsubsection{Parameters}
 
 %% The following five commands set the respective field values so we can
 %% generate the title page and abstract page automatically.
@@ -207,7 +225,7 @@
 \title{\emph{(title)}}
 %    \end{macrocode}
 
-%%%%%%    New formatting environments and commands.
+% \subsubsection{Environments and Commands}
 
 %% |\begin{preliminary}| sets the pagestyle and page numbering for the
 %% preliminary sections; |\end{preliminary}| resets the page numbering.
@@ -314,7 +332,7 @@
   {\begin{quotation}\singlespacingnoskip}{\end{quotation}}
 %    \end{macrocode}
 
-%%%%%%    Page Styles
+% \subsubsection{Page Styles}
 
 %% Redefine all four standard page styles (empty, plain, headings,
 %% myheadings), based on the definitions in `report', so that they
@@ -433,7 +451,6 @@
 %% Default page style.
 %    \begin{macrocode}
 \pagestyle{thesis}
-\endinput
 %    \end{macrocode}
 %%
 %% End of file `ut-thesis.cls'.
