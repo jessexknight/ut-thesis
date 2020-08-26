@@ -204,24 +204,21 @@
    \end{titlepage}
    \setcounter{page}{2}}
 
-%% Change |\begin{abstract}...\end{abstract}| to follow SGS guidelines.
 \newenvironment*{abstract}%
-  {\begin{center}
-      \section*{Abstract}
-   \end{center}
+  {\thispagestyle{plain}
    \begin{center}
+     \singlespacing
       {\@title}\\[2ex]
       {\@author}\\
-      {\@degree}\\
+      {\@degree}\\[1ex]
       Graduate Department of {\@department}\\
       University of Toronto\\
       {\@gradyear}\\
+      \section*{Abstract}
    \end{center}
    \begingroup
-   %% Adjust line spacing: if it was less than 2, increase it to 2;
-   %% otherwise, leave it as is.
-   \ifdim \baselinestretch pt < 1.6pt \doublespacing\fi}%
-  {\par\endgroup\newpage}
+   \doublespacing}%
+  {\endgroup\cleardoublepage}
 
 %% |\begin{dedication}...\end{dedication}| formats a dedication section
 %% (*not* on a separate page -- just a paragraph formatted flush right).

@@ -394,25 +394,29 @@
    \setcounter{page}{2}}
 %    \end{macrocode}
 
-%% Change |\begin{abstract}...\end{abstract}| to follow SGS guidelines.
+% \subsubsection{Abstract Page}
+% The abstract is an environment, but it creates its own page
+% (and possibly an extra empty page if using |twoside|).
+% The author and title info is centered and singlespaced.
+% The word ``Abstract'' uses the |\section*| style, without any numbering.
+% The abstract content is doublespaced.
+%
 %    \begin{macrocode}
 \newenvironment*{abstract}%
-  {\begin{center}
-      \section*{Abstract}
-   \end{center}
+  {\thispagestyle{plain}
    \begin{center}
+     \singlespacing
       {\@title}\\[2ex]
       {\@author}\\
-      {\@degree}\\
+      {\@degree}\\[1ex]
       Graduate Department of {\@department}\\
       University of Toronto\\
       {\@gradyear}\\
+      \section*{Abstract}
    \end{center}
    \begingroup
-   %% Adjust line spacing: if it was less than 2, increase it to 2;
-   %% otherwise, leave it as is.
-   \ifdim \baselinestretch pt < 1.6pt \doublespacing\fi}%
-  {\par\endgroup\newpage}
+   \doublespacing}%
+  {\endgroup\cleardoublepage}
 %    \end{macrocode}
 
 %% |\begin{dedication}...\end{dedication}| formats a dedication section
