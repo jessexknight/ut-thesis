@@ -127,24 +127,12 @@
 
 %% All other options are passed to the base class directly.
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{book}}
-
-
-%% Default settings: standard options followed by ut-thesis options.
-\ExecuteOptions{letterpaper,oneside,openright}
-\ExecuteOptions{normalmargins,onehalfspaced,singlespacednotes}
-
-%% Process options.
+\ExecuteOptions{letterpaper} % from book
+\ExecuteOptions{center,onehalfspacing,chapterhead} % from ut-thesis
 \ProcessOptions
-
-
-%% Load base class using current setting for basic options.
 \LoadClass{book}
-
-%% To set/change page layout.
 \RequirePackage{calc}
 \RequirePackage{geometry}
-
-%% To set/change line spacing.
 \RequirePackage{setspace}
 \renewcommand*{\author}  [1]{\gdef\@author{#1}}
 \renewcommand*{\title}   [1]{\gdef\@title{#1}}
@@ -156,8 +144,6 @@
 \degree    {(degree)}
 \department{(department)}
 \gradyear  {(gradyear)}
-
-
 \renewcommand*{\maketitle}%
   {\thispagestyle{empty}
    \large
@@ -180,7 +166,6 @@
       {\copyright} Copyright {\@gradyear} by {\@author}
    \end{center}
    \cleardoublepage}
-
 \newenvironment*{abstract}%
   {\thispagestyle{plain}
    \begin{center}

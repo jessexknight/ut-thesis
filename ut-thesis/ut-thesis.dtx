@@ -294,35 +294,26 @@
 %    \begin{macrocode}
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{book}}
 %    \end{macrocode}
-
-% \subsection{Option Execution}
-
-%% Default settings: standard options followed by ut-thesis options.
+%
+% \subsubsection{Default Options \& Processing}
+%
+% Executing the default options and processing.
+% Any remaining options should now raise an error like:
+% |LaTeX Warning: Unused global option(s): ...|
+%
 %    \begin{macrocode}
-\ExecuteOptions{letterpaper,oneside,openright}
-\ExecuteOptions{normalmargins,onehalfspaced,singlespacednotes}
-%    \end{macrocode}
-
-%% Process options.
-%    \begin{macrocode}
+\ExecuteOptions{letterpaper} % from book
+\ExecuteOptions{center,onehalfspacing,chapterhead} % from ut-thesis
 \ProcessOptions
 %    \end{macrocode}
-
-% \subsection{Package Loading}
-
-%% Load base class using current setting for basic options.
+%
+% \subsection{Initialization}
+% We load the |book| class and the required packages.
+%
 %    \begin{macrocode}
 \LoadClass{book}
-%    \end{macrocode}
-
-%% To set/change page layout.
-%    \begin{macrocode}
 \RequirePackage{calc}
 \RequirePackage{geometry}
-%    \end{macrocode}
-
-%% To set/change line spacing.
-%    \begin{macrocode}
 \RequirePackage{setspace}
 %    \end{macrocode}
 %
@@ -346,9 +337,9 @@
 \department{(department)}
 \gradyear  {(gradyear)}
 %    \end{macrocode}
-
+%
 % \subsection{Front Matter}
-
+%
 % \subsubsection{Title Page}
 % We don't enforce firm distances between lines,
 % but use |\vfill| to stretch and fill the space evenly,
@@ -380,7 +371,7 @@
    \end{center}
    \cleardoublepage}
 %    \end{macrocode}
-
+%
 % \subsubsection{Abstract Page}
 % The abstract is an environment, but it creates its own page
 % (and possibly an extra empty page if using |twoside|).
