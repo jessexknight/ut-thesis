@@ -64,7 +64,7 @@
 %
 % \subsection{Options}
 %
-%  - Any standard option for the LaTeX2e |report| class, including
+%  - Any standard option for the LaTeX2e |book| class, including
 %    |10pt|, |11pt|, |12pt|, |oneside|, |twoside|, etc.
 % 
 %  - |narrowmargins|, |normalmargins|, |widemargins|, or
@@ -235,7 +235,7 @@
    \newcommand*{\brDRAFT}%
      {\raisebox{-3ex}[0pt][0pt]{\rlap{\sffamily\scriptsize \ \ DRAFT}}}
    \ExecuteOptions{doublespaced}
-   \PassOptionsToClass{draft,twoside,openany}{report}}
+   \PassOptionsToClass{draft,twoside,openany}{book}}
 %    \end{macrocode}
 
 %% Margin options.
@@ -292,7 +292,7 @@
 
 %% All other options are passed to the base class directly.
 %    \begin{macrocode}
-\DeclareOption*{\PassOptionsToClass{\CurrentOption}{report}}
+\DeclareOption*{\PassOptionsToClass{\CurrentOption}{book}}
 %    \end{macrocode}
 
 % \subsection{Option Execution}
@@ -312,7 +312,7 @@
 
 %% Load base class using current setting for basic options.
 %    \begin{macrocode}
-\LoadClass{report}
+\LoadClass{book}
 %    \end{macrocode}
 
 %% To set/change page layout.
@@ -396,7 +396,7 @@
 
 %% Change |\begin{abstract}...\end{abstract}| to follow SGS guidelines.
 %    \begin{macrocode}
-\renewenvironment*{abstract}%
+\newenvironment*{abstract}%
   {\begin{center}
       \section*{Abstract}
    \end{center}
@@ -464,7 +464,7 @@
 % \subsubsection{Page Styles}
 
 %% Redefine all four standard page styles (empty, plain, headings,
-%% myheadings), based on the definitions in |report|, so that they
+%% myheadings), based on the definitions in |book|, so that they
 %% conform to the SGS guidelines (and include draft information if
 %% applicable).  Then, define a new pagestyle |thesis|.
 

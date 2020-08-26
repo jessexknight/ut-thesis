@@ -79,7 +79,7 @@
    \newcommand*{\brDRAFT}%
      {\raisebox{-3ex}[0pt][0pt]{\rlap{\sffamily\scriptsize \ \ DRAFT}}}
    \ExecuteOptions{doublespaced}
-   \PassOptionsToClass{draft,twoside,openany}{report}}
+   \PassOptionsToClass{draft,twoside,openany}{book}}
 
 %% Margin options.
 \DeclareOption{narrowmargins}{\AtEndOfClass % 1 1/4" left, 3/4" others
@@ -126,7 +126,7 @@
   {\AtEndOfClass{\let\cleardoublepage\clearstandarddoublepage}}
 
 %% All other options are passed to the base class directly.
-\DeclareOption*{\PassOptionsToClass{\CurrentOption}{report}}
+\DeclareOption*{\PassOptionsToClass{\CurrentOption}{book}}
 
 
 %% Default settings: standard options followed by ut-thesis options.
@@ -138,7 +138,7 @@
 
 
 %% Load base class using current setting for basic options.
-\LoadClass{report}
+\LoadClass{book}
 
 %% To set/change page layout.
 \RequirePackage{calc}
@@ -205,7 +205,7 @@
    \setcounter{page}{2}}
 
 %% Change |\begin{abstract}...\end{abstract}| to follow SGS guidelines.
-\renewenvironment*{abstract}%
+\newenvironment*{abstract}%
   {\begin{center}
       \section*{Abstract}
    \end{center}
@@ -261,7 +261,7 @@
 
 
 %% Redefine all four standard page styles (empty, plain, headings,
-%% myheadings), based on the definitions in |report|, so that they
+%% myheadings), based on the definitions in |book|, so that they
 %% conform to the SGS guidelines (and include draft information if
 %% applicable).  Then, define a new pagestyle |thesis|.
 
