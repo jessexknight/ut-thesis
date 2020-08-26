@@ -365,33 +365,36 @@
   {\cleardoublepage\pagenumbering{arabic}}
 %    \end{macrocode}
 
-%% Change |\maketitle| to follow SGS guidelines.
+% \subsubsection{Title Page}
+% We don't enforce firm distances between lines,
+% but use |\vfill| to stretch and fill the space evenly,
+% except for a double-sized gap after the author name.
+% There is one part of space above the title,
+% while the copyright is pushed all the way to the bottom.
+%
 %    \begin{macrocode}
 \renewcommand*{\maketitle}%
-  {\begin{titlepage}
-   \large\singlespacingnoskip
+  {\thispagestyle{empty}
+   \large
    \begin{center}
-      \mbox{}
+      \singlespacing
+      \null
       \vfill
-      \textsc{\@title}\\
+      \textsc{\@title}
       \vfill
-      by \\
+      by
       \vfill
-      {\@author}\\
+      {\@author}
       \vfill
       \vfill
       A thesis submitted in conformity with the requirements\\
-      for the degree of {\@degree}\\
+      for the degree of {\@degree}\\[1ex]
       Graduate Department of {\@department}\\
       University of Toronto\\
       \vfill
-      {\copyright} Copyright {\@gradyear} by {\@author}\\
-      \vspace{.01\textheight}
-      \mbox{}
+      {\copyright} Copyright {\@gradyear} by {\@author}
    \end{center}
-   \setcounter{page}{1}
-   \end{titlepage}
-   \setcounter{page}{2}}
+   \cleardoublepage}
 %    \end{macrocode}
 
 % \subsubsection{Abstract Page}

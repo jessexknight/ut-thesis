@@ -177,32 +177,28 @@
   {\pagestyle{plain}\pagenumbering{roman}}%
   {\cleardoublepage\pagenumbering{arabic}}
 
-%% Change |\maketitle| to follow SGS guidelines.
 \renewcommand*{\maketitle}%
-  {\begin{titlepage}
-   \large\singlespacingnoskip
+  {\thispagestyle{empty}
+   \large
    \begin{center}
-      \mbox{}
+      \singlespacing
+      \null
       \vfill
-      \textsc{\@title}\\
+      \textsc{\@title}
       \vfill
-      by \\
+      by
       \vfill
-      {\@author}\\
+      {\@author}
       \vfill
       \vfill
       A thesis submitted in conformity with the requirements\\
-      for the degree of {\@degree}\\
+      for the degree of {\@degree}\\[1ex]
       Graduate Department of {\@department}\\
       University of Toronto\\
       \vfill
-      {\copyright} Copyright {\@gradyear} by {\@author}\\
-      \vspace{.01\textheight}
-      \mbox{}
+      {\copyright} Copyright {\@gradyear} by {\@author}
    \end{center}
-   \setcounter{page}{1}
-   \end{titlepage}
-   \setcounter{page}{2}}
+   \cleardoublepage}
 
 \newenvironment*{abstract}%
   {\thispagestyle{plain}
