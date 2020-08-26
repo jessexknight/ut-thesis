@@ -146,36 +146,17 @@
 
 %% To set/change line spacing.
 \RequirePackage{setspace}
+\renewcommand*{\author}  [1]{\gdef\@author{#1}}
+\renewcommand*{\title}   [1]{\gdef\@title{#1}}
+\newcommand*{\degree}    [1]{\gdef\@degree{#1}}
+\newcommand*{\department}[1]{\gdef\@department{#1}}
+\newcommand*{\gradyear}  [1]{\gdef\@gradyear{#1}}
+\author    {(author)}
+\title     {(title)}
+\degree    {(degree)}
+\department{(department)}
+\gradyear  {(gradyear)}
 
-
-
-%% The following five commands set the respective field values so we can
-%% generate the title page and abstract page automatically.
-\newcommand*{\degree}[1]%
-  {\ifx\empty#1\empty\else\gdef\@degree{#1}\fi}
-\newcommand*{\department}[1]%
-  {\ifx\empty#1\empty\else\gdef\@department{#1}\fi}
-\newcommand*{\gradyear}[1]%
-  {\ifx\empty#1\empty\else\gdef\@gradyear{#1}\fi}
-\renewcommand*{\author}[1]%
-  {\ifx\empty#1\empty\else\gdef\@author{#1}\fi}
-\renewcommand*{\title}[1]%
-  {\ifx\empty#1\empty\else\gdef\@title{#1}\fi}
-
-%% Default values for the required fields.
-\degree{\emph{(degree)}}
-\department{\emph{(department)}}
-\gradyear{\emph{(year of graduation)}}
-\author{\emph{(author)}}
-\title{\emph{(title)}}
-
-
-%% |\begin{preliminary}| sets the pagestyle and page numbering for the
-%% preliminary sections; |\end{preliminary}| resets the page numbering.
-%% The default page style is used outside of the preliminary block.
-\newenvironment*{preliminary}%
-  {\pagestyle{plain}\pagenumbering{roman}}%
-  {\cleardoublepage\pagenumbering{arabic}}
 
 \renewcommand*{\maketitle}%
   {\thispagestyle{empty}
