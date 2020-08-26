@@ -10,6 +10,7 @@
 %
 %<*driver>
 \documentclass[10pt]{ltxdoc}
+\usepackage[colorlinks,linkcolor=link]{hyperref}
 \begin{document}
   \DocInput{ut-thesis.dtx}
 \end{document}
@@ -18,20 +19,38 @@
 %
 % \GetFileInfo{ut-thesis.dtx}
 %
-
+% \title{The \textsf{ut-thesis} class
+%   \thanks{\fileversion~[\filedate] CTAN repository:
+%   \href{https://ctan.org/pkg/ut-thesis}
+%        {\texttt{https://ctan.org/pkg/ut-thesis}}}}
+% \author{
+%   Francois Pitt,
+%   Jesse Knight
+%     \thanks{maintainer, contact:
+%     \href{mailto:jesse.knight@mail.utoronto.ca}
+%          {\texttt{jesse.knight@mail.utoronto.ca}}}
+% }
+%
+% \maketitle
+%
 %%%%%%%%%%%%         INITIAL CODE         %%%%%%%%%%%%
 
 %% Switch for testing draft mode (toggled by `draft' option).
+%    \begin{macrocode}
 \newif\if@draft
 \@draftfalse
+%    \end{macrocode}
 
 %% Switch for testing current page style.
+%    \begin{macrocode}
 \newif\if@thesispagestyle
 \@thesispagestyletrue
+%    \end{macrocode}
 
 %% Save original definitions of footnote and marginal note macros and
 %% lengths, to be able to reset them below as needed (when changing
 %% between single-spaced and standard-spaced notes).
+%    \begin{macrocode}
 \let\@thesis@footnotetext\@footnotetext
 \let\@thesis@mpfootnotetext\@mpfootnotetext
 \let\@thesis@marginparreset\@marginparreset
@@ -40,20 +59,25 @@
 \AtBeginDocument
   {\setlength\@thesisfootnotesep{\footnotesep}
    \setlength\@thesismarginparpush{\marginparpush}}
+%    \end{macrocode}
 
-%% Save original definition of \cleardoublepage.
+%% Save original definition of |\cleardoublepage|.
+%    \begin{macrocode}
 \let\clearstandarddoublepage\cleardoublepage
+%    \end{macrocode}
 
-%% The \singlespacing macro from `setspace' includes some vertical space
+%% The |\singlespacing| macro from `setspace' includes some vertical space
 %% (to make it easier to change line spacing within the document).
 %% Unfortunately, this has undesirable side-effects within macros, so we
 %% define our own replacement here for use within the class.
+%    \begin{macrocode}
 \newcommand*{\singlespacingnoskip}{\setstretch{\setspace@singlespace}}
-
+%    \end{macrocode}
 
 %%%%%%%%%%%%      OPTION DECLARATION      %%%%%%%%%%%%
 
 %% `draft' option: change default document settings.
+%    \begin{macrocode}
 \DeclareOption{draft}{\@drafttrue
    \newcommand*{\tlDRAFT}%
      {\raisebox{ 3ex}[0pt][0pt]{\llap{\sffamily\scriptsize DRAFT\ \ }}}
@@ -65,8 +89,10 @@
      {\raisebox{-3ex}[0pt][0pt]{\rlap{\sffamily\scriptsize \ \ DRAFT}}}
    \ExecuteOptions{doublespaced}
    \PassOptionsToClass{draft,twoside,openany}{report}}
+%    \end{macrocode}
 
 %% Margin options.
+%    \begin{macrocode}
 \DeclareOption{narrowmargins}{\AtEndOfClass % 1 1/4" left, 3/4" others
   {\geometry{margin=.75in,left=1.25in,headsep=.375in-\headheight,
              footskip=.375in,marginparwidth=.5in,marginparsep=.125in}}}
@@ -79,13 +105,17 @@
 \DeclareOption{extrawidemargins}{\AtEndOfClass % 1 1/2" all around
   {\geometry{margin=1.5in,headsep=.75in-\headheight,
              footskip=.75in,marginparwidth=1in,marginparsep=.25in}}}
+%    \end{macrocode}
 
 %% Line Spacing options.
+%    \begin{macrocode}
 \DeclareOption{singlespaced}{\AtEndOfClass{\singlespacingnoskip}}
 \DeclareOption{onehalfspaced}{\AtEndOfClass{\onehalfspacing}}
 \DeclareOption{doublespaced}{\AtEndOfClass{\doublespacing}}
+%    \end{macrocode}
 
 %% Line spacing for notes.
+%    \begin{macrocode}
 \DeclareOption{singlespacednotes}{\AtBeginDocument
   {\setlength\footnotesep{\@thesisfootnotesep}
    \setlength\marginparpush{\@thesismarginparpush}
@@ -101,41 +131,53 @@
    \let\@footnotetext\@thesis@footnotetext
    \let\@mpfootnotetext\@thesis@mpfootnotetext
    \let\@marginparreset\@thesis@marginparreset}}
+%    \end{macrocode}
 
 %% Page styles for cleared pages.
+%    \begin{macrocode}
 \DeclareOption{cleardoublepagestyleempty}
   {\AtEndOfClass{\let\cleardoublepage\clearemptydoublepage}}
 \DeclareOption{cleardoublepagestyleplain}
   {\AtEndOfClass{\let\cleardoublepage\clearplaindoublepage}}
 \DeclareOption{cleardoublepagestylestandard}
   {\AtEndOfClass{\let\cleardoublepage\clearstandarddoublepage}}
+%    \end{macrocode}
 
 %% All other options are passed to the base class directly.
+%    \begin{macrocode}
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{report}}
-
+%    \end{macrocode}
 
 %%%%%%%%%%%%       OPTION EXECUTION       %%%%%%%%%%%%
 
 %% Default settings: standard options followed by ut-thesis options.
+%    \begin{macrocode}
 \ExecuteOptions{letterpaper,oneside,openright}
 \ExecuteOptions{normalmargins,onehalfspaced,singlespacednotes}
+%    \end{macrocode}
 
 %% Process options.
+%    \begin{macrocode}
 \ProcessOptions
-
+%    \end{macrocode}
 
 %%%%%%%%%%%%       PACKAGE  LOADING       %%%%%%%%%%%%
 
 %% Load base class using current setting for basic options.
+%    \begin{macrocode}
 \LoadClass{report}
+%    \end{macrocode}
 
 %% To set/change page layout.
+%    \begin{macrocode}
 \RequirePackage{calc}
 \RequirePackage{geometry}
+%    \end{macrocode}
 
 %% To set/change line spacing.
+%    \begin{macrocode}
 \RequirePackage{setspace}
-
+%    \end{macrocode}
 
 %%%%%%%%%%%%          MAIN  CODE          %%%%%%%%%%%%
 
@@ -143,6 +185,7 @@
 
 %% The following five commands set the respective field values so we can
 %% generate the title page and abstract page automatically.
+%    \begin{macrocode}
 \newcommand*{\degree}[1]%
   {\ifx\empty#1\empty\else\gdef\@degree{#1}\fi}
 \newcommand*{\department}[1]%
@@ -153,24 +196,30 @@
   {\ifx\empty#1\empty\else\gdef\@author{#1}\fi}
 \renewcommand*{\title}[1]%
   {\ifx\empty#1\empty\else\gdef\@title{#1}\fi}
+%    \end{macrocode}
 
 %% Default values for the required fields.
+%    \begin{macrocode}
 \degree{\emph{(degree)}}
 \department{\emph{(department)}}
 \gradyear{\emph{(year of graduation)}}
 \author{\emph{(author)}}
 \title{\emph{(title)}}
+%    \end{macrocode}
 
 %%%%%%    New formatting environments and commands.
 
-%% \begin{preliminary} sets the pagestyle and page numbering for the
-%% preliminary sections; \end{preliminary} resets the page numbering.
+%% |\begin{preliminary}| sets the pagestyle and page numbering for the
+%% preliminary sections; |\end{preliminary}| resets the page numbering.
 %% The default page style is used outside of the preliminary block.
+%    \begin{macrocode}
 \newenvironment*{preliminary}%
   {\pagestyle{plain}\pagenumbering{roman}}%
   {\cleardoublepage\pagenumbering{arabic}}
+%    \end{macrocode}
 
-%% Change \maketitle to follow SGS guidelines.
+%% Change |\maketitle| to follow SGS guidelines.
+%    \begin{macrocode}
 \renewcommand*{\maketitle}%
   {\begin{titlepage}
    \large\singlespacingnoskip
@@ -196,8 +245,10 @@
    \setcounter{page}{1}
    \end{titlepage}
    \setcounter{page}{2}}
+%    \end{macrocode}
 
-%% Change \begin{abstract}...\end{abstract} to follow SGS guidelines.
+%% Change |\begin{abstract}...\end{abstract}| to follow SGS guidelines.
+%    \begin{macrocode}
 \renewenvironment*{abstract}%
   {\begin{center}
       \section*{Abstract}
@@ -215,42 +266,53 @@
    %% otherwise, leave it as is.
    \ifdim \baselinestretch pt < 1.6pt \doublespacing\fi}%
   {\par\endgroup\newpage}
+%    \end{macrocode}
 
-%% \begin{dedication}...\end{dedication} formats a dedication section
+%% |\begin{dedication}...\end{dedication}| formats a dedication section
 %% (*not* on a separate page -- just a paragraph formatted flush right).
+%    \begin{macrocode}
 \newenvironment*{dedication}%
   {\begin{flushright}}%
   {\end{flushright}}
+%    \end{macrocode}
 
-%% \begin{acknowledgements}...\end{acknowledgements} formats an
+%% |\begin{acknowledgements}...\end{acknowledgements}| formats an
 %% acknowledgements section (*not* on a separate page).
+%    \begin{macrocode}
 \newenvironment*{acknowledgements}%
   {\begin{center}
       \section*{Acknowledgements}
    \end{center}
    \begingroup\noindent}%
   {\par\endgroup}
+%    \end{macrocode}
 
 %% Redefine `thebibliography' environment so that it generates headers
 %% in the same style as the rest of the document.
+%    \begin{macrocode}
 \let\@thesisthebibliography\thebibliography
 \renewcommand*{\thebibliography}[1]{\@thesisthebibliography{#1}
    \if@thesispagestyle\@mkboth{\textsc{\bibname}}{\textsc{\bibname}}\fi}
+%    \end{macrocode}
 
-%% Variations of \cleardoublepage that explicitly set the pagestyle of
+%% Variations of |\cleardoublepage| that explicitly set the pagestyle of
 %% any inserted blank page.
+%    \begin{macrocode}
 \newcommand*{\clearemptydoublepage}%
   {{\pagestyle{empty}\clearstandarddoublepage}}
 \newcommand*{\clearplaindoublepage}%
   {{\pagestyle{plain}\clearstandarddoublepage}}
 \newcommand*{\clearthesisdoublepage}%
   {{\pagestyle{thesis}\clearstandarddoublepage}}
+%    \end{macrocode}
 
 %% Single-spaced quotes and quotations.
+%    \begin{macrocode}
 \newenvironment*{longquote}%
   {\begin{quote}\singlespacingnoskip}{\end{quote}}
 \newenvironment*{longquotation}%
   {\begin{quotation}\singlespacingnoskip}{\end{quotation}}
+%    \end{macrocode}
 
 %%%%%%    Page Styles
 
@@ -262,6 +324,7 @@
 %% TODO: Get rid of copy-pasted definitions for pagestyles?
 
 %% Pagestyle `empty'.
+%    \begin{macrocode}
 \renewcommand*{\ps@empty}%
   {\@thesispagestylefalse
    \let\@mkboth\@gobbletwo
@@ -271,8 +334,10 @@
    \def\@oddhead{\if@draft\tlDRAFT\hfil
       {\slshape\small\today}\hfil\trDRAFT\fi}%
    \let\@evenhead\@oddhead}
+%    \end{macrocode}
 
 %% Pagestyle `plain'.
+%    \begin{macrocode}
 \renewcommand*{\ps@plain}%
   {\@thesispagestylefalse
    \let\@mkboth\@gobbletwo
@@ -282,8 +347,10 @@
    \def\@oddhead{\if@draft\tlDRAFT\hfil
       {\slshape\small\today}\hfil\trDRAFT\fi}%
    \let\@evenhead\@oddhead}
+%    \end{macrocode}
 
 %% Pagestyle `headings'.
+%    \begin{macrocode}
 \if@twoside % two-sided printing
 \renewcommand*{\ps@headings}%
   {\@thesispagestylefalse
@@ -313,8 +380,10 @@
       {\MakeUppercase{\ifnum \c@secnumdepth >\m@ne
          \@chapapp\ \thechapter. \ \fi ##1}}}}
 \fi%@twoside
+%    \end{macrocode}
 
 %% Pagestyle `myheadings'.
+%    \begin{macrocode}
 \renewcommand*{\ps@myheadings}%
   {\@thesispagestylefalse
    \let\@mkboth\@gobbletwo
@@ -326,8 +395,10 @@
    \def\@evenhead{\if@draft\tlDRAFT\fi\thepage\hfil
       {\slshape\leftmark}\if@draft\trDRAFT\fi}%
    \let\chaptermark\@gobble\let\sectionmark\@gobble}
+%    \end{macrocode}
 
 %% Pagestyle `thesis' (based on `headings').
+%    \begin{macrocode}
 \if@twoside % two-sided printing
 \newcommand*{\ps@thesis}%
   {\@thesispagestyletrue
@@ -357,6 +428,14 @@
       {\textsc{\ifnum \c@secnumdepth >\m@ne
          \@chapapp\ \thechapter. \ \fi ##1}}}}
 \fi%@twoside
+%    \end{macrocode}
 
 %% Default page style.
+%    \begin{macrocode}
 \pagestyle{thesis}
+\endinput
+%    \end{macrocode}
+%%
+%% End of file `ut-thesis.cls'.
+
+\endinput

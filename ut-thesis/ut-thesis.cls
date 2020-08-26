@@ -154,7 +154,6 @@
 \NeedsTeXFormat{LaTeX2e}[1999/12/01]
 \ProvidesClass{ut-thesis}
 [2020/09/01 v3.0.a University of Toronto thesis class]
-
 %%%%%%%%%%%%         INITIAL CODE         %%%%%%%%%%%%
 
 %% Switch for testing draft mode (toggled by `draft' option).
@@ -177,10 +176,10 @@
   {\setlength\@thesisfootnotesep{\footnotesep}
    \setlength\@thesismarginparpush{\marginparpush}}
 
-%% Save original definition of \cleardoublepage.
+%% Save original definition of |\cleardoublepage|.
 \let\clearstandarddoublepage\cleardoublepage
 
-%% The \singlespacing macro from `setspace' includes some vertical space
+%% The |\singlespacing| macro from `setspace' includes some vertical space
 %% (to make it easier to change line spacing within the document).
 %% Unfortunately, this has undesirable side-effects within macros, so we
 %% define our own replacement here for use within the class.
@@ -295,14 +294,14 @@
 
 %%%%%%    New formatting environments and commands.
 
-%% \begin{preliminary} sets the pagestyle and page numbering for the
-%% preliminary sections; \end{preliminary} resets the page numbering.
+%% |\begin{preliminary}| sets the pagestyle and page numbering for the
+%% preliminary sections; |\end{preliminary}| resets the page numbering.
 %% The default page style is used outside of the preliminary block.
 \newenvironment*{preliminary}%
   {\pagestyle{plain}\pagenumbering{roman}}%
   {\cleardoublepage\pagenumbering{arabic}}
 
-%% Change \maketitle to follow SGS guidelines.
+%% Change |\maketitle| to follow SGS guidelines.
 \renewcommand*{\maketitle}%
   {\begin{titlepage}
    \large\singlespacingnoskip
@@ -329,7 +328,7 @@
    \end{titlepage}
    \setcounter{page}{2}}
 
-%% Change \begin{abstract}...\end{abstract} to follow SGS guidelines.
+%% Change |\begin{abstract}...\end{abstract}| to follow SGS guidelines.
 \renewenvironment*{abstract}%
   {\begin{center}
       \section*{Abstract}
@@ -348,13 +347,13 @@
    \ifdim \baselinestretch pt < 1.6pt \doublespacing\fi}%
   {\par\endgroup\newpage}
 
-%% \begin{dedication}...\end{dedication} formats a dedication section
+%% |\begin{dedication}...\end{dedication}| formats a dedication section
 %% (*not* on a separate page -- just a paragraph formatted flush right).
 \newenvironment*{dedication}%
   {\begin{flushright}}%
   {\end{flushright}}
 
-%% \begin{acknowledgements}...\end{acknowledgements} formats an
+%% |\begin{acknowledgements}...\end{acknowledgements}| formats an
 %% acknowledgements section (*not* on a separate page).
 \newenvironment*{acknowledgements}%
   {\begin{center}
@@ -369,7 +368,7 @@
 \renewcommand*{\thebibliography}[1]{\@thesisthebibliography{#1}
    \if@thesispagestyle\@mkboth{\textsc{\bibname}}{\textsc{\bibname}}\fi}
 
-%% Variations of \cleardoublepage that explicitly set the pagestyle of
+%% Variations of |\cleardoublepage| that explicitly set the pagestyle of
 %% any inserted blank page.
 \newcommand*{\clearemptydoublepage}%
   {{\pagestyle{empty}\clearstandarddoublepage}}

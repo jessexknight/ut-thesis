@@ -1,5 +1,6 @@
 all:
 	make ins ; \
+	make doc ; \
 	make tests ; \
 
 ins:
@@ -7,6 +8,9 @@ ins:
 	rm ut-thesis.cls ; \
 	pdflatex ut-thesis.ins ;
 
+doc:
+	cd ut-thesis ; \
+	pdflatex ut-thesis.dtx ;
 
 tests:
 	for example in test/* ; do \
