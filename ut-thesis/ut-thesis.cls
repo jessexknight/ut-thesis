@@ -46,26 +46,8 @@
 \newif\if@thesispagestyle
 \@thesispagestyletrue
 
-%% Save original definitions of footnote and marginal note macros and
-%% lengths, to be able to reset them below as needed (when changing
-%% between single-spaced and standard-spaced notes).
-\let\@thesis@footnotetext\@footnotetext
-\let\@thesis@mpfootnotetext\@mpfootnotetext
-\let\@thesis@marginparreset\@marginparreset
-\newlength{\@thesisfootnotesep}
-\newlength{\@thesismarginparpush}
-\AtBeginDocument
-  {\setlength\@thesisfootnotesep{\footnotesep}
-   \setlength\@thesismarginparpush{\marginparpush}}
-
 %% Save original definition of |\cleardoublepage|.
 \let\clearstandarddoublepage\cleardoublepage
-
-%% The |\singlespacing| macro from |setspace| includes some vertical space
-%% (to make it easier to change line spacing within the document).
-%% Unfortunately, this has undesirable side-effects within macros, so we
-%% define our own replacement here for use within the class.
-\newcommand*{\singlespacingnoskip}{\setstretch{\setspace@singlespace}}
 
 
 %% |draft| option: change default document settings.
@@ -78,7 +60,7 @@
      {\raisebox{-3ex}[0pt][0pt]{\llap{\sffamily\scriptsize DRAFT\ \ }}}
    \newcommand*{\brDRAFT}%
      {\raisebox{-3ex}[0pt][0pt]{\rlap{\sffamily\scriptsize \ \ DRAFT}}}
-   \ExecuteOptions{doublespaced}
+   \ExecuteOptions{doublespacing}
    \PassOptionsToClass{draft,twoside,openany}{book}}
 
 %% Margin options.
@@ -95,28 +77,6 @@
   {\geometry{margin=1.5in,headsep=.75in-\headheight,
              footskip=.75in,marginparwidth=1in,marginparsep=.25in}}}
 
-%% Line Spacing options.
-\DeclareOption{singlespaced}{\AtEndOfClass{\singlespacingnoskip}}
-\DeclareOption{onehalfspaced}{\AtEndOfClass{\onehalfspacing}}
-\DeclareOption{doublespaced}{\AtEndOfClass{\doublespacing}}
-
-%% Line spacing for notes.
-\DeclareOption{singlespacednotes}{\AtBeginDocument
-  {\setlength\footnotesep{\@thesisfootnotesep}
-   \setlength\marginparpush{\@thesismarginparpush}
-   \renewcommand{\@footnotetext}[1]%
-     {\@thesis@footnotetext{#1\singlespacingnoskip}}
-   \renewcommand{\@mpfootnotetext}[1]%
-     {\@thesis@mpfootnotetext{#1\singlespacingnoskip}}
-   \renewcommand*{\@marginparreset}%
-     {\@thesis@marginparreset\singlespacingnoskip}}}
-\DeclareOption{standardspacednotes}{\AtBeginDocument
-  {\setlength\footnotesep{\baselineskip-\@thesisfootnotesep}
-   \setlength\marginparpush{\baselineskip-\@thesismarginparpush}
-   \let\@footnotetext\@thesis@footnotetext
-   \let\@mpfootnotetext\@thesis@mpfootnotetext
-   \let\@marginparreset\@thesis@marginparreset}}
-
 %% Page styles for cleared pages.
 \DeclareOption{cleardoublepagestyleempty}
   {\AtEndOfClass{\let\cleardoublepage\clearemptydoublepage}}
@@ -124,7 +84,15 @@
   {\AtEndOfClass{\let\cleardoublepage\clearplaindoublepage}}
 \DeclareOption{cleardoublepagestylestandard}
   {\AtEndOfClass{\let\cleardoublepage\clearstandarddoublepage}}
-
+\DeclareOption{doublespacing}{%
+  \AtEndOfClass{\doublespacing}
+}
+\DeclareOption{onehalfspacing}{%
+  \AtEndOfClass{\onehalfspacing}
+}
+\DeclareOption{singlespacing}{%
+  \AtEndOfClass{\singlespacing}
+}
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{book}}
 \ExecuteOptions{letterpaper} % from book
 \ExecuteOptions{center,onehalfspacing,chapterhead} % from ut-thesis
@@ -210,12 +178,6 @@
   {{\pagestyle{plain}\clearstandarddoublepage}}
 \newcommand*{\clearthesisdoublepage}%
   {{\pagestyle{thesis}\clearstandarddoublepage}}
-
-%% Single-spaced quotes and quotations.
-\newenvironment*{longquote}%
-  {\begin{quote}\singlespacingnoskip}{\end{quote}}
-\newenvironment*{longquotation}%
-  {\begin{quotation}\singlespacingnoskip}{\end{quotation}}
 
 
 %% Redefine all four standard page styles (empty, plain, headings,
