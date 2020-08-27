@@ -47,7 +47,7 @@
       \put(-0.125in+\paperwidth,-0.125in-\f@size pt  ){\llap{DRAFT}}
       \put(+0.125in,            +0.125in-\paperheight){\rlap{DRAFT}}
       \put(-0.125in+\paperwidth,+0.125in-\paperheight){\llap{DRAFT}}
-      \put(\leftmargin+0.5\textwidth,+0.125in-\paperheight)%
+      \put(+0.5\paperwidth,+0.125in-\paperheight)%
         {\makebox[0in][c]{\today}}
 }}}}
 \newlength{\margin@v}
