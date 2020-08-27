@@ -175,6 +175,8 @@
      \if@mainmatter\headerstyle{\@chapapp\ \thechapter.\ ##1}\fi}}}
 \fi
 \pagestyle{headings}
+\setlength\abovecaptionskip{1ex}
+\setlength\belowcaptionskip{1ex}
 \endinput
 %%
 %% End of file `ut-thesis.cls'.
