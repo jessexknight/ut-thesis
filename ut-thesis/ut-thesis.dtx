@@ -11,6 +11,8 @@
 %<*driver>
 \documentclass[10pt]{ltxdoc}
 \usepackage[osf]{mathpazo}
+\usepackage[toc]{multitoc}
+\renewcommand*{\multicolumntoc}{2}
 \usepackage[margin=4cm]{geometry}
 \usepackage{xcolor}
 \definecolor{code} {HTML}{990033}
@@ -50,7 +52,7 @@
 %   as of Winter 2020.
 % \end{abstract}
 %
-% \tableofcontents
+% {\footnotesize\setlength{\parskip}{3pt}\tableofcontents}
 % \clearpage
 %
 % \section{Usage}
