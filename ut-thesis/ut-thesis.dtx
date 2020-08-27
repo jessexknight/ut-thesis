@@ -216,22 +216,51 @@
    \PassOptionsToClass{draft,twoside,openany}{book}}
 %    \end{macrocode}
 
-%% Margin options.
+% \subsubsection{Margins}
+% First, we define three lengths to help us compute the margins:
+% |\margin@v| is the top and bottom margins;
+% |\margin@xhi| is the inner margin offset;
+% |\margin@xho| is the outer margin offset.
 %    \begin{macrocode}
-\DeclareOption{narrowmargins}{\AtEndOfClass % 1 1/4" left, 3/4" others
-  {\geometry{margin=.75in,left=1.25in,headsep=.375in-\headheight,
-             footskip=.375in,marginparwidth=.5in,marginparsep=.125in}}}
-\DeclareOption{normalmargins}{\AtEndOfClass % 1 1/4" left, 1" others
-  {\geometry{margin=1in,left=1.25in,headsep=.5in-\headheight,
-             footskip=.5in,marginparwidth=.75in,marginparsep=.125in}}}
-\DeclareOption{widemargins}{\AtEndOfClass % 1 1/4" all around
-  {\geometry{margin=1.25in,headsep=.625in-\headheight,
-             footskip=.625in,marginparwidth=.75in,marginparsep=.25in}}}
-\DeclareOption{extrawidemargins}{\AtEndOfClass % 1 1/2" all around
-  {\geometry{margin=1.5in,headsep=.75in-\headheight,
-             footskip=.75in,marginparwidth=1in,marginparsep=.25in}}}
+\newlength{\margin@v}
+\newlength{\margin@xhi}\setlength{\margin@xhi}{0.5in}
+\newlength{\margin@xho}\setlength{\margin@xho}{0.0in}
 %    \end{macrocode}
-
+%
+% The options are based off |\margin@v|:
+%    \begin{macrocode}
+\DeclareOption{narrowmargins}   {\setlength{\margin@v}{0.75in}}
+\DeclareOption{normalmargins}   {\setlength{\margin@v}{1.00in}}
+\DeclareOption{widemargins}     {\setlength{\margin@v}{1.25in}}
+\DeclareOption{extrawidemargins}{\setlength{\margin@v}{1.50in}}
+%    \end{macrocode}
+%
+% For digital copies, |equalmargins| may be preferred.
+% However, to keep the |\textwidth| consistent
+% for any of the above margin options with and without |equalmargins|,
+% we simply average the inner and outer offsets:
+%    \begin{macrocode}
+\DeclareOption{equalmargins}%
+  {\setlength{\margin@xho}{0.5\margin@xhi}
+   \setlength{\margin@xhi}{0.5\margin@xhi}}
+%    \end{macrocode}
+%
+% Finally, we actually compute the margins using the above three lengths,
+% and adjust the placement of the header, footer, and margin notes.
+%    \begin{macrocode}
+\AtEndOfClass{
+  \geometry{
+    top      = \margin@v,
+    bottom   = \margin@v,
+    inner    = \dimexpr \margin@v + \margin@xhi,
+    outer    = \dimexpr \margin@v + \margin@xho,
+    headsep  = \dimexpr 0.5\margin@v - \headheight,
+    footskip = \dimexpr 0.5\margin@v,
+    marginparwidth = \dimexpr \margin@v + \margin@xho - 0.25in,
+    marginparsep   = 0.125in,
+}}
+%    \end{macrocode}
+%
 %% Page styles for cleared pages.
 %    \begin{macrocode}
 \DeclareOption{cleardoublepagestyleempty}
@@ -283,7 +312,7 @@
 %
 %    \begin{macrocode}
 \ExecuteOptions{letterpaper} % from book
-\ExecuteOptions{center,onehalfspacing,chapterhead} % from ut-thesis
+\ExecuteOptions{normalmargins,onehalfspacing,chapterhead} % from ut-thesis
 \ProcessOptions
 %    \end{macrocode}
 %
@@ -292,7 +321,6 @@
 %
 %    \begin{macrocode}
 \LoadClass{book}
-\RequirePackage{calc}
 \RequirePackage{geometry}
 \RequirePackage{setspace}
 %    \end{macrocode}

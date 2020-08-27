@@ -63,20 +63,27 @@
    \ExecuteOptions{doublespacing}
    \PassOptionsToClass{draft,twoside,openany}{book}}
 
-%% Margin options.
-\DeclareOption{narrowmargins}{\AtEndOfClass % 1 1/4" left, 3/4" others
-  {\geometry{margin=.75in,left=1.25in,headsep=.375in-\headheight,
-             footskip=.375in,marginparwidth=.5in,marginparsep=.125in}}}
-\DeclareOption{normalmargins}{\AtEndOfClass % 1 1/4" left, 1" others
-  {\geometry{margin=1in,left=1.25in,headsep=.5in-\headheight,
-             footskip=.5in,marginparwidth=.75in,marginparsep=.125in}}}
-\DeclareOption{widemargins}{\AtEndOfClass % 1 1/4" all around
-  {\geometry{margin=1.25in,headsep=.625in-\headheight,
-             footskip=.625in,marginparwidth=.75in,marginparsep=.25in}}}
-\DeclareOption{extrawidemargins}{\AtEndOfClass % 1 1/2" all around
-  {\geometry{margin=1.5in,headsep=.75in-\headheight,
-             footskip=.75in,marginparwidth=1in,marginparsep=.25in}}}
-
+\newlength{\margin@v}
+\newlength{\margin@xhi}\setlength{\margin@xhi}{0.5in}
+\newlength{\margin@xho}\setlength{\margin@xho}{0.0in}
+\DeclareOption{narrowmargins}   {\setlength{\margin@v}{0.75in}}
+\DeclareOption{normalmargins}   {\setlength{\margin@v}{1.00in}}
+\DeclareOption{widemargins}     {\setlength{\margin@v}{1.25in}}
+\DeclareOption{extrawidemargins}{\setlength{\margin@v}{1.50in}}
+\DeclareOption{equalmargins}%
+  {\setlength{\margin@xho}{0.5\margin@xhi}
+   \setlength{\margin@xhi}{0.5\margin@xhi}}
+\AtEndOfClass{
+  \geometry{
+    top      = \margin@v,
+    bottom   = \margin@v,
+    inner    = \dimexpr \margin@v + \margin@xhi,
+    outer    = \dimexpr \margin@v + \margin@xho,
+    headsep  = \dimexpr 0.5\margin@v - \headheight,
+    footskip = \dimexpr 0.5\margin@v,
+    marginparwidth = \dimexpr \margin@v + \margin@xho - 0.25in,
+    marginparsep   = 0.125in,
+}}
 %% Page styles for cleared pages.
 \DeclareOption{cleardoublepagestyleempty}
   {\AtEndOfClass{\let\cleardoublepage\clearemptydoublepage}}
@@ -95,10 +102,9 @@
 }
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{book}}
 \ExecuteOptions{letterpaper} % from book
-\ExecuteOptions{center,onehalfspacing,chapterhead} % from ut-thesis
+\ExecuteOptions{normalmargins,onehalfspacing,chapterhead} % from ut-thesis
 \ProcessOptions
 \LoadClass{book}
-\RequirePackage{calc}
 \RequirePackage{geometry}
 \RequirePackage{setspace}
 \renewcommand*{\author}  [1]{\gdef\@author{#1}}
