@@ -1,6 +1,11 @@
 .old/
 *.aux
+*.bbl
+*.blg
 *.log
+*.lof
+*.lot
 *.out
+*.run.xml
 *.toc
 *.zip
