@@ -180,42 +180,29 @@
 % the use of this class.
 %
 % \section{Implementation}
-% \subsection{Initial Code}
-
-%% Switch for testing draft mode (toggled by |draft| option).
-%    \begin{macrocode}
-\newif\if@draft
-\@draftfalse
-%    \end{macrocode}
-
-%% Switch for testing current page style.
-%    \begin{macrocode}
-\newif\if@thesispagestyle
-\@thesispagestyletrue
-%    \end{macrocode}
-
-%% Save original definition of |\cleardoublepage|.
-%    \begin{macrocode}
-\let\clearstandarddoublepage\cleardoublepage
-%    \end{macrocode}
-
+%
 % \subsection{Option Declaration}
-
-%% |draft| option: change default document settings.
+%
+% \subsubsection{Draft Mode}
+% Specifying |draft| adds ``DRAFT'' to all 4 corners,
+% plus the date centered below the footer.
+% The default |draft| behaviour for the |book| class is also supported.
 %    \begin{macrocode}
-\DeclareOption{draft}{\@drafttrue
-   \newcommand*{\tlDRAFT}%
-     {\raisebox{ 3ex}[0pt][0pt]{\llap{\sffamily\scriptsize DRAFT\ \ }}}
-   \newcommand*{\trDRAFT}%
-     {\raisebox{ 3ex}[0pt][0pt]{\rlap{\sffamily\scriptsize \ \ DRAFT}}}
-   \newcommand*{\blDRAFT}%
-     {\raisebox{-3ex}[0pt][0pt]{\llap{\sffamily\scriptsize DRAFT\ \ }}}
-   \newcommand*{\brDRAFT}%
-     {\raisebox{-3ex}[0pt][0pt]{\rlap{\sffamily\scriptsize \ \ DRAFT}}}
-   \ExecuteOptions{doublespacing}
-   \PassOptionsToClass{draft,twoside,openany}{book}}
+\newcommand{\draftmarkstyle}{\scriptsize\sffamily}
+\DeclareOption{draft}{%
+  \PassOptionsToClass{\CurrentOption}{book}
+  \AtEndOfClass{
+    \AtBeginShipout{\AtBeginShipoutUpperLeft{%
+      \draftmarkstyle
+      \put(+0.125in,            -0.125in-\f@size pt  ){\rlap{DRAFT}}
+      \put(-0.125in+\paperwidth,-0.125in-\f@size pt  ){\llap{DRAFT}}
+      \put(+0.125in,            +0.125in-\paperheight){\rlap{DRAFT}}
+      \put(-0.125in+\paperwidth,+0.125in-\paperheight){\llap{DRAFT}}
+      \put(\leftmargin+0.5\textwidth,+0.125in-\paperheight)%
+        {\makebox[0in][c]{\today}}
+}}}}
 %    \end{macrocode}
-
+%
 % \subsubsection{Margins}
 % First, we define three lengths to help us compute the margins:
 % |\margin@v| is the top and bottom margins;
@@ -249,26 +236,18 @@
 % and adjust the placement of the header, footer, and margin notes.
 %    \begin{macrocode}
 \AtEndOfClass{
+  \setlength{\leftmargin}{\dimexpr\margin@v+\margin@xhi}
+  \setlength{\rightmargin}{\dimexpr\margin@v+\margin@xho}
   \geometry{
     top      = \margin@v,
     bottom   = \margin@v,
-    inner    = \dimexpr \margin@v + \margin@xhi,
-    outer    = \dimexpr \margin@v + \margin@xho,
+    inner    = \leftmargin,
+    outer    = \rightmargin,
     headsep  = \dimexpr 0.5\margin@v - \headheight,
     footskip = \dimexpr 0.5\margin@v,
-    marginparwidth = \dimexpr \margin@v + \margin@xho - 0.25in,
+    marginparwidth = \dimexpr \rightmargin - 0.25in,
     marginparsep   = 0.125in,
 }}
-%    \end{macrocode}
-%
-%% Page styles for cleared pages.
-%    \begin{macrocode}
-\DeclareOption{cleardoublepagestyleempty}
-  {\AtEndOfClass{\let\cleardoublepage\clearemptydoublepage}}
-\DeclareOption{cleardoublepagestyleplain}
-  {\AtEndOfClass{\let\cleardoublepage\clearplaindoublepage}}
-\DeclareOption{cleardoublepagestylestandard}
-  {\AtEndOfClass{\let\cleardoublepage\clearstandarddoublepage}}
 %    \end{macrocode}
 %
 % \subsubsection{Line Spacing}
@@ -311,8 +290,8 @@
 % |LaTeX Warning: Unused global option(s): ...|
 %
 %    \begin{macrocode}
-\ExecuteOptions{letterpaper} % from book
-\ExecuteOptions{normalmargins,onehalfspacing,chapterhead} % from ut-thesis
+\ExecuteOptions{letterpaper} % book
+\ExecuteOptions{normalmargins,onehalfspacing,chapterhead} % ut-thesis
 \ProcessOptions
 %    \end{macrocode}
 %
@@ -321,8 +300,10 @@
 %
 %    \begin{macrocode}
 \LoadClass{book}
-\RequirePackage{geometry}
-\RequirePackage{setspace}
+\RequirePackage{picture}  % for draft mode
+\RequirePackage{atbegshi} % for draft mode
+\RequirePackage{geometry} % for margins etc.
+\RequirePackage{setspace} % for line spacing
 %    \end{macrocode}
 %
 % \subsection{Author Information}
@@ -348,6 +329,20 @@
 %    \end{macrocode}
 %
 % \subsection{Front Matter}
+%
+% \subsubsection{Matter Commands}
+% We enforce that the |\frontmatter| and |\mainmatter| use the right
+% page numbering and styles.
+% Also, if we are using |twoside|,
+% then we need to reduce all page numbers in the front matter by 1,
+% so that the |abstract| is page ``ii''.
+% Note that adjusting the |page| counter directly causes typesetting problems,
+% such as incorrect alternating margins.
+%    \begin{macrocode}
+\newcommand{\@romanskip}[1]{\@roman{\if@twoside\numexpr#1-1\else#1\fi}}
+\g@addto@macro\frontmatter{\pagenumbering{romanskip}\pagestyle{plain}}
+\g@addto@macro\mainmatter {\pagenumbering{arabic}\pagestyle{headings}}
+%    \end{macrocode}
 %
 % \subsubsection{Title Page}
 %
@@ -379,7 +374,8 @@
       \vfill
       {\copyright} Copyright {\@gradyear} by {\@author}
    \end{center}
-   \cleardoublepage}
+   {{\pagestyle{empty}\ocleardoublepage}}
+   }
 %    \end{macrocode}
 %
 % \subsubsection{Abstract Page}
@@ -407,17 +403,19 @@
    \doublespacing}%
   {\endgroup\cleardoublepage}
 %    \end{macrocode}
-
-%% |\begin{dedication}...\end{dedication}| formats a dedication section
-%% (*not* on a separate page -- just a paragraph formatted flush right).
+%
+% \subsubsection{Dedication}
+% The |dedication| environment is just a paragraph formatted flush right
+% (not a new page).
 %    \begin{macrocode}
 \newenvironment*{dedication}%
   {\begin{flushright}}%
   {\end{flushright}}
 %    \end{macrocode}
-
-%% |\begin{acknowledgements}...\end{acknowledgements}| formats an
-%% acknowledgements section (*not* on a separate page).
+%
+% \subsubsection{Acknowledgments}
+% Similarly, the |acknowledgements| is just standard text with a heading
+% (not a new page).
 %    \begin{macrocode}
 \newenvironment*{acknowledgements}%
   {\begin{center}
@@ -426,144 +424,47 @@
    \begingroup\noindent}%
   {\par\endgroup}
 %    \end{macrocode}
-
-%% Redefine |\thebibliography| environment so that it generates headers
-%% in the same style as the rest of the document.
+%
+% \subsection{Page Styles}
+%
+% \subsubsection{Blank Pages}
+% By defauly, all blank pages will have page style |plain|,
+% but the original definition is stored in |\ocleardoublepage|.
 %    \begin{macrocode}
-\let\@thesisthebibliography\thebibliography
-\renewcommand*{\thebibliography}[1]{\@thesisthebibliography{#1}
-   \if@thesispagestyle\@mkboth{\textsc{\bibname}}{\textsc{\bibname}}\fi}
+\let\ocleardoublepage\cleardoublepage
+\def\cleardoublepage{{\newpage\pagestyle{plain}\ocleardoublepage}}
 %    \end{macrocode}
-
-%% Variations of |\cleardoublepage| that explicitly set the pagestyle of
-%% any inserted blank page.
+%
+% \subsubsection{Headings}
+% We redefine the |headings| page style
+% with a new formatting hook |\headerstyle{}|,
+% but is otherwise similar to the original |headings|.
 %    \begin{macrocode}
-\newcommand*{\clearemptydoublepage}%
-  {{\pagestyle{empty}\clearstandarddoublepage}}
-\newcommand*{\clearplaindoublepage}%
-  {{\pagestyle{plain}\clearstandarddoublepage}}
-\newcommand*{\clearthesisdoublepage}%
-  {{\pagestyle{thesis}\clearstandarddoublepage}}
-%    \end{macrocode}
-
-% \subsubsection{Page Styles}
-
-%% Redefine all four standard page styles (empty, plain, headings,
-%% myheadings), based on the definitions in |book|, so that they
-%% conform to the SGS guidelines (and include draft information if
-%% applicable).  Then, define a new pagestyle |thesis|.
-
-%% TODO: Get rid of copy-pasted definitions for pagestyles?
-
-%% Pagestyle |empty|.
-%    \begin{macrocode}
-\renewcommand*{\ps@empty}%
-  {\@thesispagestylefalse
-   \let\@mkboth\@gobbletwo
-   \def\@oddfoot{\if@draft\blDRAFT\hfil
-      {\slshape\small\today}\hfil\brDRAFT\fi}%
-   \let\@evenfoot\@oddfoot
-   \def\@oddhead{\if@draft\tlDRAFT\hfil
-      {\slshape\small\today}\hfil\trDRAFT\fi}%
-   \let\@evenhead\@oddhead}
-%    \end{macrocode}
-
-%% Pagestyle |plain|.
-%    \begin{macrocode}
-\renewcommand*{\ps@plain}%
-  {\@thesispagestylefalse
-   \let\@mkboth\@gobbletwo
-   \def\@oddfoot{\if@draft\blDRAFT\fi\hfil
-      \thepage\hfil\if@draft\brDRAFT\fi}%
-   \let\@evenfoot\@oddfoot
-   \def\@oddhead{\if@draft\tlDRAFT\hfil
-      {\slshape\small\today}\hfil\trDRAFT\fi}%
-   \let\@evenhead\@oddhead}
-%    \end{macrocode}
-
-%% Pagestyle |headings|.
-%    \begin{macrocode}
-\if@twoside % two-sided printing
+\newcommand{\headerstyle}[1]{\footnotesize\MakeUppercase{#1}}
+\if@twoside
 \renewcommand*{\ps@headings}%
-  {\@thesispagestylefalse
-   \let\@mkboth\markboth
-   \def\@oddfoot{\if@draft\blDRAFT\hfil
-      {\slshape\small\today}\hfil\brDRAFT\fi}%
-   \let\@evenfoot\@oddfoot
-   \def\@oddhead{\if@draft\tlDRAFT\fi{\slshape\rightmark}\hfil
-      \thepage\if@draft\trDRAFT\fi}%
-   \def\@evenhead{\if@draft\tlDRAFT\fi\thepage\hfil
-      {\slshape\leftmark}\if@draft\trDRAFT\fi}%
-   \def\chaptermark##1{\markboth
-      {\MakeUppercase{\ifnum \c@secnumdepth >\m@ne
-         \@chapapp\ \thechapter. \ \fi ##1}}{}}%
-   \def\sectionmark##1{\markright
-      {\MakeUppercase{\ifnum \c@secnumdepth >\z@
-         \thesection. \ \fi ##1}}}}
-\else % one-sided printing
+  {\let\@mkboth\markboth
+   \let\@oddfoot\@empty
+   \let\@evenfoot\@empty
+   \def\@oddhead{\headerstyle{\rightmark\hfil\thepage}}%
+   \def\@evenhead{\headerstyle{\thepage\hfil\leftmark}}%
+   \def\chaptermark##1{\markboth{%
+     \if@mainmatter\headerstyle{\@chapapp\ \thechapter.\ ##1}\fi}{}}
+   \def\sectionmark##1{\markright{%
+     \if@mainmatter\headerstyle{\thesection.\ ##1}\fi}}}
+\else
 \renewcommand*{\ps@headings}%
-  {\@thesispagestylefalse
-   \let\@mkboth\markboth
-   \def\@oddfoot{\if@draft\blDRAFT\hfil
-      {\slshape\small\today}\hfil\brDRAFT\fi}%
-   \def\@oddhead{\if@draft\tlDRAFT\fi{\slshape\rightmark}\hfil
-      \thepage\if@draft\trDRAFT\fi}%
-   \def\chaptermark##1{\markright
-      {\MakeUppercase{\ifnum \c@secnumdepth >\m@ne
-         \@chapapp\ \thechapter. \ \fi ##1}}}}
-\fi%@twoside
+  {\let\@mkboth\markboth
+   \let\@oddfoot\@empty
+   \let\@evenfoot\@empty
+   \def\@oddhead{\headerstyle{\rightmark\hfil\thepage}}%
+   \def\chaptermark##1{\markright{%
+     \if@mainmatter\headerstyle{\@chapapp\ \thechapter.\ ##1}\fi}}}
+\fi
 %    \end{macrocode}
-
-%% Pagestyle |myheadings|.
+%
+% Default page style.
 %    \begin{macrocode}
-\renewcommand*{\ps@myheadings}%
-  {\@thesispagestylefalse
-   \let\@mkboth\@gobbletwo
-   \def\@oddfoot{\if@draft\blDRAFT\hfil
-      {\slshape\small\today}\hfil\brDRAFT\fi}%
-   \let\@evenfoot\@oddfoot
-   \def\@oddhead{\if@draft\tlDRAFT\fi{\slshape\rightmark}\hfil
-      \thepage\if@draft\trDRAFT\fi}%
-   \def\@evenhead{\if@draft\tlDRAFT\fi\thepage\hfil
-      {\slshape\leftmark}\if@draft\trDRAFT\fi}%
-   \let\chaptermark\@gobble\let\sectionmark\@gobble}
-%    \end{macrocode}
-
-%% Pagestyle |thesis| (based on |headings|).
-%    \begin{macrocode}
-\if@twoside % two-sided printing
-\newcommand*{\ps@thesis}%
-  {\@thesispagestyletrue
-   \let\@mkboth\markboth
-   \def\@oddfoot{\if@draft\blDRAFT\hfil
-      {\slshape\small\today}\hfil\brDRAFT\fi}%
-   \let\@evenfoot\@oddfoot
-   \def\@oddhead{\if@draft\tlDRAFT\fi{\slshape\rightmark}\hfil
-      \thepage\if@draft\trDRAFT\fi}%
-   \def\@evenhead{\if@draft\tlDRAFT\fi\thepage\hfil
-      {\slshape\leftmark}\if@draft\trDRAFT\fi}%
-   \def\chaptermark##1{\markboth
-      {\textsc{\ifnum \c@secnumdepth >\m@ne
-         \@chapapp\ \thechapter. \ \fi ##1}}{}}%
-   \def\sectionmark##1{\markright
-      {\textsc{\ifnum \c@secnumdepth >\z@
-         \thesection. \ \fi ##1}}}}
-\else % one-sided printing
-\newcommand*{\ps@thesis}%
-  {\@thesispagestyletrue
-   \let\@mkboth\markboth
-   \def\@oddfoot{\if@draft\blDRAFT\hfil
-      {\slshape\small\today}\hfil\brDRAFT\fi}%
-   \def\@oddhead{\if@draft\tlDRAFT\fi{\slshape\rightmark}\hfil
-      \thepage\if@draft\trDRAFT\fi}%
-   \def\chaptermark##1{\markright
-      {\textsc{\ifnum \c@secnumdepth >\m@ne
-         \@chapapp\ \thechapter. \ \fi ##1}}}}
-\fi%@twoside
-%    \end{macrocode}
-
-%% Default page style.
-%    \begin{macrocode}
-\pagestyle{thesis}
+\pagestyle{headings}
 %    \end{macrocode}
 \endinput

@@ -37,32 +37,19 @@
 \NeedsTeXFormat{LaTeX2e}[1999/12/01]
 \ProvidesClass{ut-thesis}
 [2020/09/01 v3.0.a University of Toronto thesis class]
-
-%% Switch for testing draft mode (toggled by |draft| option).
-\newif\if@draft
-\@draftfalse
-
-%% Switch for testing current page style.
-\newif\if@thesispagestyle
-\@thesispagestyletrue
-
-%% Save original definition of |\cleardoublepage|.
-\let\clearstandarddoublepage\cleardoublepage
-
-
-%% |draft| option: change default document settings.
-\DeclareOption{draft}{\@drafttrue
-   \newcommand*{\tlDRAFT}%
-     {\raisebox{ 3ex}[0pt][0pt]{\llap{\sffamily\scriptsize DRAFT\ \ }}}
-   \newcommand*{\trDRAFT}%
-     {\raisebox{ 3ex}[0pt][0pt]{\rlap{\sffamily\scriptsize \ \ DRAFT}}}
-   \newcommand*{\blDRAFT}%
-     {\raisebox{-3ex}[0pt][0pt]{\llap{\sffamily\scriptsize DRAFT\ \ }}}
-   \newcommand*{\brDRAFT}%
-     {\raisebox{-3ex}[0pt][0pt]{\rlap{\sffamily\scriptsize \ \ DRAFT}}}
-   \ExecuteOptions{doublespacing}
-   \PassOptionsToClass{draft,twoside,openany}{book}}
-
+\newcommand{\draftmarkstyle}{\scriptsize\sffamily}
+\DeclareOption{draft}{%
+  \PassOptionsToClass{\CurrentOption}{book}
+  \AtEndOfClass{
+    \AtBeginShipout{\AtBeginShipoutUpperLeft{%
+      \draftmarkstyle
+      \put(+0.125in,            -0.125in-\f@size pt  ){\rlap{DRAFT}}
+      \put(-0.125in+\paperwidth,-0.125in-\f@size pt  ){\llap{DRAFT}}
+      \put(+0.125in,            +0.125in-\paperheight){\rlap{DRAFT}}
+      \put(-0.125in+\paperwidth,+0.125in-\paperheight){\llap{DRAFT}}
+      \put(\leftmargin+0.5\textwidth,+0.125in-\paperheight)%
+        {\makebox[0in][c]{\today}}
+}}}}
 \newlength{\margin@v}
 \newlength{\margin@xhi}\setlength{\margin@xhi}{0.5in}
 \newlength{\margin@xho}\setlength{\margin@xho}{0.0in}
@@ -74,23 +61,18 @@
   {\setlength{\margin@xho}{0.5\margin@xhi}
    \setlength{\margin@xhi}{0.5\margin@xhi}}
 \AtEndOfClass{
+  \setlength{\leftmargin}{\dimexpr\margin@v+\margin@xhi}
+  \setlength{\rightmargin}{\dimexpr\margin@v+\margin@xho}
   \geometry{
     top      = \margin@v,
     bottom   = \margin@v,
-    inner    = \dimexpr \margin@v + \margin@xhi,
-    outer    = \dimexpr \margin@v + \margin@xho,
+    inner    = \leftmargin,
+    outer    = \rightmargin,
     headsep  = \dimexpr 0.5\margin@v - \headheight,
     footskip = \dimexpr 0.5\margin@v,
-    marginparwidth = \dimexpr \margin@v + \margin@xho - 0.25in,
+    marginparwidth = \dimexpr \rightmargin - 0.25in,
     marginparsep   = 0.125in,
 }}
-%% Page styles for cleared pages.
-\DeclareOption{cleardoublepagestyleempty}
-  {\AtEndOfClass{\let\cleardoublepage\clearemptydoublepage}}
-\DeclareOption{cleardoublepagestyleplain}
-  {\AtEndOfClass{\let\cleardoublepage\clearplaindoublepage}}
-\DeclareOption{cleardoublepagestylestandard}
-  {\AtEndOfClass{\let\cleardoublepage\clearstandarddoublepage}}
 \DeclareOption{doublespacing}{%
   \AtEndOfClass{\doublespacing}
 }
@@ -101,12 +83,14 @@
   \AtEndOfClass{\singlespacing}
 }
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{book}}
-\ExecuteOptions{letterpaper} % from book
-\ExecuteOptions{normalmargins,onehalfspacing,chapterhead} % from ut-thesis
+\ExecuteOptions{letterpaper} % book
+\ExecuteOptions{normalmargins,onehalfspacing,chapterhead} % ut-thesis
 \ProcessOptions
 \LoadClass{book}
-\RequirePackage{geometry}
-\RequirePackage{setspace}
+\RequirePackage{picture}  % for draft mode
+\RequirePackage{atbegshi} % for draft mode
+\RequirePackage{geometry} % for margins etc.
+\RequirePackage{setspace} % for line spacing
 \renewcommand*{\author}  [1]{\gdef\@author{#1}}
 \renewcommand*{\title}   [1]{\gdef\@title{#1}}
 \newcommand*{\degree}    [1]{\gdef\@degree{#1}}
@@ -117,6 +101,9 @@
 \degree    {(degree)}
 \department{(department)}
 \gradyear  {(gradyear)}
+\newcommand{\@romanskip}[1]{\@roman{\if@twoside\numexpr#1-1\else#1\fi}}
+\g@addto@macro\frontmatter{\pagenumbering{romanskip}\pagestyle{plain}}
+\g@addto@macro\mainmatter {\pagenumbering{arabic}\pagestyle{headings}}
 \renewcommand*{\maketitle}%
   {\thispagestyle{empty}
    \large
@@ -138,7 +125,8 @@
       \vfill
       {\copyright} Copyright {\@gradyear} by {\@author}
    \end{center}
-   \cleardoublepage}
+   {{\pagestyle{empty}\ocleardoublepage}}
+   }
 \newenvironment*{abstract}%
   {\thispagestyle{plain}
    \begin{center}
@@ -154,144 +142,39 @@
    \begingroup
    \doublespacing}%
   {\endgroup\cleardoublepage}
-
-%% |\begin{dedication}...\end{dedication}| formats a dedication section
-%% (*not* on a separate page -- just a paragraph formatted flush right).
 \newenvironment*{dedication}%
   {\begin{flushright}}%
   {\end{flushright}}
-
-%% |\begin{acknowledgements}...\end{acknowledgements}| formats an
-%% acknowledgements section (*not* on a separate page).
 \newenvironment*{acknowledgements}%
   {\begin{center}
       \section*{Acknowledgements}
    \end{center}
    \begingroup\noindent}%
   {\par\endgroup}
-
-%% Redefine |\thebibliography| environment so that it generates headers
-%% in the same style as the rest of the document.
-\let\@thesisthebibliography\thebibliography
-\renewcommand*{\thebibliography}[1]{\@thesisthebibliography{#1}
-   \if@thesispagestyle\@mkboth{\textsc{\bibname}}{\textsc{\bibname}}\fi}
-
-%% Variations of |\cleardoublepage| that explicitly set the pagestyle of
-%% any inserted blank page.
-\newcommand*{\clearemptydoublepage}%
-  {{\pagestyle{empty}\clearstandarddoublepage}}
-\newcommand*{\clearplaindoublepage}%
-  {{\pagestyle{plain}\clearstandarddoublepage}}
-\newcommand*{\clearthesisdoublepage}%
-  {{\pagestyle{thesis}\clearstandarddoublepage}}
-
-
-%% Redefine all four standard page styles (empty, plain, headings,
-%% myheadings), based on the definitions in |book|, so that they
-%% conform to the SGS guidelines (and include draft information if
-%% applicable).  Then, define a new pagestyle |thesis|.
-
-%% TODO: Get rid of copy-pasted definitions for pagestyles?
-
-%% Pagestyle |empty|.
-\renewcommand*{\ps@empty}%
-  {\@thesispagestylefalse
-   \let\@mkboth\@gobbletwo
-   \def\@oddfoot{\if@draft\blDRAFT\hfil
-      {\slshape\small\today}\hfil\brDRAFT\fi}%
-   \let\@evenfoot\@oddfoot
-   \def\@oddhead{\if@draft\tlDRAFT\hfil
-      {\slshape\small\today}\hfil\trDRAFT\fi}%
-   \let\@evenhead\@oddhead}
-
-%% Pagestyle |plain|.
-\renewcommand*{\ps@plain}%
-  {\@thesispagestylefalse
-   \let\@mkboth\@gobbletwo
-   \def\@oddfoot{\if@draft\blDRAFT\fi\hfil
-      \thepage\hfil\if@draft\brDRAFT\fi}%
-   \let\@evenfoot\@oddfoot
-   \def\@oddhead{\if@draft\tlDRAFT\hfil
-      {\slshape\small\today}\hfil\trDRAFT\fi}%
-   \let\@evenhead\@oddhead}
-
-%% Pagestyle |headings|.
-\if@twoside % two-sided printing
+\let\ocleardoublepage\cleardoublepage
+\def\cleardoublepage{{\newpage\pagestyle{plain}\ocleardoublepage}}
+\newcommand{\headerstyle}[1]{\footnotesize\MakeUppercase{#1}}
+\if@twoside
 \renewcommand*{\ps@headings}%
-  {\@thesispagestylefalse
-   \let\@mkboth\markboth
-   \def\@oddfoot{\if@draft\blDRAFT\hfil
-      {\slshape\small\today}\hfil\brDRAFT\fi}%
-   \let\@evenfoot\@oddfoot
-   \def\@oddhead{\if@draft\tlDRAFT\fi{\slshape\rightmark}\hfil
-      \thepage\if@draft\trDRAFT\fi}%
-   \def\@evenhead{\if@draft\tlDRAFT\fi\thepage\hfil
-      {\slshape\leftmark}\if@draft\trDRAFT\fi}%
-   \def\chaptermark##1{\markboth
-      {\MakeUppercase{\ifnum \c@secnumdepth >\m@ne
-         \@chapapp\ \thechapter. \ \fi ##1}}{}}%
-   \def\sectionmark##1{\markright
-      {\MakeUppercase{\ifnum \c@secnumdepth >\z@
-         \thesection. \ \fi ##1}}}}
-\else % one-sided printing
+  {\let\@mkboth\markboth
+   \let\@oddfoot\@empty
+   \let\@evenfoot\@empty
+   \def\@oddhead{\headerstyle{\rightmark\hfil\thepage}}%
+   \def\@evenhead{\headerstyle{\thepage\hfil\leftmark}}%
+   \def\chaptermark##1{\markboth{%
+     \if@mainmatter\headerstyle{\@chapapp\ \thechapter.\ ##1}\fi}{}}
+   \def\sectionmark##1{\markright{%
+     \if@mainmatter\headerstyle{\thesection.\ ##1}\fi}}}
+\else
 \renewcommand*{\ps@headings}%
-  {\@thesispagestylefalse
-   \let\@mkboth\markboth
-   \def\@oddfoot{\if@draft\blDRAFT\hfil
-      {\slshape\small\today}\hfil\brDRAFT\fi}%
-   \def\@oddhead{\if@draft\tlDRAFT\fi{\slshape\rightmark}\hfil
-      \thepage\if@draft\trDRAFT\fi}%
-   \def\chaptermark##1{\markright
-      {\MakeUppercase{\ifnum \c@secnumdepth >\m@ne
-         \@chapapp\ \thechapter. \ \fi ##1}}}}
-\fi%@twoside
-
-%% Pagestyle |myheadings|.
-\renewcommand*{\ps@myheadings}%
-  {\@thesispagestylefalse
-   \let\@mkboth\@gobbletwo
-   \def\@oddfoot{\if@draft\blDRAFT\hfil
-      {\slshape\small\today}\hfil\brDRAFT\fi}%
-   \let\@evenfoot\@oddfoot
-   \def\@oddhead{\if@draft\tlDRAFT\fi{\slshape\rightmark}\hfil
-      \thepage\if@draft\trDRAFT\fi}%
-   \def\@evenhead{\if@draft\tlDRAFT\fi\thepage\hfil
-      {\slshape\leftmark}\if@draft\trDRAFT\fi}%
-   \let\chaptermark\@gobble\let\sectionmark\@gobble}
-
-%% Pagestyle |thesis| (based on |headings|).
-\if@twoside % two-sided printing
-\newcommand*{\ps@thesis}%
-  {\@thesispagestyletrue
-   \let\@mkboth\markboth
-   \def\@oddfoot{\if@draft\blDRAFT\hfil
-      {\slshape\small\today}\hfil\brDRAFT\fi}%
-   \let\@evenfoot\@oddfoot
-   \def\@oddhead{\if@draft\tlDRAFT\fi{\slshape\rightmark}\hfil
-      \thepage\if@draft\trDRAFT\fi}%
-   \def\@evenhead{\if@draft\tlDRAFT\fi\thepage\hfil
-      {\slshape\leftmark}\if@draft\trDRAFT\fi}%
-   \def\chaptermark##1{\markboth
-      {\textsc{\ifnum \c@secnumdepth >\m@ne
-         \@chapapp\ \thechapter. \ \fi ##1}}{}}%
-   \def\sectionmark##1{\markright
-      {\textsc{\ifnum \c@secnumdepth >\z@
-         \thesection. \ \fi ##1}}}}
-\else % one-sided printing
-\newcommand*{\ps@thesis}%
-  {\@thesispagestyletrue
-   \let\@mkboth\markboth
-   \def\@oddfoot{\if@draft\blDRAFT\hfil
-      {\slshape\small\today}\hfil\brDRAFT\fi}%
-   \def\@oddhead{\if@draft\tlDRAFT\fi{\slshape\rightmark}\hfil
-      \thepage\if@draft\trDRAFT\fi}%
-   \def\chaptermark##1{\markright
-      {\textsc{\ifnum \c@secnumdepth >\m@ne
-         \@chapapp\ \thechapter. \ \fi ##1}}}}
-\fi%@twoside
-
-%% Default page style.
-\pagestyle{thesis}
+  {\let\@mkboth\markboth
+   \let\@oddfoot\@empty
+   \let\@evenfoot\@empty
+   \def\@oddhead{\headerstyle{\rightmark\hfil\thepage}}%
+   \def\chaptermark##1{\markright{%
+     \if@mainmatter\headerstyle{\@chapapp\ \thechapter.\ ##1}\fi}}}
+\fi
+\pagestyle{headings}
 \endinput
 %%
 %% End of file `ut-thesis.cls'.
