@@ -6,13 +6,13 @@
 %%
 %% ut-thesis.dtx  (with options: `class')
 %% 
-%% The |ut-thesis| document class and template implements
-%% the requirements of the University of Toronto School of Graduate Studies (SGS),
-%% as of Winter 2020.
+%% The |ut-thesis| document class implements the formatting requirements of
+%% the University of Toronto School of Graduate Studies (SGS),
+%% as of Fall 2020.
 %% 
 %% Copyright (c) 1998-2013 Francois Pitt <fpitt@cs.utoronto.ca>,
 %%               2020-2020 Jesse Knight <jesse.knight@mail.utoronto.ca>
-%% last updated at 17:00 (EST) on Wed 26 Aug 2020
+%% last updated at 10:00 (EST) on Wed 14 Oct 2020
 %% 
 %% This work may be distributed and/or modified under the conditions of
 %% the LaTeX Project Public License, either version 1.3c of this license
@@ -36,7 +36,7 @@
 %% 
 \NeedsTeXFormat{LaTeX2e}[1999/12/01]
 \ProvidesClass{ut-thesis}
-[2020/09/01 v3.0.a University of Toronto thesis class]
+[2020/11/19 v3.0.0a University of Toronto thesis class]
 \newcommand{\draftmarkstyle}{\scriptsize\sffamily}
 \DeclareOption{draft}{%
   \PassOptionsToClass{\CurrentOption}{book}
@@ -126,7 +126,7 @@
       {\copyright} Copyright {\@gradyear} by {\@author}
    \end{center}
    {{\pagestyle{empty}\ocleardoublepage}}
-   }
+  }
 \newenvironment*{abstract}%
   {\thispagestyle{plain}
    \begin{center}
@@ -143,14 +143,21 @@
    \doublespacing}%
   {\endgroup\cleardoublepage}
 \newenvironment*{dedication}%
-  {\begin{flushright}}%
-  {\end{flushright}}
+  {\thispagestyle{plain}
+   \null
+   \vfill
+   \begin{flushright}}%
+  {\end{flushright}
+   \vfill
+   \vfill
+   \clearpage}
 \newenvironment*{acknowledgements}%
-  {\begin{center}
-      \section*{Acknowledgements}
+  {\thispagestyle{plain}
+   \begin{center}
+   \section*{Acknowledgments}
    \end{center}
-   \begingroup\noindent}%
-  {\par\endgroup}
+   \begingroup}%
+  {\endgroup\clearpage}
 \let\ocleardoublepage\cleardoublepage
 \def\cleardoublepage{{\newpage\pagestyle{plain}\ocleardoublepage}}
 \newcommand{\headerstyle}[1]{\footnotesize\MakeUppercase{#1}}
