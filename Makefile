@@ -30,7 +30,7 @@ tds:
 	cd ut-thesis ;\
 	cp ut-thesis.cls ../ctan/tex/latex/ut-thesis/ ;\
 	cp ut-thesis.pdf ../ctan/doc/latex/ut-thesis/ ;\
-	cp ../README     ../ctan/doc/latex/ut-thesis/ ;\
+	cp README        ../ctan/doc/latex/ut-thesis/ ;\
 	cp ut-thesis.ins ../ctan/source/latex/ut-thesis ;\
 	cp ut-thesis.dtx ../ctan/source/latex/ut-thesis ;\
 	cd ../ctan ;\
@@ -39,7 +39,6 @@ tds:
 
 zip:
 	cd ut-thesis ;\
-	cp ../README . ;\
 	cp ../ctan/ut-thesis.tds.zip . ;\
 	zip ../ctan/ut-thesis.zip \
 		ut-thesis.tds.zip \
@@ -48,4 +47,3 @@ zip:
 		ut-thesis.cls \
 		ut-thesis.pdf \
 		README ;\
-	rm README

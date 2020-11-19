@@ -1,0 +1,32 @@
+LaTeX2e document class for graduate theses
+that conform to the formatting requirements of
+the School of Graduate Studies at the University of Toronto,
+as of Fall 2020:
+[https://www.sgs.utoronto.ca/academic-progress/program-completion/formatting]
+
+Copyright (c) 1998-2013 Francois Pitt <fpitt@cs.utoronto.ca>,
+              2020-2024 Jesse Knight <jesse.knight@mail.utoronto.ca>
+last updated at 15:30 (EST) on Thu 19 Nov 2020
+
+This work may be distributed and/or modified under the conditions of
+the LaTeX Project Public License, either version 1.3c of this license
+or (at your option) any later version.
+The latest version of this license is in
+    http://www.latex-project.org/lppl.txt
+and version 1.3c or later is part of all distributions of LaTeX
+version 2005/12/01 or later.
+
+This work has the LPPL maintenance status "maintained".
+
+The Current Maintainer of this work is
+Jesse Knight <jesse.knight@mail.utoronto.ca>.
+
+This work consists of the files:
+- README
+- ut-thesis.dtx
+- ut-thesis.ins
+- ut-thesis.pdf (derived user manual)
+- ut-thesis.cls (derived class file)
+
+See version history on GitHub:
+[https://github.com/jessexknight/ut-thesis]
