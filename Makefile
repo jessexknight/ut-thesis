@@ -38,12 +38,12 @@ tds:
 	rm -r tex doc source
 
 zip:
-	cd ut-thesis ;\
-	cp ../ctan/ut-thesis.tds.zip . ;\
-	zip ../ctan/ut-thesis.zip \
+	cp ctan/ut-thesis.tds.zip . ;\
+	zip ctan/ut-thesis.zip \
 		ut-thesis.tds.zip \
-		ut-thesis.dtx \
-		ut-thesis.ins \
-		ut-thesis.cls \
-		ut-thesis.pdf \
-		README ;\
+		ut-thesis/ut-thesis.dtx \
+		ut-thesis/ut-thesis.ins \
+		ut-thesis/ut-thesis.cls \
+		ut-thesis/ut-thesis.pdf \
+		ut-thesis/README ;\
+	rm ut-thesis.tds.zip
