@@ -2,8 +2,8 @@ all:
 	make ins ;\
 	make doc ;\
 	make tests ;\
-	make tds ;\
-	make zip
+	make zip ;\
+	make tds
 
 ins:
 	cd ut-thesis ;\
@@ -29,3 +29,15 @@ zip:
 		ut-thesis/ut-thesis.ins \
 		ut-thesis/ut-thesis.pdf \
 		ut-thesis/README
+
+tds:
+	mkdir -p .texmf/tex/latex/ut-thesis ;\
+	mkdir -p .texmf/doc/latex/ut-thesis ;\
+	cd .texmf ;\
+	cp ../ut-thesis/ut-thesis.cls tex/latex/ut-thesis/ ;\
+	cp ../ut-thesis/ut-thesis.pdf doc/latex/ut-thesis/ ;\
+	cp ../ut-thesis/README doc/latex/ut-thesis/ ;\
+	zip ut-thesis.tds.zip -r * ;\
+	cp ut-thesis.tds.zip ../ctan ;\
+	cd .. ;\
+	rm -r .texmf
