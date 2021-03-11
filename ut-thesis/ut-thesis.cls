@@ -6,13 +6,15 @@
 %%
 %% ut-thesis.dtx  (with options: `class')
 %% 
-%% The |ut-thesis| document class implements the formatting requirements of
-%% the University of Toronto School of Graduate Studies (SGS),
-%% as of Fall 2020.
+%% LaTeX2e document class for graduate theses
+%% that conform to the formatting requirements of
+%% the School of Graduate Studies at the University of Toronto,
+%% as of Fall 2020:
+%% [https://www.sgs.utoronto.ca/academic-progress/program-completion/formatting]
 %% 
 %% Copyright (c) 1998-2013 Francois Pitt <fpitt@cs.utoronto.ca>,
-%%               2020-2020 Jesse Knight <jesse.knight@mail.utoronto.ca>
-%% last updated at 10:00 (EST) on Wed 14 Oct 2020
+%%               2020-2021 Jesse Knight <jesse.knight@mail.utoronto.ca>
+%% last updated at 14:30 (EST) on Thu 11 May 2021
 %% 
 %% This work may be distributed and/or modified under the conditions of
 %% the LaTeX Project Public License, either version 1.3c of this license
@@ -34,9 +36,19 @@
 %% - ut-thesis.pdf (derived user manual)
 %% - ut-thesis.cls (derived class file)
 %% 
+%% To generate ut-thesis.cls (class file), run: pdflatex ut-thesis.ins
+%% To generate ut-thesis.pdf (documentation), run: pdflatex ut-thesis.dtx
+%% To use the class, make ut-thesis.cls visible to your LaTeX distribution,
+%% by placing ut-thesis.cls either in your working directory,
+%% or in your texmf tree, perhaps: $texmf/tex/latex/ut-thesis/ut-thesis.cls
+%% and the documentation: $texmf/doc/latex/ut-thesis/ut-thesis.pdf
+%% 
+%% See version history on GitHub:
+%% [https://github.com/jessexknight/ut-thesis]
+%% 
 \NeedsTeXFormat{LaTeX2e}[1999/12/01]
 \ProvidesClass{ut-thesis}
-[2021/03/07 v3.0.1 University of Toronto thesis class]
+[2021/03/11 v3.0.2 University of Toronto thesis class]
 \newcommand{\draftmarkstyle}{\scriptsize\sffamily}
 \DeclareOption{draft}{%
   \PassOptionsToClass{\CurrentOption}{book}
@@ -141,7 +153,7 @@
    \end{center}
    \begingroup
    \doublespacing}%
-  {\endgroup\cleardoublepage}
+  {\par\endgroup\cleardoublepage}
 \newenvironment*{dedication}%
   {\thispagestyle{plain}
    \null

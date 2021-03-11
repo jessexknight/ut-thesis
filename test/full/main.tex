@@ -1,21 +1,26 @@
+% !TeX TS-program = pdflatex
+% !BIB TS-program = biber
+% !TeX root = main.tex
 \documentclass[
-  widemargins,
+  normalmargins,
   10pt,
   openany,
-  singlespacing,
+  onehalfspacing,
 ]{ut-thesis}
-\usepackage[colorlinks]{hyperref}
-\usepackage[backend=bibtex]{biblatex}
-\usepackage{graphicx}
-\usepackage{booktabs}
-\usepackage[hang]{footmisc}
+% packages
+\usepackage[colorlinks]{hyperref} % for links
+\usepackage[backend=biber]{biblatex} % for references
+\usepackage{graphicx} % for embedding graphics
+\usepackage{booktabs} % for pretty tables
+\usepackage{lipsum} % for gibberish text
+% author data
 \author{Jesse Knight}
 \title{Title of the Example Thesis}
 \degree{Doctor of Philosophy}
 \department{Institute of Medical Science}
 \gradyear{2020}
-\addbibresource{refs}
-\usepackage{lipsum}
+% reference database
+\addbibresource{refs.bib}
 \begin{document}
   \frontmatter
     \maketitle
