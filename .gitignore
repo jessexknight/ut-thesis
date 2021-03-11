@@ -1,6 +1,7 @@
 .old/
 *.aux
 *.bbl
+*.bcf
 *.blg
 *.log
 *.lof
