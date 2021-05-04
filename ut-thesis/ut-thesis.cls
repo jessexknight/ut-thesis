@@ -48,7 +48,7 @@
 %% 
 \NeedsTeXFormat{LaTeX2e}[1999/12/01]
 \ProvidesClass{ut-thesis}
-[2021/03/11 v3.0.2 University of Toronto thesis class]
+[2021/05/04 v3.0.3 University of Toronto thesis class]
 \newcommand{\draftmarkstyle}{\scriptsize\sffamily}
 \DeclareOption{draft}{%
   \PassOptionsToClass{\CurrentOption}{book}
