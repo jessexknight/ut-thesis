@@ -118,8 +118,8 @@
 \g@addto@macro\mainmatter {\pagenumbering{arabic}\pagestyle{headings}}
 \renewcommand*{\maketitle}%
   {\thispagestyle{empty}
-   \large
    \begin{center}
+      \large
       \singlespacing
       \null
       \vfill
