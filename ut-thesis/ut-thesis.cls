@@ -48,7 +48,7 @@
 %% 
 \NeedsTeXFormat{LaTeX2e}[1999/12/01]
 \ProvidesClass{ut-thesis}
-[2021/05/04 v3.0.3 University of Toronto thesis class]
+[2021/05/15 v3.0.4 University of Toronto thesis class]
 \newcommand{\draftmarkstyle}{\scriptsize\sffamily}
 \DeclareOption{draft}{%
   \PassOptionsToClass{\CurrentOption}{book}
@@ -166,7 +166,7 @@
 \newenvironment*{acknowledgements}%
   {\thispagestyle{plain}
    \begin{center}
-   \section*{Acknowledgments}
+   \section*{Acknowledgements}
    \end{center}
    \begingroup}%
   {\endgroup\clearpage}

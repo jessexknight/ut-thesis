@@ -5,7 +5,7 @@
 %<class>\NeedsTeXFormat{LaTeX2e}[1999/12/01]
 %<class>\ProvidesClass{ut-thesis}
 %<*class>
-[2021/05/04 v3.0.3 University of Toronto thesis class]
+[2021/05/15 v3.0.4 University of Toronto thesis class]
 %</class>
 %
 %<*driver>
@@ -269,7 +269,7 @@
 %   We do not provide tools for counting words.
 % \end{macro}
 %
-% \subsubsection{Dedication \& Acknowledgments}\label{use:env:ded-ackn}
+% \subsubsection{Dedication \& Acknowledgements}\label{use:env:ded-ackn}
 %
 % \begin{macro}{dedication}
 %   The |dedication| environment formats text flush right and 2/3 down a new page.
@@ -277,7 +277,7 @@
 % \end{macro}
 %
 % \begin{macro}{acknowledgements}
-%   The |acknowledgments| environment creates a centered heading using |\section*{}|,
+%   The |acknowledgements| environment creates a centered heading using |\section*{}|,
 %   and a new page after the text.
 %   Not necessary for SGS requirements, so you're welcome to redefine this environment.
 % \end{macro}
@@ -537,7 +537,7 @@
    \clearpage}
 %    \end{macrocode}
 %
-% \subsubsection{Acknowledgments}\label{imp:front:ackn}
+% \subsubsection{Acknowledgements}\label{imp:front:ackn}
 %
 % As described above.
 %
@@ -545,7 +545,7 @@
 \newenvironment*{acknowledgements}%
   {\thispagestyle{plain}
    \begin{center}
-   \section*{Acknowledgments}
+   \section*{Acknowledgements}
    \end{center}
    \begingroup}%
   {\endgroup\clearpage}
