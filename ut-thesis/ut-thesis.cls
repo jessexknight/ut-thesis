@@ -166,7 +166,7 @@
 \newenvironment*{acknowledgements}%
   {\thispagestyle{plain}
    \begin{center}
-   \section*{Acknowledgments}
+   \section*{Acknowledgements}
    \end{center}
    \begingroup}%
   {\endgroup\clearpage}
