@@ -23,6 +23,12 @@ tests:
 		cd ../../ ;\
 	done
 
+debug:
+	cp ut-thesis/ut-thesis.cls test/.debug/ ;\
+	cd test/.debug ;\
+	pdflatex main && pdflatex main && bibtex main && pdflatex main ;\
+	rm ut-thesis.cls ;\
+
 zip:
 	zip ctan/ut-thesis.zip \
 		ut-thesis/ut-thesis.dtx \
