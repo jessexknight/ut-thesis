@@ -108,8 +108,7 @@
 \degree    {(degree)}
 \department{(department)}
 \gradyear  {(gradyear)}
-\newcommand{\@romanskip}[1]{\@roman{\if@twoside\numexpr#1-1\else#1\fi}}
-\g@addto@macro\frontmatter{\pagenumbering{romanskip}\pagestyle{plain}}
+\g@addto@macro\frontmatter{\pagenumbering{roman}\pagestyle{plain}}
 \g@addto@macro\mainmatter {\pagenumbering{arabic}\pagestyle{headings}}
 \renewcommand*{\maketitle}%
   {\thispagestyle{empty}

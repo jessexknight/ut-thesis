@@ -455,15 +455,9 @@
 %
 % We enforce that the |\frontmatter| and |\mainmatter| use the right
 % page numbering and styles.
-% Also, if we are using |[twoside]|,
-% then we need to reduce all page numbers in the front matter by 1,
-% so that the |abstract| is page ``ii'',
-% because adjusting the |page| counter directly causes typesetting problems,
-% such as incorrect alternating margins.
 %
 %    \begin{macrocode}
-\newcommand{\@romanskip}[1]{\@roman{\if@twoside\numexpr#1-1\else#1\fi}}
-\g@addto@macro\frontmatter{\pagenumbering{romanskip}\pagestyle{plain}}
+\g@addto@macro\frontmatter{\pagenumbering{roman}\pagestyle{plain}}
 \g@addto@macro\mainmatter {\pagenumbering{arabic}\pagestyle{headings}}
 %    \end{macrocode}
 %
