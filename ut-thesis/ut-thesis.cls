@@ -53,18 +53,18 @@
 \ProvidesClass{ut-thesis}
 [2021/08/25 v3.1.2 University of Toronto thesis class]
 \newlength{\margin@v}
-\newlength{\margin@xhi}\setlength{\margin@xhi}{0.5in}
-\newlength{\margin@xho}\setlength{\margin@xho}{0.0in}
-\DeclareOption{narrowmargins}   {\setlength{\margin@v}{0.75in}}
-\DeclareOption{normalmargins}   {\setlength{\margin@v}{1.00in}}
-\DeclareOption{widemargins}     {\setlength{\margin@v}{1.25in}}
-\DeclareOption{extrawidemargins}{\setlength{\margin@v}{1.50in}}
-\DeclareOption{equalmargins}%
-  {\setlength{\margin@xho}{0.5\margin@xhi}
-   \setlength{\margin@xhi}{0.5\margin@xhi}}
+\newlength{\margin@xi}
+\newlength{\margin@xo}
+\newlength{\margin@xh}\setlength{\margin@xh}{0.5in}
+\newcommand{\margins@equal}%
+  {\setlength{\margin@xo}{0.5\margin@xh}%
+   \setlength{\margin@xi}{0.5\margin@xh}}
+\newcommand{\margins@unequal}%
+  {\setlength{\margin@xi}{1.0\margin@xh}%
+   \setlength{\margin@xo}{0.0\margin@xh}}
 \AtEndOfClass{
-  \setlength{\leftmargin}{\dimexpr\margin@v+\margin@xhi}
-  \setlength{\rightmargin}{\dimexpr\margin@v+\margin@xho}
+  \setlength{\leftmargin}{\dimexpr\margin@v+\margin@xi}
+  \setlength{\rightmargin}{\dimexpr\margin@v+\margin@xo}
   \geometry{
     top      = \margin@v,
     bottom   = \margin@v,
@@ -75,6 +75,12 @@
     marginparwidth = \dimexpr \rightmargin - 0.25in,
     marginparsep   = 0.125in,
 }}
+\DeclareOption{narrowmargins}   {\setlength{\margin@v}{0.75in}}
+\DeclareOption{normalmargins}   {\setlength{\margin@v}{1.00in}}
+\DeclareOption{widemargins}     {\setlength{\margin@v}{1.25in}}
+\DeclareOption{extrawidemargins}{\setlength{\margin@v}{1.50in}}
+\DeclareOption{equalmargins}{\margins@equal}
+\DeclareOption{unequalmargins}{\margins@unequal}
 \DeclareOption{doublespacing}{%
   \AtEndOfClass{\doublespacing}
 }
@@ -84,9 +90,10 @@
 \DeclareOption{singlespacing}{%
   \AtEndOfClass{\singlespacing}
 }
+\DeclareOption{oneside}{\PassOptionsToClass{oneside}{book}}
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{book}}
-\ExecuteOptions{normalmargins,onehalfspacing} % ut-thesis
-\ProcessOptions
+\ExecuteOptions{normalmargins,onehalfspacing,equalmargins,oneside}
+\ProcessOptions\relax
 \LoadClass{book}
 \RequirePackage{geometry} % for margins etc.
 \RequirePackage{setspace} % for line spacing

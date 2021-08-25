@@ -297,48 +297,41 @@
 %
 % \section{Implementation}\label{imp}
 %
-% \subsection{Option Declaration}\label{imp:opt}
+% \subsection{Margin Math}\label{imp:margins}
 %
-% \subsubsection{Margins}\label{imp:opt:margins}
-%
-% First, we define three lengths to help us compute the margins:
+% First, we define four lengths to help us compute the margins:
 % |\margin@v| is the top and bottom margins;
-% |\margin@xhi| is the inner margin offset;
-% |\margin@xho| is the outer margin offset.
+% |\margin@xi| is the inner margin offset;
+% |\margin@xo| is the outer margin offset; and
+% |\margin@xh| is the difference between inner and outer offsets.
 %
 %    \begin{macrocode}
 \newlength{\margin@v}
-\newlength{\margin@xhi}\setlength{\margin@xhi}{0.5in}
-\newlength{\margin@xho}\setlength{\margin@xho}{0.0in}
+\newlength{\margin@xi}
+\newlength{\margin@xo}
+\newlength{\margin@xh}\setlength{\margin@xh}{0.5in}
 %    \end{macrocode}
 %
-% The options are based off |\margin@v|:
+% We define two commands |\margins@equal| and |\margins@unequal|
+% to average or apply the inner offset, respectively,
+% so that the |\textwidth| is consistent in either case:
 %
 %    \begin{macrocode}
-\DeclareOption{narrowmargins}   {\setlength{\margin@v}{0.75in}}
-\DeclareOption{normalmargins}   {\setlength{\margin@v}{1.00in}}
-\DeclareOption{widemargins}     {\setlength{\margin@v}{1.25in}}
-\DeclareOption{extrawidemargins}{\setlength{\margin@v}{1.50in}}
+\newcommand{\margins@equal}%
+  {\setlength{\margin@xo}{0.5\margin@xh}%
+   \setlength{\margin@xi}{0.5\margin@xh}}
+\newcommand{\margins@unequal}%
+  {\setlength{\margin@xi}{1.0\margin@xh}%
+   \setlength{\margin@xo}{0.0\margin@xh}}
 %    \end{macrocode}
 %
-% For digital copies, |equalmargins| may be preferred.
-% However, to keep the |\textwidth| consistent
-% for any of the above margin options with and without |equalmargins|,
-% we simply average the inner and outer offsets:
-%
-%    \begin{macrocode}
-\DeclareOption{equalmargins}%
-  {\setlength{\margin@xho}{0.5\margin@xhi}
-   \setlength{\margin@xhi}{0.5\margin@xhi}}
-%    \end{macrocode}
-%
-% Finally, we actually compute the margins using the above three lengths,
+% Finally, we actually compute the margins using the above lengths,
 % and adjust the placement of the header, footer, and margin notes.
 %
 %    \begin{macrocode}
 \AtEndOfClass{
-  \setlength{\leftmargin}{\dimexpr\margin@v+\margin@xhi}
-  \setlength{\rightmargin}{\dimexpr\margin@v+\margin@xho}
+  \setlength{\leftmargin}{\dimexpr\margin@v+\margin@xi}
+  \setlength{\rightmargin}{\dimexpr\margin@v+\margin@xo}
   \geometry{
     top      = \margin@v,
     bottom   = \margin@v,
@@ -349,6 +342,26 @@
     marginparwidth = \dimexpr \rightmargin - 0.25in,
     marginparsep   = 0.125in,
 }}
+%    \end{macrocode}
+%
+% \subsection{Option Declaration}\label{imp:opt}
+%
+% \subsubsection{Margins}\label{imp:opt:margins}
+%
+% Four margin width options are based on |\margin@v|:
+%
+%    \begin{macrocode}
+\DeclareOption{narrowmargins}   {\setlength{\margin@v}{0.75in}}
+\DeclareOption{normalmargins}   {\setlength{\margin@v}{1.00in}}
+\DeclareOption{widemargins}     {\setlength{\margin@v}{1.25in}}
+\DeclareOption{extrawidemargins}{\setlength{\margin@v}{1.50in}}
+%    \end{macrocode}
+%
+% Setting the margins either equal or unequal:
+%
+%    \begin{macrocode}
+\DeclareOption{equalmargins}{\margins@equal}
+\DeclareOption{unequalmargins}{\margins@unequal}
 %    \end{macrocode}
 %
 % \subsubsection{Line Spacing}\label{imp:opt:spacing}
@@ -373,10 +386,18 @@
 %
 % \subsubsection{Book Options}\label{imp:opt:misc}
 %
+% We need to redeclare the |oneside| option from |book| so that
+% it can be used as a default:
+%
+%    \begin{macrocode}
+\DeclareOption{oneside}{\PassOptionsToClass{oneside}{book}}
+%    \end{macrocode}
+%
 % Finally, we try to process all remaining options using the |book| class,
 % so the usual options and default values should be defined, like:
 % \begin{itemize}
 %   \item font size: e.g. |10pt|, |11pt|, |12pt|
+%   \item sides: e.g. |oneside|, |twoside|
 %   \item open side for twoside: e.g. |openright|, |openany|
 % \end{itemize}
 %
@@ -391,11 +412,11 @@
 % |LaTeX Warning: Unused global option(s): ...|
 %
 %    \begin{macrocode}
-\ExecuteOptions{normalmargins,onehalfspacing} % ut-thesis
-\ProcessOptions
+\ExecuteOptions{normalmargins,onehalfspacing,equalmargins,oneside}
+\ProcessOptions\relax
 %    \end{macrocode}
 %
-% \subsection{Initialization}\label{imp:init}
+% \subsection{Loading Dependencies}\label{imp:load}
 %
 % We load the |book| class and the required packages.
 %
