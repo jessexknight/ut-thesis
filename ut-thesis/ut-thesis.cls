@@ -51,7 +51,7 @@
 %% 
 \NeedsTeXFormat{LaTeX2e}[1999/12/01]
 \ProvidesClass{ut-thesis}
-[2021/07/20 v3.0.5 University of Toronto thesis class]
+[2021/08/24 v3.0.6 University of Toronto thesis class]
 \newcommand{\draftmarkstyle}{\scriptsize\sffamily}
 \DeclareOption{draft}{%
   \PassOptionsToClass{\CurrentOption}{book}
@@ -109,8 +109,9 @@
 \renewcommand*{\author}  [1]{\gdef\@author{#1}}
 \renewcommand*{\title}   [1]{\gdef\@title{#1}}
 \newcommand*{\degree}    [1]{\gdef\@degree{#1}}
-\newcommand*{\department}[1]{\gdef\@department{#1}}
 \newcommand*{\gradyear}  [1]{\gdef\@gradyear{#1}}
+\newcommand*{\department}[2][Department of]%
+  {\gdef\@deptpre{#1}\gdef\@deptname{#2}}
 \author    {(author)}
 \title     {(title)}
 \degree    {(degree)}
@@ -135,7 +136,7 @@
       \vfill
       A thesis submitted in conformity with the requirements\\
       for the degree of {\@degree}\\[1ex]
-      Graduate Department of {\@department}\\
+      {\@deptpre} {\@deptname}\\
       University of Toronto\\
       \vfill
       {\copyright} Copyright {\@gradyear} by {\@author}
@@ -149,7 +150,7 @@
       {\@title}\\[2ex]
       {\@author}\\
       {\@degree}\\[1ex]
-      Graduate Department of {\@department}\\
+      {\@deptpre} {\@deptname}\\
       University of Toronto\\
       {\@gradyear}\\
       \section*{Abstract}
