@@ -5,7 +5,7 @@
 %<class>\NeedsTeXFormat{LaTeX2e}[1999/12/01]
 %<class>\ProvidesClass{ut-thesis}
 %<*class>
-[2021/08/24 v3.0.6 University of Toronto thesis class]
+[2021/08/25 v3.1.0 University of Toronto thesis class]
 %</class>
 %
 %<*driver>
@@ -165,12 +165,12 @@
 %   Inner: 2.00 inch; outer: 1.50 inch
 % \end{macro}
 %
-% \subsubsection{Draft}\label{use:opt:draft}
+% \subsubsection{Book Options}\label{use:opt:book}
 %
-% \begin{macro}{[draft]}
-%   Adds ``DRAFT'' to all 4 corners, plus the date centered below the footer.
-%   The default |draft| behaviour for the |book| class is also supported.
-% \end{macro}
+% This class inherits from the standard \LaTeX\ |book| class,
+% so all other |book| options are processed by that class.
+% Two caveats are that |[titlepage]|/|[notitlepage]| have no effect and
+% |[twocolumn]| has undefined behaviour.
 %
 % \subsection{Commands}\label{use:cmd}
 %
@@ -304,26 +304,6 @@
 %
 % \subsection{Option Declaration}\label{imp:opt}
 %
-% \subsubsection{Draft Mode}\label{imp:opt:draft}
-% Specifying |draft| adds ``DRAFT'' to all 4 corners,
-% plus the date centered below the footer.
-% The default |draft| behaviour for the |book| class is also supported.
-%    \begin{macrocode}
-\newcommand{\draftmarkstyle}{\scriptsize\sffamily}
-\DeclareOption{draft}{%
-  \PassOptionsToClass{\CurrentOption}{book}
-  \AtEndOfClass{
-    \AtBeginShipout{\AtBeginShipoutUpperLeft{%
-      \draftmarkstyle
-      \put(+0.125in,            -0.125in-\f@size pt  ){\rlap{DRAFT}}
-      \put(-0.125in+\paperwidth,-0.125in-\f@size pt  ){\llap{DRAFT}}
-      \put(+0.125in,            +0.125in-\paperheight){\rlap{DRAFT}}
-      \put(-0.125in+\paperwidth,+0.125in-\paperheight){\llap{DRAFT}}
-      \put(+0.5\paperwidth,+0.125in-\paperheight)%
-        {\makebox[0in][c]{\today}}
-}}}}
-%    \end{macrocode}
-%
 % \subsubsection{Margins}\label{imp:opt:margins}
 % First, we define three lengths to help us compute the margins:
 % |\margin@v| is the top and bottom margins;
@@ -421,8 +401,6 @@
 %
 %    \begin{macrocode}
 \LoadClass{book}
-\RequirePackage{picture}  % for draft mode
-\RequirePackage{atbegshi} % for draft mode
 \RequirePackage{geometry} % for margins etc.
 \RequirePackage{setspace} % for line spacing
 %    \end{macrocode}

@@ -51,20 +51,7 @@
 %% 
 \NeedsTeXFormat{LaTeX2e}[1999/12/01]
 \ProvidesClass{ut-thesis}
-[2021/08/24 v3.0.6 University of Toronto thesis class]
-\newcommand{\draftmarkstyle}{\scriptsize\sffamily}
-\DeclareOption{draft}{%
-  \PassOptionsToClass{\CurrentOption}{book}
-  \AtEndOfClass{
-    \AtBeginShipout{\AtBeginShipoutUpperLeft{%
-      \draftmarkstyle
-      \put(+0.125in,            -0.125in-\f@size pt  ){\rlap{DRAFT}}
-      \put(-0.125in+\paperwidth,-0.125in-\f@size pt  ){\llap{DRAFT}}
-      \put(+0.125in,            +0.125in-\paperheight){\rlap{DRAFT}}
-      \put(-0.125in+\paperwidth,+0.125in-\paperheight){\llap{DRAFT}}
-      \put(+0.5\paperwidth,+0.125in-\paperheight)%
-        {\makebox[0in][c]{\today}}
-}}}}
+[2021/08/25 v3.1.0 University of Toronto thesis class]
 \newlength{\margin@v}
 \newlength{\margin@xhi}\setlength{\margin@xhi}{0.5in}
 \newlength{\margin@xho}\setlength{\margin@xho}{0.0in}
@@ -102,8 +89,6 @@
 \ExecuteOptions{normalmargins,onehalfspacing,chapterhead} % ut-thesis
 \ProcessOptions
 \LoadClass{book}
-\RequirePackage{picture}  % for draft mode
-\RequirePackage{atbegshi} % for draft mode
 \RequirePackage{geometry} % for margins etc.
 \RequirePackage{setspace} % for line spacing
 \renewcommand*{\author}  [1]{\gdef\@author{#1}}
