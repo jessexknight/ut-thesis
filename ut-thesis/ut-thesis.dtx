@@ -300,10 +300,12 @@
 % \subsection{Option Declaration}\label{imp:opt}
 %
 % \subsubsection{Margins}\label{imp:opt:margins}
+%
 % First, we define three lengths to help us compute the margins:
 % |\margin@v| is the top and bottom margins;
 % |\margin@xhi| is the inner margin offset;
 % |\margin@xho| is the outer margin offset.
+%
 %    \begin{macrocode}
 \newlength{\margin@v}
 \newlength{\margin@xhi}\setlength{\margin@xhi}{0.5in}
@@ -311,6 +313,7 @@
 %    \end{macrocode}
 %
 % The options are based off |\margin@v|:
+%
 %    \begin{macrocode}
 \DeclareOption{narrowmargins}   {\setlength{\margin@v}{0.75in}}
 \DeclareOption{normalmargins}   {\setlength{\margin@v}{1.00in}}
@@ -322,6 +325,7 @@
 % However, to keep the |\textwidth| consistent
 % for any of the above margin options with and without |equalmargins|,
 % we simply average the inner and outer offsets:
+%
 %    \begin{macrocode}
 \DeclareOption{equalmargins}%
   {\setlength{\margin@xho}{0.5\margin@xhi}
@@ -330,6 +334,7 @@
 %
 % Finally, we actually compute the margins using the above three lengths,
 % and adjust the placement of the header, footer, and margin notes.
+%
 %    \begin{macrocode}
 \AtEndOfClass{
   \setlength{\leftmargin}{\dimexpr\margin@v+\margin@xhi}
@@ -347,6 +352,7 @@
 %    \end{macrocode}
 %
 % \subsubsection{Line Spacing}\label{imp:opt:spacing}
+%
 % We're using the |setspace| package.
 % We simply call one of the spacing commands after the class is loaded.
 % So, be careful to place any line spacing commands within a group,
@@ -390,6 +396,7 @@
 %    \end{macrocode}
 %
 % \subsection{Initialization}\label{imp:init}
+%
 % We load the |book| class and the required packages.
 %
 %    \begin{macrocode}
@@ -424,6 +431,7 @@
 % \subsection{Front Matter}\label{imp:front}
 %
 % \subsubsection{Matter Commands}\label{imp:front:pp}
+%
 % We enforce that the |\frontmatter| and |\mainmatter| use the right
 % page numbering and styles.
 % Also, if we are using |[twoside]|,
@@ -431,6 +439,7 @@
 % so that the |abstract| is page ``ii'',
 % because adjusting the |page| counter directly causes typesetting problems,
 % such as incorrect alternating margins.
+%
 %    \begin{macrocode}
 \newcommand{\@romanskip}[1]{\@roman{\if@twoside\numexpr#1-1\else#1\fi}}
 \g@addto@macro\frontmatter{\pagenumbering{romanskip}\pagestyle{plain}}
@@ -530,17 +539,21 @@
 % \subsection{Page Styles}\label{imp:hf}
 %
 % \subsubsection{Blank Pages}\label{imp:hf:blank}
+%
 % By default, all blank pages will have page style |plain|,
 % but the original definition is stored in |\ocleardoublepage|.
+%
 %    \begin{macrocode}
 \let\ocleardoublepage\cleardoublepage
 \def\cleardoublepage{{\newpage\pagestyle{plain}\ocleardoublepage}}
 %    \end{macrocode}
 %
 % \subsubsection{Headers \& Footers}\label{imp:hf:hf}
+%
 % We redefine the |headings| page style
 % with a new formatting hook |\headerstyle{}|,
 % but is otherwise similar to the original |headings|.
+%
 %    \begin{macrocode}
 \newcommand{\headerstyle}[1]{\footnotesize\MakeUppercase{#1}}
 \if@twoside
@@ -566,11 +579,13 @@
 %    \end{macrocode}
 %
 % Default page style.
+%
 %    \begin{macrocode}
 \pagestyle{headings}
 %    \end{macrocode}
 %
 % \subsection{Spacing Adjustments}\label{imp:adj}
+%
 % The default spacing below captions is too small
 % for captions on top of floats (e.g.\ for tables),
 % so we make it consistent above and below.
