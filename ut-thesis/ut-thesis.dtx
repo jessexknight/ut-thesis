@@ -5,7 +5,7 @@
 %<class>\NeedsTeXFormat{LaTeX2e}[1999/12/01]
 %<class>\ProvidesClass{ut-thesis}
 %<*class>
-[2021/08/25 v3.1.0 University of Toronto thesis class]
+[2021/08/25 v3.1.1 University of Toronto thesis class]
 %</class>
 %
 %<*driver>
@@ -83,11 +83,6 @@
 % \subsection{Options}\label{use:opt}
 %
 % The default class options are denoted like |option*|.
-%
-% \subsubsection{Paper Size}\label{use:opt:paper}
-%
-% The standard page sizes are supported, including:
-% |[letterpaper*]|, and |[a4paper]|.
 %
 % \subsubsection{Font Size}\label{use:opt:fontsize}
 %
@@ -375,7 +370,6 @@
 % Finally, we try to process all remaining options using the |book| class,
 % so the usual options and default values should be defined, like:
 % \begin{itemize}
-%   \item page size: e.g. |letterpaper|, |a4paper|, \dots
 %   \item font size: e.g. |10pt|, |11pt|, |12pt|
 %   \item open side for twoside: e.g. |openright|, |openany|
 % \end{itemize}
@@ -391,7 +385,6 @@
 % |LaTeX Warning: Unused global option(s): ...|
 %
 %    \begin{macrocode}
-\ExecuteOptions{letterpaper} % book
 \ExecuteOptions{normalmargins,onehalfspacing,chapterhead} % ut-thesis
 \ProcessOptions
 %    \end{macrocode}

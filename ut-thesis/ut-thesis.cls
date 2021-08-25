@@ -51,7 +51,7 @@
 %% 
 \NeedsTeXFormat{LaTeX2e}[1999/12/01]
 \ProvidesClass{ut-thesis}
-[2021/08/25 v3.1.0 University of Toronto thesis class]
+[2021/08/25 v3.1.1 University of Toronto thesis class]
 \newlength{\margin@v}
 \newlength{\margin@xhi}\setlength{\margin@xhi}{0.5in}
 \newlength{\margin@xho}\setlength{\margin@xho}{0.0in}
@@ -85,7 +85,6 @@
   \AtEndOfClass{\singlespacing}
 }
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{book}}
-\ExecuteOptions{letterpaper} % book
 \ExecuteOptions{normalmargins,onehalfspacing,chapterhead} % ut-thesis
 \ProcessOptions
 \LoadClass{book}
