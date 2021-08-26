@@ -11,7 +11,8 @@ Within this [repo](https://github.com/jessexknight/ut-thesis):
 - `test/`: some example usage of the class, including:
   - `mwe`: a minimal working example
   - `full`: a more realistic example
-  - `margins`: illustration of the margins using `showframe`
+  - `frame`: illustration of the margins using `showframe`
+  - `margin-*`: testing the margin options
 - `makefile`: compile stuff
 - `ctan/`: output for uploading to CTAN
 
