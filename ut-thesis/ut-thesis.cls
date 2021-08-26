@@ -51,36 +51,35 @@
 %% 
 \NeedsTeXFormat{LaTeX2e}[1999/12/01]
 \ProvidesClass{ut-thesis}
-[2021/08/25 v3.1.2 University of Toronto thesis class]
-\newlength{\margin@v}
-\newlength{\margin@xi}
-\newlength{\margin@xo}
-\newlength{\margin@xh}\setlength{\margin@xh}{0.5in}
-\newcommand{\margins@equal}%
-  {\setlength{\margin@xo}{0.5\margin@xh}%
-   \setlength{\margin@xi}{0.5\margin@xh}}
-\newcommand{\margins@unequal}%
-  {\setlength{\margin@xi}{1.0\margin@xh}%
-   \setlength{\margin@xo}{0.0\margin@xh}}
+[2021/08/26 v3.1.3 University of Toronto thesis class]
+\newif\ifmargins@equal
+\newlength{\margin@base}
+\newlength{\margin@offset}
+\setlength{\margin@offset}{0.5in}
 \AtEndOfClass{
-  \setlength{\leftmargin}{\dimexpr\margin@v+\margin@xi}
-  \setlength{\rightmargin}{\dimexpr\margin@v+\margin@xo}
+  \ifmargins@equal
+    \setlength{\leftmargin}{\dimexpr\margin@base+.5\margin@offset}
+    \setlength{\rightmargin}{\dimexpr\margin@base+.5\margin@offset}
+  \else
+    \setlength{\leftmargin}{\dimexpr\margin@base+\margin@offset}
+    \setlength{\rightmargin}{\dimexpr\margin@base}
+  \fi
   \geometry{
-    top      = \margin@v,
-    bottom   = \margin@v,
+    top      = \margin@base,
+    bottom   = \margin@base,
     inner    = \leftmargin,
     outer    = \rightmargin,
-    headsep  = \dimexpr 0.5\margin@v - \headheight,
-    footskip = \dimexpr 0.5\margin@v,
-    marginparwidth = \dimexpr \rightmargin - 0.25in,
+    headsep  = \dimexpr0.5\margin@base-\headheight,
+    footskip = \dimexpr0.5\margin@base,
+    marginparwidth = \dimexpr\rightmargin-0.25in,
     marginparsep   = 0.125in,
 }}
-\DeclareOption{narrowmargins}   {\setlength{\margin@v}{0.75in}}
-\DeclareOption{normalmargins}   {\setlength{\margin@v}{1.00in}}
-\DeclareOption{widemargins}     {\setlength{\margin@v}{1.25in}}
-\DeclareOption{extrawidemargins}{\setlength{\margin@v}{1.50in}}
-\DeclareOption{equalmargins}{\margins@equal}
-\DeclareOption{unequalmargins}{\margins@unequal}
+\DeclareOption{narrowmargins}   {\setlength{\margin@base}{0.75in}}
+\DeclareOption{normalmargins}   {\setlength{\margin@base}{1.00in}}
+\DeclareOption{widemargins}     {\setlength{\margin@base}{1.25in}}
+\DeclareOption{extrawidemargins}{\setlength{\margin@base}{1.50in}}
+\DeclareOption{equalmargins}{\margins@equaltrue}
+\DeclareOption{unequalmargins}{\margins@equalfalse}
 \DeclareOption{doublespacing}{%
   \AtEndOfClass{\doublespacing}
 }

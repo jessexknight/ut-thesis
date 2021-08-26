@@ -5,7 +5,7 @@
 %<class>\NeedsTeXFormat{LaTeX2e}[1999/12/01]
 %<class>\ProvidesClass{ut-thesis}
 %<*class>
-[2021/08/25 v3.1.2 University of Toronto thesis class]
+[2021/08/26 v3.1.3 University of Toronto thesis class]
 %</class>
 %
 %<*driver>
@@ -299,47 +299,43 @@
 %
 % \subsection{Margin Math}\label{imp:margins}
 %
-% First, we define four lengths to help us compute the margins:
-% |\margin@v| is the top and bottom margins;
-% |\margin@xi| is the inner margin offset;
-% |\margin@xo| is the outer margin offset; and
-% |\margin@xh| is the difference between inner and outer offsets.
+% First, we define a boolean |margins@equal| to store
+% whether margins should be equal or not, plus
+% two lengths to help us compute the margins:
+% |\margin@base| is the minimum used directly for the top and bottom, and
+% |\margin@offset| is the difference between inner/outer margins
+% if they are not equal.
 %
 %    \begin{macrocode}
-\newlength{\margin@v}
-\newlength{\margin@xi}
-\newlength{\margin@xo}
-\newlength{\margin@xh}\setlength{\margin@xh}{0.5in}
+\newif\ifmargins@equal
+\newlength{\margin@base}
+\newlength{\margin@offset}
+\setlength{\margin@offset}{0.5in}
 %    \end{macrocode}
 %
-% We define two commands |\margins@equal| and |\margins@unequal|
-% to average or apply the inner offset, respectively,
-% so that the |\textwidth| is consistent in either case:
-%
-%    \begin{macrocode}
-\newcommand{\margins@equal}%
-  {\setlength{\margin@xo}{0.5\margin@xh}%
-   \setlength{\margin@xi}{0.5\margin@xh}}
-\newcommand{\margins@unequal}%
-  {\setlength{\margin@xi}{1.0\margin@xh}%
-   \setlength{\margin@xo}{0.0\margin@xh}}
-%    \end{macrocode}
-%
-% Finally, we actually compute the margins using the above lengths,
+% After processing all options,
+% we compute the margins using the above lengths,
 % and adjust the placement of the header, footer, and margin notes.
+% If margins are equal, we average |\margin@offset|
+% to keep the |\textwidth| consistent with the unequal case.
 %
 %    \begin{macrocode}
 \AtEndOfClass{
-  \setlength{\leftmargin}{\dimexpr\margin@v+\margin@xi}
-  \setlength{\rightmargin}{\dimexpr\margin@v+\margin@xo}
+  \ifmargins@equal
+    \setlength{\leftmargin}{\dimexpr\margin@base+.5\margin@offset}
+    \setlength{\rightmargin}{\dimexpr\margin@base+.5\margin@offset}
+  \else
+    \setlength{\leftmargin}{\dimexpr\margin@base+\margin@offset}
+    \setlength{\rightmargin}{\dimexpr\margin@base}
+  \fi
   \geometry{
-    top      = \margin@v,
-    bottom   = \margin@v,
+    top      = \margin@base,
+    bottom   = \margin@base,
     inner    = \leftmargin,
     outer    = \rightmargin,
-    headsep  = \dimexpr 0.5\margin@v - \headheight,
-    footskip = \dimexpr 0.5\margin@v,
-    marginparwidth = \dimexpr \rightmargin - 0.25in,
+    headsep  = \dimexpr0.5\margin@base-\headheight,
+    footskip = \dimexpr0.5\margin@base,
+    marginparwidth = \dimexpr\rightmargin-0.25in,
     marginparsep   = 0.125in,
 }}
 %    \end{macrocode}
@@ -351,17 +347,17 @@
 % Four margin width options are based on |\margin@v|:
 %
 %    \begin{macrocode}
-\DeclareOption{narrowmargins}   {\setlength{\margin@v}{0.75in}}
-\DeclareOption{normalmargins}   {\setlength{\margin@v}{1.00in}}
-\DeclareOption{widemargins}     {\setlength{\margin@v}{1.25in}}
-\DeclareOption{extrawidemargins}{\setlength{\margin@v}{1.50in}}
+\DeclareOption{narrowmargins}   {\setlength{\margin@base}{0.75in}}
+\DeclareOption{normalmargins}   {\setlength{\margin@base}{1.00in}}
+\DeclareOption{widemargins}     {\setlength{\margin@base}{1.25in}}
+\DeclareOption{extrawidemargins}{\setlength{\margin@base}{1.50in}}
 %    \end{macrocode}
 %
 % Setting the margins either equal or unequal:
 %
 %    \begin{macrocode}
-\DeclareOption{equalmargins}{\margins@equal}
-\DeclareOption{unequalmargins}{\margins@unequal}
+\DeclareOption{equalmargins}{\margins@equaltrue}
+\DeclareOption{unequalmargins}{\margins@equalfalse}
 %    \end{macrocode}
 %
 % \subsubsection{Line Spacing}\label{imp:opt:spacing}
