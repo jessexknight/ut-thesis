@@ -51,7 +51,7 @@
 %% 
 \NeedsTeXFormat{LaTeX2e}[1999/12/01]
 \ProvidesClass{ut-thesis}
-[2021/08/26 v3.1.3 University of Toronto thesis class]
+[2021/08/26 v3.1.4 University of Toronto thesis class]
 \newif\ifmargins@equal
 \newlength{\margin@base}
 \newlength{\margin@offset}
@@ -105,8 +105,8 @@
 \author    {(author)}
 \title     {(title)}
 \degree    {(degree)}
-\department{(department)}
 \gradyear  {(gradyear)}
+\department{(department)}
 \g@addto@macro\frontmatter{\pagenumbering{roman}\pagestyle{plain}}
 \g@addto@macro\mainmatter {\pagenumbering{arabic}\pagestyle{headings}}
 \renewcommand*{\maketitle}%
