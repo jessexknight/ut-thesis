@@ -1,15 +1,10 @@
 % !TeX TS-program = pdflatex
 % !BIB TS-program = biber
 % !TeX root = main.tex
-\documentclass[
-  normalmargins,
-  10pt,
-  openany,
-  onehalfspacing,
-]{ut-thesis}
+\documentclass{ut-thesis}
 % packages
 \usepackage[colorlinks]{hyperref} % for links
-\usepackage[backend=biber]{biblatex} % for references
+\usepackage[backend=bibtex]{biblatex} % for references
 \usepackage{graphicx} % for embedding graphics
 \usepackage{booktabs} % for pretty tables
 \usepackage{lipsum} % for gibberish text
@@ -17,8 +12,8 @@
 \author{Jesse Knight}
 \title{Title of the Example Thesis}
 \degree{Doctor of Philosophy}
-\department{Institute of Medical Science}
-\gradyear{2020}
+\department[]{Institute of Medical Science}
+\gradyear{2021}
 % reference database
 \addbibresource{refs.bib}
 \begin{document}
