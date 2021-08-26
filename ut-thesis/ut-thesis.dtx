@@ -5,7 +5,7 @@
 %<class>\NeedsTeXFormat{LaTeX2e}[1999/12/01]
 %<class>\ProvidesClass{ut-thesis}
 %<*class>
-[2021/08/26 v3.1.4 University of Toronto thesis class]
+[2021/08/26 v3.1.5 University of Toronto thesis class]
 %</class>
 %
 %<*driver>
@@ -24,9 +24,6 @@
 \setlength{\skip\footins}{4ex}
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{6pt}
-\newcommand{\smacro}[2][0]{%
-  \begin{macro}{#2}\end{macro}%
-  \vspace{\dimexpr #1\baselineskip-3\baselineskip}}
 \begin{document}
   \DocInput{ut-thesis.dtx}
 \end{document}
@@ -86,65 +83,66 @@
 %
 % \subsubsection{Font Size}\label{use:opt:fontsize}
 %
-% \smacro[ 1]{[10pt*]}
-% \smacro[ 1]{[11pt]}
-% \smacro[-2]{[12pt]}
-% \begin{macro}{]}
+% \begin{macro}{[10pt*]}
+% \begin{macro}{[11pt]}
+% \begin{macro}{[12pt]}
 %   The three standard font sizes are supported.
 %   SGS requires at least 10\,pt font for the text,
 %   but captions, footnotes, etc.\ can be smaller.
 % \end{macro}
+% \end{macro}
+% \end{macro}
 %
 % \subsubsection{Line Spacing}\label{use:opt:spacing}
 %
-% \smacro[ 1]{[singlespacing]}
-% \smacro[ 1]{[onehalfspacing*]}
-% \smacro[-2]{[doublespacing]}
-% \begin{macro}{]}
+% \begin{macro}{[singlespacing]}
+% \begin{macro}{[onehalfspacing*]}
+% \begin{macro}{[doublespacing]}
 %   Three options are available for line spacing.
 %   Note that |[singlespacing]| does not conform to the SGS guidelines,
 %   but we provide it in case you ever prefer it while writing.
 % \end{macro}
+% \end{macro}
+% \end{macro}
 %
 % \subsubsection{Margins}\label{use:opt:margins}
 %
-% \paragraph{Sides:}
-% Three variants of margins are defined,
-% reflecting preferences for printing and binding,
-% the first two being the same as in the |book| class:
+% We aim to support both digital and print copies of the thesis,
+% with two aspects affected:
+% \begin{enumerate}
+%   \item whether margins are equal (digital) or unequal (print),
+%         where unequal margins include a wider inner margin for binding
+%   \item whether pages will be printed on one or both sides,
+%         essentially only relevant for print copies
+% \end{enumerate}
 %
-% \begin{macro}{[oneside]}
-%   All pages behave as if they open to the right (wider left margin).
+% \begin{macro}{[equalmargins*]}
+%   The inner and outer margins are averaged
+%   to keep the |\textwidth| consistent with the |[unequalmargins]| option.
 % \end{macro}
 %
-% \begin{macro}{[twoside*]}
+% \begin{macro}{[unequalmargins]}
+%   The outer margin is equal to the top and bottom margins;
+%   the inner margin is 0.50~inches wider than the outer margin.
+% \end{macro}
+%
+% \begin{macro}{[oneside*]}
+%   All pages behave as if they open to the right (wider left margin);
+%   no extra blank pages.
+% \end{macro}
+%
+% \begin{macro}{[twoside]}
 %   Most pages will alternate opening to the right and left;
-%   however, the commands: |\maketitle|, |\begin{abstract}| and |\mainmatter|,
-%   which create new pages, will always open to the right,
+%   however, some commands which create new pages
+%   will always open to the right,
 %   sometimes requiring a blank page before to do so.
+%   See the |book| class for more information, as well as
+%   details about the |[openright*]| and |[openany]| options.
 % \end{macro}
 %
-% \begin{macro}{[equalmargins]}
-%   The left and right margins are equal (averaged);
-%   all pages behave as if they open to the right.
-% \end{macro}
-%
-% \paragraph{Opening:}
-% Only if |[twoside]| is used, two additional options from the |book| class
-% control how other new pages will open, including new pages created by:
-% |\listoftables|, |\listoffigures|, and |\chapter{}|.
-%
-% \begin{macro}{[openright*]}
-%   These pages will always open to the right (like |\maketitle|, etc.).
-% \end{macro}
-%
-% \begin{macro}{[openany]}
-%   These pages can open to the left or right.
-% \end{macro}
-%
-% \paragraph{Widths:}
 % Four widths of margins are defined based on
-% the inner (left) and outer (right/top/bottom) dimensions:
+% the inner (left) and outer (right/top/bottom) dimensions.
+% If |[equalmargins]| is used, the left/right margins are averaged.
 %
 % \begin{macro}{[narrowmargins]}
 %   Inner: 1.25 inch; outer: 0.75 inch
@@ -344,7 +342,7 @@
 %
 % \subsubsection{Margins}\label{imp:opt:margins}
 %
-% Four margin width options are based on |\margin@v|:
+% Four margin width options are based on |\margin@base|:
 %
 %    \begin{macrocode}
 \DeclareOption{narrowmargins}   {\setlength{\margin@base}{0.75in}}
@@ -366,7 +364,6 @@
 % We simply call one of the spacing commands after the class is loaded.
 % So, be careful to place any line spacing commands within a group,
 % or the global setting can be changed in the middle of the document.
-% The default is |onehalfspacing|.
 %
 %    \begin{macrocode}
 \DeclareOption{doublespacing}{%
@@ -408,7 +405,7 @@
 % |LaTeX Warning: Unused global option(s): ...|
 %
 %    \begin{macrocode}
-\ExecuteOptions{normalmargins,onehalfspacing,equalmargins,oneside}
+\ExecuteOptions{onehalfspacing,normalmargins,equalmargins,oneside}
 \ProcessOptions\relax
 %    \end{macrocode}
 %

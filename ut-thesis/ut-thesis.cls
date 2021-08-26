@@ -51,7 +51,7 @@
 %% 
 \NeedsTeXFormat{LaTeX2e}[1999/12/01]
 \ProvidesClass{ut-thesis}
-[2021/08/26 v3.1.4 University of Toronto thesis class]
+[2021/08/26 v3.1.5 University of Toronto thesis class]
 \newif\ifmargins@equal
 \newlength{\margin@base}
 \newlength{\margin@offset}
@@ -91,7 +91,7 @@
 }
 \DeclareOption{oneside}{\PassOptionsToClass{oneside}{book}}
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{book}}
-\ExecuteOptions{normalmargins,onehalfspacing,equalmargins,oneside}
+\ExecuteOptions{onehalfspacing,normalmargins,equalmargins,oneside}
 \ProcessOptions\relax
 \LoadClass{book}
 \RequirePackage{geometry} % for margins etc.
