@@ -51,7 +51,7 @@
 %% 
 \NeedsTeXFormat{LaTeX2e}[1999/12/01]
 \ProvidesClass{ut-thesis}
-[2021/08/26 v3.1.5 University of Toronto thesis class]
+[2022/06/21 v3.1.6 University of Toronto thesis class]
 \newif\ifmargins@equal
 \newlength{\margin@base}
 \newlength{\margin@offset}
@@ -102,11 +102,13 @@
 \newcommand*{\gradyear}  [1]{\gdef\@gradyear{#1}}
 \newcommand*{\department}[2][Department of]%
   {\gdef\@deptpre{#1}\gdef\@deptname{#2}}
+\newcommand*{\copyrighttext}[1]{\gdef\@copyrighttext{#1}}
 \author    {(author)}
 \title     {(title)}
 \degree    {(degree)}
 \gradyear  {(gradyear)}
 \department{(department)}
+\copyrighttext{{\copyright} Copyright {\@gradyear} by {\@author}}
 \g@addto@macro\frontmatter{\pagenumbering{roman}\pagestyle{plain}}
 \g@addto@macro\mainmatter {\pagenumbering{arabic}\pagestyle{headings}}
 \renewcommand*{\maketitle}%
@@ -128,7 +130,7 @@
       {\@deptpre} {\@deptname}\\
       University of Toronto\\
       \vfill
-      {\copyright} Copyright {\@gradyear} by {\@author}
+      {\@copyrighttext}
    \end{center}
    {{\pagestyle{empty}\ocleardoublepage}}
   }
