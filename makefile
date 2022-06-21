@@ -18,7 +18,7 @@ tests:
 	for example in test/* ; do \
 		cp ut-thesis/ut-thesis.cls $$example ;\
 		cd $$example ;\
-		pdflatex main && pdflatex main && bibtex main && pdflatex main ;\
+		pdflatex main && pdflatex main && biber main && pdflatex main ;\
 		rm ut-thesis.cls ;\
 		cd ../../ ;\
 	done
@@ -26,7 +26,7 @@ tests:
 debug:
 	cp ut-thesis/ut-thesis.cls test/.debug/ ;\
 	cd test/.debug ;\
-	pdflatex main && pdflatex main && bibtex main && pdflatex main ;\
+	pdflatex main && pdflatex main && biber main && pdflatex main ;\
 	rm ut-thesis.cls ;\
 
 zip:
