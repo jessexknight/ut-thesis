@@ -18,22 +18,27 @@ Within this [repo](https://github.com/jessexknight/ut-thesis):
 
 ## Installation
 
-There are three main ways to install the class:
-1. **latex distriubtion:**
-  The `ut-thesis` class is available under the major LaTeX distributions
-  (linux: TeX Live, macOS: MacTeX, windows: MiKTeX).
-  Within TeX Live, it is part of the bundle "texlive-publishers".
+There are two main options to start using the class:
+1. **installing:**
+  The *ut-thesis* class is available under the major LaTeX distributions
+  (Linux: TeX Live, macOS: MacTeX, Windows: MiKTeX).
+  Installation steps will depend on the distribution; some helpful information is
+  [here](https://en.wikibooks.org/wiki/LaTeX/Installing_Extra_Packages).
+  Within TeX Live, *ut-thesis* is part of the
+  [publishers](https://packages.ubuntu.com/kinetic/all/texlive-publishers/filelist)
+  bundle, so it should be available on Overleaf.
 2. **local file:**
-  Simply download the class file (`.cls`) and maybe documentation (`.pdf`)
-  from GitHub: `ut-thesis/`, and place it in your working directory.
+  Place the file `ut-thesis.cls` in your project directory.
   The class will only be available in this directory.
-3. **tds:**
-  Download the [tds](http://www.texfaq.org/FAQ-tds) version of the package
-  from here: `ctan/ut-thesis.tds.zip`.
-  CTAN won't host this file, because the package is too small.
-  Then, run: `sudo unzip ut-thesis.tds.zip -d $texmf`
-  where `$texmf` is the root of your texmf tree.
-  This makes the class available to your whole LaTeX distribution.
+  This works if you don't have write access in the LaTeX distribution,
+  or if you want to use an updated version of the class.
+  The documentation is available on
+  [GitHub](https://github.com/jessexknight/ut-thesis/blob/master/ut-thesis/ut-thesis.pdf).
+
+## Examples
+
+There is some example code on
+[GitHub](https://github.com/jessexknight/ut-thesis/tree/master/test).
 
 ## Issues & Requests
 
