@@ -5,7 +5,7 @@
 %<class>\NeedsTeXFormat{LaTeX2e}[1999/12/01]
 %<class>\ProvidesClass{ut-thesis}
 %<*class>
-[2022/06/21 v3.1.6 University of Toronto thesis class]
+[2023/02/08 v3.1.7 University of Toronto thesis class]
 %</class>
 %
 %<*driver>
@@ -16,7 +16,7 @@
 \usepackage[margin=3cm,inner=5cm]{geometry}
 \usepackage{xcolor}
 \definecolor{code}{HTML}{990033}
-\definecolor{link}{HTML}{000066}
+\definecolor{link}{HTML}{006699}
 \let\ottfamily\ttfamily
 \renewcommand{\ttfamily}{\color{code}\ottfamily}
 \renewcommand{\MacroFont}{\ttfamily\color{code}}
@@ -32,10 +32,10 @@
 %
 % \GetFileInfo{ut-thesis.dtx}
 %
-% \title{The \texttt{ut-thesis} class
-%   \thanks{\fileversion~[\filedate] CTAN repository:
-%   \href{https://ctan.org/pkg/ut-thesis}
-%        {\texttt{https://ctan.org/pkg/ut-thesis}}}}
+% \title{The \textit{ut-thesis} class
+%   \thanks{\fileversion~[\filedate]\hfill
+%   \href{https://ctan.org/pkg/ut-thesis}{\texttt{https://ctan.org/pkg/ut-thesis}}\hfill
+%   \href{https://github.com/jessexknight/ut-thesis}{\texttt{github.com/jessexknight/ut-thesis}}}}
 % \author{
 %   Francois Pitt,
 %   Jesse Knight
@@ -47,7 +47,7 @@
 % \maketitle
 %
 % \begin{abstract}\noindent
-%   The |ut-thesis| document class implements the formatting requirements of
+%   The \textit{ut-thesis} document class implements the formatting requirements of
 %   the University of Toronto School of Graduate Studies (SGS),
 %   as of Fall 2020.
 % \end{abstract}
@@ -57,16 +57,19 @@
 %
 % \section{Installation}\label{inst}
 %
-% To use the |ut-thesis| class,
-% you must first make the file |ut-thesis.cls| visible to your current \LaTeX\ distribution.
-% There are two ways to do this:
+% There are two main options to start using the class:
 % \begin{itemize}
-%   \item \textbf{local file}: Place the file |ut-thesis.cls| in your project directory.
-%         This works if you don't have write access
-%         in the \LaTeX\ distribution, such as if you use Overleaf.
-%   \item \textbf{installing}: Installation steps will depend on your \LaTeX\ distribution.
-%         Some helpful instructions can be found
+%   \item \textbf{installing}: The \textit{ut-thesis} class is available
+%         under the major \LaTeX\ distributions (Linux: TeX Live, macOS: MacTeX, Windows: MiKTeX).
+%         Installation steps will depend on the distribution; some helpful information is
 %         \href{https://en.wikibooks.org/wiki/LaTeX/Installing_Extra_Packages}{here}.
+%         Within TeX Live, \textit{ut-thesis} is part of the
+%         \href{https://packages.ubuntu.com/kinetic/all/texlive-publishers/filelist}
+%         {publishers} bundle, so it should be available on Overleaf.
+%   \item \textbf{local file}: Place the file |ut-thesis.cls| in your project directory.
+%         The class will only be available in this directory.
+%         This works if you don't have write access in the \LaTeX\ distribution,
+%         or if you want to use an updated version of the class.
 % \end{itemize}
 %
 % \section{Usage}\label{use}
@@ -76,6 +79,8 @@
 %
 % The default options produce a final copy, ready for submission to
 % the University of Toronto School of Graduate Studies (SGS).
+% There is some example code on
+% \href{https://github.com/jessexknight/ut-thesis/tree/master/test}{GitHub}.
 %
 % \subsection{Options}\label{use:opt}
 %
