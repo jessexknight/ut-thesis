@@ -45,6 +45,11 @@ There is some example code on
 ... are welcome!
 Please file them [here](https://github.com/jessexknight/ut-thesis) on GitHub.
 
+If you have your thesis rejected by SGS / ProQuest due to formatting,
+please help us track the (inconsistent) reasons
+[here](https://github.com/jessexknight/ut-thesis/issues/23),
+to see if any changes are actually needed in *ut-thesis*.
+
 ## Versions
 
 If there are any differences between
