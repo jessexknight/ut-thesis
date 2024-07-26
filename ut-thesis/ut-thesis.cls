@@ -13,8 +13,8 @@
 %% [https://www.sgs.utoronto.ca/academic-progress/program-completion/formatting]
 %% 
 %% Copyright (c) 1998-2013 Francois Pitt <fpitt@cs.utoronto.ca>,
-%%               2020-2023 Jesse Knight <jesse.knight@mail.utoronto.ca>
-%% last updated at 13:00 (EST) on Wed 08 Feb 2023
+%%               2020-2024 Jesse Knight <jesse.x.knight@protonmail.com>
+%% last updated at 09:00 (BST) on Fri 26 July 2024
 %% 
 %% This work may be distributed and/or modified under the conditions of
 %% the LaTeX Project Public Licence, either version 1.3c of this licence
@@ -30,7 +30,7 @@
 %% This work has the LPPL maintenance status "maintained".
 %% 
 %% The Current Maintainer of this work is
-%% Jesse Knight <jesse.knight@mail.utoronto.ca>.
+%% Jesse Knight <jesse.x.knight@protonmail.com>.
 %% 
 %% This work consists of the files:
 %% - README
@@ -39,19 +39,20 @@
 %% - ut-thesis.pdf (derived user manual)
 %% - ut-thesis.cls (derived class file)
 %% 
-%% To generate ut-thesis.cls (class file), run: pdflatex ut-thesis.ins
-%% To generate ut-thesis.pdf (documentation), run: pdflatex ut-thesis.dtx
-%% To use the class, make ut-thesis.cls visible to your LaTeX distribution,
-%% by placing ut-thesis.cls either in your working directory,
-%% or in your texmf tree, perhaps: $texmf/tex/latex/ut-thesis/ut-thesis.cls
-%% and the documentation: $texmf/doc/latex/ut-thesis/ut-thesis.pdf
+%% Install ut-thesis from your favourite LaTeX distribution.
+%% Alternatively, or to use the latest version:
+%% - generate ut-thesis.cls (class file) using: pdflatex ut-thesis.ins
+%%   and copy to: $texmf/tex/latex/ut-thesis/ut-thesis.cls
+%% - generate ut-thesis.pdf (documentation) using: pdflatex ut-thesis.dtx
+%%   and copy to: $texmf/doc/latex/ut-thesis/ut-thesis.pdf
+%% or simply copy ut-thesis.cls to your working directory.
 %% 
 %% See version history on GitHub:
 %% [https://github.com/jessexknight/ut-thesis]
 %% 
 \NeedsTeXFormat{LaTeX2e}[1999/12/01]
 \ProvidesClass{ut-thesis}
-[2023/02/08 v3.1.7 University of Toronto thesis class]
+[2024/07/26 v3.1.8 University of Toronto thesis class]
 \newif\ifmargins@equal
 \newlength{\margin@base}
 \newlength{\margin@offset}
